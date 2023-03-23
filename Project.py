@@ -13,9 +13,9 @@ from streamlit_echarts import st_echarts
 import requests
 import streamlit as st
 from PIL import Image
-"""
 import pandas
 import time
+"""
 from geopy.geocoders import Nominatim
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
