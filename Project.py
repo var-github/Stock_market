@@ -22,7 +22,7 @@ from selenium import webdriver
 
 
 # Connecting to database and creating required tables
-mycon = connector.connect(host="localhost", user="root", password="sqlroot")
+mycon = connector.connect(**st.secrets["mysql"])
 db = mycon.cursor()
 db.execute("create database if not exists finance;")
 db.execute("use finance;")
