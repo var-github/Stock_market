@@ -1,2 +1,2 @@
 mysql-connector-python==8.0.29
-
+streamlit-on-Hover-tabs==1.0.1
