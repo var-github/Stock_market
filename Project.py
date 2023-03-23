@@ -22,5 +22,5 @@ from selenium import webdriver
 
 
 # Connecting to database and creating required tables
-mycon = connector.connect(host="sql210.epizy.com", user="epiz_33859005", password="arduino2022$", database="epiz_33859005_finance")
+mycon = connector.connect(host="sql12.freemysqlhosting.net", user="sql12608034", password="G47UQim29M", database="sql12608034")
 st.button("Hi")
