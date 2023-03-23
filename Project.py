@@ -15,12 +15,10 @@ import streamlit as st
 from PIL import Image
 import pandas
 import time
-"""
-from geopy.geocoders import Nominatim
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium import webdriver
-"""
+
 
 # Connecting to database and creating required tables
 mycon = connector.connect(host="sql12.freemysqlhosting.net", user="sql12608034", password="G47UQim29M", database="sql12608034", port=3306)
