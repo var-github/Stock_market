@@ -34,10 +34,4 @@ st.set_page_config(
 if 'page' not in st.session_state:
     st.session_state['page'] = 1
 
-# If admin account is not created, then admin account has to be created first
-db.execute("SELECT username from users where user_id = 1;")
-data = db.fetchall()
-if not data:
-    st.session_state['page'] = 10
-
 st.button("Hi")
