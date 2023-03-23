@@ -1,6 +1,6 @@
 # Om
 # If any of the required modules are not installed - ask the user to install
-
+"""
 import mysql.connector as connector
 from st_on_hover_tabs import on_hover_tabs
 from captcha.image import ImageCaptcha
@@ -19,7 +19,7 @@ from geopy.geocoders import Nominatim
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium import webdriver
-
+"""
 
 # Connecting to database and creating required tables
 #mycon = connector.connect(host="sql12.freemysqlhosting.net", user="sql12608034", password="G47UQim29M", database="sql12608034", port=3306)
