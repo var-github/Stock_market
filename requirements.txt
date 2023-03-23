@@ -2,3 +2,4 @@ mysql-connector-python==8.0.29
 streamlit-on-Hover-tabs==1.0.1
 captcha==0.4
 yfinance==0.2.9
+streamlit-echarts==0.4.0
