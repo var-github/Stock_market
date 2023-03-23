@@ -21,7 +21,7 @@ from selenium.webdriver.common.by import By
 from selenium import webdriver
 
 # Connecting to database and creating required tables
-mycon = connector.connect(host="localhost", user="root", password="sqlroot", database="finance")
+mycon = connector.connect(host="localhost", user="root", password="sqlroot", database="finance", port=3306)
 
 
 st.button("Hi")
