@@ -1,6 +1,6 @@
 # Om
 # If any of the required modules are not installed - ask the user to install
-"""
+
 import mysql.connector as connector
 from st_on_hover_tabs import on_hover_tabs
 from captcha.image import ImageCaptcha
@@ -12,6 +12,7 @@ from datetime import date, datetime, timedelta
 from streamlit_echarts import st_echarts
 import requests
 import streamlit as st
+"""
 from PIL import Image
 import pandas
 import time
