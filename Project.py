@@ -23,6 +23,21 @@ from selenium import webdriver
 # Connecting to database and creating required tables
 mycon = connector.connect(**st.secrets["mysql"])
 db = mycon.cursor()
-db.execute("CREATE TABLE IF NOT EXSISTS users (user_id int primary key, username varchar(30) not null unique, password text not null, cash float(7, 2) default(10000.00), status varchar(8) default ('ENABLED'));")
-db.execute("create table if not exists transaction (user_id int, transaction_id int primary key, symbol varchar(15) not null, shares int not null, price float(7, 2) not null, transacted char(19));")
+# SQL giving error
+# Configuring the page
+st.set_page_config(
+    page_title="Stock Market",
+    layout="wide",
+)
+
+
+if 'page' not in st.session_state:
+    st.session_state['page'] = 1
+
+# If admin account is not created, then admin account has to be created first
+db.execute("SELECT username from users where user_id = 1;")
+data = db.fetchall()
+if not data:
+    st.session_state['page'] = 10
+
 st.button("Hi")
