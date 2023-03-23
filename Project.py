@@ -12,8 +12,8 @@ from datetime import date, datetime, timedelta
 from streamlit_echarts import st_echarts
 import requests
 import streamlit as st
-"""
 from PIL import Image
+"""
 import pandas
 import time
 from geopy.geocoders import Nominatim
