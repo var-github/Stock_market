@@ -707,3 +707,4 @@ def main():
                 st.session_state['page'] = 1
                 st.experimental_rerun()
 
+main()
