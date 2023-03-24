@@ -242,7 +242,7 @@ while True:
                 var.empty()
                 st.session_state['key'] = random.randrange(100, 10000)
                 continue
-            form = column2.form(key=10)
+            form = column2.form(key="Admin_login")
             username = form.text_input('Username')
             password = form.text_input('Password', type="password")
             if column2.button(label="Login"):
