@@ -39,14 +39,8 @@ st.set_page_config(
 if 'page' not in st.session_state:
     st.session_state['page'] = 1
 
-# If admin account is not created, then admin account has to be created first
-db.execute("SELECT username from users where user_id = 1;")
-data = db.fetchall()
-if not data:
-    st.session_state['page'] = 10
 
-
-if st.session_state['page'] in [1, 2, 4, 5, 6, 8, 10]:
+if st.session_state['page'] in [1, 2, 4, 5, 6, 8]:
     img = 'https://img.freepik.com/stock-market-forex-trading-graph-graphic-double-exposure_73426-193.jpg'
 else:
     img = 'https://cdn.pixabay.com/photo/2018/01/12/16/16/growth-3078543_1280.png'
@@ -708,42 +702,3 @@ elif st.session_state['page'] == 3:
             st.session_state['page'] = 1
             st.experimental_rerun()
 
-elif st.session_state['page'] == 10:
-    column2.header("Create Admin Account")
-    column2.text("")
-    name = column2.empty()
-    username = name.text_input('Enter admin username:', key=21)
-    var1 = column2.empty()
-    password = var1.text_input('Enter password:', type="password", help="Choose a strong password with letters, numbers and symbols", key=22)
-    var2 = column2.empty()
-    confirm = var2.text_input('Re-enter password:', type="password", key=23)
-    btn = column2.empty()
-    if btn.button(label="Submit") or st.session_state['user'] == 1:
-        if not username:
-            column2.warning("Please enter username!")
-            st.stop()
-        if " " in username:
-            column2.warning("Username cannot contain space!")
-            st.stop()
-        if not password:
-            column2.warning("Please enter password!")
-            st.stop()
-        if " " in password:
-            column2.warning("The password cannot contain space!")
-            st.stop()
-        if password != confirm:
-            column2.warning("Passwords Not Matching!")
-            st.stop()
-        name.text_input('Enter username:', disabled=True, value=username, key=24)
-        var1.text_input('Enter password:', type="password", help="Choose a strong password with letters, numbers and symbols", disabled=True, value=password, key=25)
-        var2.text_input('Re-enter password:', type="password", disabled=True, value=confirm, key=26)
-        btn.empty()
-        if st.session_state['user'] != 1:
-            db.execute(f'insert into users values (1,"{username}","{password}", NULL, "ENABLED");')
-            mycon.commit()
-        st.session_state['user'] = 1
-        column2.warning("Admin account created successfully")
-        if column2.button("Continue to website"):
-            st.session_state['user'] = None
-            st.session_state['page'] = 1
-            st.experimental_rerun()
