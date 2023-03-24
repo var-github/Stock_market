@@ -28,6 +28,8 @@ db = mycon.cursor()
 db.execute("create table if not exists users (user_id int primary key, username varchar(30) not null unique, password text not null, cash float(7, 2) default 10000.00, status varchar(8) default 'ENABLED');")
 db.execute("create table if not exists transaction (user_id int, transaction_id int primary key, symbol varchar(15) not null, shares int not null, price float(7, 2) not null, transacted char(19));")
 
+db.execute("select * from users;")
+db.fetchall()
 
 # Configuring the page
 st.set_page_config(
