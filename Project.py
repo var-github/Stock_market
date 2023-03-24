@@ -635,7 +635,7 @@ elif st.session_state['page'] == 2:
     if column1.button(label="🔙"):
         st.session_state['page'] = 1
         st.experimental_rerun()
-    form = column2.form()
+    form = column2.form(key="admin_login")
     username = form.text_input('Username')
     password = form.text_input('Password', type="password")
     if form.form_submit_button(label="Login"):
