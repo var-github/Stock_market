@@ -19,6 +19,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium import webdriver
+import selenium
 
 
 # Connecting to database and creating required tables
