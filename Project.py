@@ -145,6 +145,7 @@ css = f"""
         border: 1.5px solid;
         background: rgba(255, 255, 255, 0.62);
     }}
+    [data-testid="stForm"] {{border: 0px}}
 </style>
 """
 st.markdown(css, unsafe_allow_html=True)
