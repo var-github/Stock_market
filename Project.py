@@ -597,7 +597,7 @@ def transactions():
 # MAIN CODE
 # Every page is a separete if block, the variable - st.session_state['page'] - moniters which page is currently displayed
 def main_code():
-    global column2
+    global column1, column2, column3
     if st.session_state['page'] == 1:
         column1, column2, column3 = st.columns([1, 4.5, 1])
         home_page = """
