@@ -25,6 +25,8 @@ mycon = connector.connect(**st.secrets["mysql"])
 db = mycon.cursor()
 db.execute("create table if not exists users (user_id int primary key, username varchar(30) not null unique, password text not null, cash float(7, 2) default 10000.00, status varchar(8) default 'ENABLED');")
 db.execute("create table if not exists transaction (user_id int, transaction_id int primary key, symbol varchar(15) not null, shares int not null, price float(7, 2) not null, transacted char(19));")
+
+
 # Configuring the page
 st.set_page_config(
     page_title="Stock Market",
@@ -35,4 +37,17 @@ st.set_page_config(
 if 'page' not in st.session_state:
     st.session_state['page'] = 1
 
-st.button("Hi")
+# If admin account is not created, then admin account has to be created first
+db.execute("SELECT username from users where user_id = 1;")
+data = db.fetchall()
+if not data:
+    st.session_state['page'] = 10
+
+
+if st.session_state['page'] in [1, 2, 4, 5, 6, 8, 10]:
+    img = 'https://img.freepik.com/stock-market-forex-trading-graph-graphic-double-exposure_73426-193.jpg'
+else:
+    img = 'https://cdn.pixabay.com/photo/2018/01/12/16/16/growth-3078543_1280.png'
+
+
+st.button("Bye")
