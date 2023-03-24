@@ -153,3 +153,156 @@ css = f"""
 """
 st.markdown(css, unsafe_allow_html=True)
 
+
+# Function to check for internet connectivity
+def internet():
+    try:
+        status = requests.get('https://www.google.com/').status_code
+        return True
+    except:
+        return False
+
+
+# Getting USD - INR conversion rates
+def usd():
+    if 'usd' not in st.session_state or not st.session_state['usd']:
+        if internet():
+            url = f'https://api.exchangerate.host/timeseries?base={"USD"}&start_date={date.today()}&end_date={date.today()}&symbols={"INR"}'
+            data = requests.get(url).text
+            st.session_state['usd'] = float(data[data.rfind('INR') + 5:-3])
+            return st.session_state['usd']
+        else:
+            st.session_state['usd'] = ""
+    else:
+        return st.session_state['usd']
+usd()
+
+
+def get_price(company):
+    company = company.strip('.NS')
+    driver = st.session_state['driver']
+    data = {}
+    input_box = driver.find_element(By.CSS_SELECTOR, '.Ax4B8.ZAGvjd')
+    input_box.send_keys(Keys.CONTROL + "a")
+    input_box.send_keys(Keys.DELETE)
+    input_box.send_keys(company)
+    input_box.send_keys(Keys.RETURN)
+    end = time.time() + 3
+    while time.time() < end:
+        try:
+            sym1 = str(driver.current_url).strip("https://www.google.com/finance/quote/")
+            sym1 = sym1[:sym1.find(":")]
+            sym2 = driver.find_element(By.CSS_SELECTOR, '.Ax4B8.ZAGvjd').get_attribute("value").partition(' ')[2]
+            if sym1 == sym2:
+                data["Symbol"] = sym1
+                break
+        except:
+            pass
+        time.sleep(0.01)
+    else:
+        return None
+    data["Name"] = driver.find_element(By.CSS_SELECTOR, 'c-wiz[aria-busy="false"] div.zzDege').text
+    data['Price'] = driver.find_element(By.CSS_SELECTOR, 'c-wiz[aria-busy="false"] div.YMlKec.fxKbKc').text.replace(',', '')
+    if data['Price'][0] == "₹":
+        data['currency'] = 'INR'
+        data['Price'] = round(float(data['Price'][1:].replace(',', ''))/usd(), ndigits=2)
+    else:
+        data['currency'] = ""
+        data['Price'] = float(data['Price'][1:].replace(',', ''))
+    data['Website'] = driver.find_element(By.CSS_SELECTOR, 'c-wiz[aria-busy="false"] .gyFHrc a[rel~="noopener"]').text
+    return data
+
+
+# Function to display captcha on screen
+def captcha():
+    if 'successful' not in st.session_state:
+        st.session_state['successful'] = ""
+    if 'captcha' not in st.session_state:
+        st.session_state['captcha'] = ""
+    title = column2.empty()
+    title.header("CAPTCHA")
+    file_path = "\\\\".join(str(__file__).split("\\")[:-1]) + "\\\\captcha.png"
+    letters = "ACBDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    if not st.session_state['captcha']:
+        image = ImageCaptcha(width=280, height=90)
+        for i in range(7):
+            st.session_state['captcha'] = st.session_state['captcha'] + random.choice(letters)
+        st.session_state['captcha'] = st.session_state['captcha'].lower()
+        data = image.generate(st.session_state['captcha'])
+        image.write(st.session_state['captcha'], file_path)
+    image = Image.open(file_path)
+    img = column2.empty()
+    img.image(image, width=550)
+    txt = column2.empty()
+    text = txt.text_input("Enter Captcha Code: ")
+    text = text.lower()
+    verify = column2.empty()
+    if verify.button("Verify"):
+        os.remove(file_path)
+        if text == st.session_state['captcha']:
+            img.empty()
+            txt.empty()
+            verify.empty()
+            title.empty()
+            st.session_state['successful'] = True
+            return
+        else:
+            column2.text("Captcha failed!")
+            img.empty()
+            txt.empty()
+            verify.empty()
+            title.empty()
+            st.session_state['successful'] = False
+            return
+
+
+# Initializing variables
+if 'user' not in st.session_state:
+    st.session_state['user'] = None
+    options = webdriver.chrome.options.Options()
+    options.add_argument("--headless=True")
+    driver = webdriver.Chrome(options=options)
+    driver.get('https://www.google.com/finance/quote/TSLA:NASDAQ?hl=en')
+    driver.implicitly_wait(2)
+    st.session_state['driver'] = driver
+if 'captcha' not in st.session_state:
+    st.session_state['captcha'] = ""
+if 'clicked' not in st.session_state:
+    st.session_state['clicked'] = False
+if 'company' not in st.session_state:
+    st.session_state['company'] = ""
+if 'shares' not in st.session_state:
+    st.session_state['shares'] = 1
+if 'successful' not in st.session_state:
+    st.session_state['successful'] = ""
+if 'warning' not in st.session_state:
+    st.session_state['warning'] = 0
+if 'stock' not in st.session_state:
+    st.session_state['stock'] = "<select>"
+if 'agree' not in st.session_state:
+    st.session_state['agree'] = False
+if 'name' not in st.session_state:
+    st.session_state['name'] = ""
+if 'username' not in st.session_state:
+    st.session_state['username'] = ""
+if 'password' not in st.session_state:
+    st.session_state['password'] = ""
+if 'confirm' not in st.session_state:
+    st.session_state['confirm'] = ""
+
+
+# This function sets all the variables to their initiall state
+def clear():
+    st.session_state['captcha'] = ""
+    st.session_state['clicked'] = False
+    st.session_state['company'] = ""
+    st.session_state['shares'] = 1
+    st.session_state['successful'] = ""
+    st.session_state['warning'] = 0
+    st.session_state['stock'] = "<select>"
+
+
+# The page is divided into 3 columns - the first column has only back button, column 2 has the rest of the data
+column1, column2, column3 = st.columns([1, 3.5, 1])
+
+column2.button("Hi")
