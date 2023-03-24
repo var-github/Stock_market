@@ -15,6 +15,7 @@ import streamlit as st
 from PIL import Image
 import pandas
 import time
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium import webdriver
@@ -261,7 +262,7 @@ if 'user' not in st.session_state:
     st.session_state['user'] = None
     options = webdriver.chrome.options.Options()
     options.add_argument("--headless=True")
-    driver = webdriver.Chrome(options=options)
+    driver = webdriver.Chrome(service=selenium.webdriver.chrome.service.Service(ChromeDriverManager().install()), options=options)
     driver.get('https://www.google.com/finance/quote/TSLA:NASDAQ?hl=en')
     driver.implicitly_wait(2)
     st.session_state['driver'] = driver
