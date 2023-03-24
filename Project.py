@@ -307,4 +307,295 @@ def clear():
 # The page is divided into 3 columns - the first column has only back button, column 2 has the rest of the data
 column1, column2, column3 = st.columns([1, 3.5, 1])
 
-column2.button("Hi")
+
+# This function displays all the stocks the user owns
+def portfolio():
+    column2.title("PORTFOLIO")
+    db.execute(f"select symbol, sum(shares) from transaction where user_id = {st.session_state['user']} group by symbol having sum(shares) != 0;")
+    data = db.fetchall()
+    if not data:
+        column2.warning("You currently have not invested in any stocks")
+        st.stop()
+    with st.spinner("Loading..."):
+        if internet():
+            sum = 0
+            for i in range(len(data)):
+                info = get_price(data[i][0])
+                price = info['Price']
+                sum += price * int(data[i][1])
+                data[i] = data[i] + (price,)
+            data = [("Symbol", "Shares", "Current Price")] + data
+        else:
+            data = [("Symbol", "Shares")] + data
+    column2.table(data)
+    if internet():
+        column2.text("Total: $" + str(round(sum, ndigits=2)))
+    db.execute(f"select cash from users where user_id = {st.session_state['user']};")
+    cash = db.fetchall()[0][0]
+    column2.text("Cash left in account: $" + str(cash))
+    if internet():
+        if cash + sum > 10000:
+            column2.text("Profit: $" + str(round(cash + sum - 10000, ndigits=2)))
+        elif cash + sum < 10000:
+            column2.text("Loss: $" + str(round(10000 - (cash + sum), ndigits=2)))
+        column2.subheader("YOUR net worth: $" + str(round(cash + sum, ndigits=2)))
+    else:
+        column2.warning("No internet connection! To view current prices of the stocks - please connect to the internet and refresh the page.")
+
+
+# Displays price and other required information on any stock entered by the user
+def quote():
+    column2.title("QUOTE")
+    company = column2.text_input("Enter stock symbol or company name: ")
+    if column2.button(label="Quote"):
+        if not internet():
+            column2.warning("No internet connection! Hence current prices cannot be retrieved. Please connect to the internet and refresh the page.")
+            st.stop()
+        data = get_price(company)
+        if data:
+            column2.write("Company name: " + str(data["Name"]))
+            column2.write("Stock symbol: " + str(data["Symbol"]))
+            column2.write("Market price: $" + str(data["Price"]))
+            date = []
+            value = []
+            if data["currency"] == "INR":
+                graph = dict(yfinance.download(data['Symbol'] + '.NS', start=str(datetime.now() - timedelta(days=3 * 365))[:10], end=str(datetime.now())[:10])['Open'])
+                for i in graph:
+                    date.append(str(i.strftime("%x")))
+                    value.append(round(graph[i] / usd(), ndigits=2))
+            else:
+                graph = dict(yfinance.download(data['Symbol'], start=str(datetime.now() - timedelta(days=3 * 365))[:10], end=str(datetime.now())[:10])['Open'])
+                for i in graph:
+                    date.append(str(i.strftime("%x")))
+                    value.append(round(graph[i], ndigits=2))
+            if value:
+                options = {"height": 300, "tooltip": {"trigger": 'axis'}, "xAxis": {"data": date}, "yAxis": {"type":"value", "axisLine": {"show": True }, "splitLine": {"show": False}}, "series": [{"data": value, "type": 'line'}]}
+                st_echarts(options=options)
+            if data['Website']:
+                col1, col2, col3 = st.columns([1, 4.5, 1])
+                col2.write("Website: [" + str(data["Website"]) + "](" + str(data["Website"]) + ")")
+        else:
+            column2.warning("No stock or company exists with that name!")
+            st.stop()
+
+
+def buy():
+    global column2
+    column2.title("BUY SHARES")
+    db.execute(f"SELECT cash from users where user_id = {st.session_state['user']};")
+    cash = db.fetchall()
+    if cash[0][0] < 100:
+        column2.warning("Low Balance!, Your balance is below 100 so you cannot buy any more shares!")
+        st.stop()
+    name = column2.empty()
+    st.session_state['company'] = name.text_input("Enter stock symbol or company name: ", value=st.session_state['company'], key=1)
+    num = column2.empty()
+    st.session_state['shares'] = num.number_input("Enter the number of shares to be bought: ", min_value=1, value=st.session_state['shares'], max_value=100000, key=2)
+    btn = column2.empty()
+    war = column2.empty()
+    if st.session_state['warning'] == 1:
+        war.warning("No stock or company exists with that name!")
+    if st.session_state['warning'] == 2:
+        war.warning("Not enough money to buy " + str(st.session_state['shares']) + " shares of " + st.session_state['company'] + ". Investment is prohibited!")
+    if btn.button("Buy", key=3):
+        war.empty()
+        st.session_state['warning'] = 0
+        st.session_state['clicked'] = True
+    if st.session_state['clicked']:
+        if not internet():
+            column2.warning("No internet connection! Hence current prices cannot be retrieved. Please connect to the internet and refresh the page.")
+            st.session_state['clicked'] = False
+            st.stop()
+        company = st.session_state['company']
+        shares = st.session_state['shares']
+        btn.empty()
+        name.text_input("Enter stock symbol or company name: ", disabled=True, value=company)
+        num.number_input("Enter the number of shares to be bought: ", disabled=True, value=shares)
+        data = get_price(company)
+        column2.text("")
+        if data:
+            column2.text("Company name: " + str(data["Name"]))
+            column2.text("Stock symbol: " + str(data["Symbol"]))
+            column2.text("Market price: $" + str(data["Price"]))
+        else:
+            st.session_state['clicked'] = False
+            st.session_state['warning'] = 1
+            st.experimental_rerun()
+        price = shares * data["Price"]
+        if cash[0][0] - price < 0:
+            st.session_state['clicked'] = False
+            st.session_state['warning'] = 2
+            st.experimental_rerun()
+        column2.text("You will be paying an amount of: $" + str(round(price, ndigits=2)))
+        column2.text("")
+        var1 = column2.empty()
+        var1.markdown("-----------------------------------------------------------------------------")
+        var2 = st.empty()
+        col1, col2 = var2.columns([4.8, 10])
+        col2.write("Do you want to continue with the transaction?")
+        var3 = st.empty()
+        col3, col4, col5, col6 = var3.columns([8, 1.1, 1, 9])
+        var4 = col4.empty()
+        var5 = col5.empty()
+        if var4.button("Yes", key=13) or st.session_state['successful'] in [True, False, "run"]:
+            st.session_state['successful'] = "run"
+            var1.empty()
+            var2.empty()
+            var4.empty()
+            column1, column2, column3 = st.columns([1, 4.5, 1])
+            captcha()
+            if st.session_state['successful'] == True:
+                db.execute(f"update users set cash = cash - {price} where user_id = {st.session_state['user']};")
+                db.execute("select transaction_id from transaction")
+                trans = db.fetchall()
+                trans_id = random.randint(10000, 99999)
+                while trans_id in trans:
+                    trans_id = random.randint(10000, 99999)
+                column2.markdown("-----------------------------------------------------------------------------")
+                column2.subheader("Price of $" + str(round(price, ndigits=2)) + " has been deducted from your account   Transaction ID: " + str(trans_id))
+                column2.markdown("-----------------------------------------------------------------------------")
+                date_time = str(datetime.now())[:19]
+                db.execute(f"insert into transaction values({st.session_state['user']}, {trans_id}, '{data['Symbol']}',{shares},{data['Price']},'{date_time}');")
+                mycon.commit()
+                column2.text("Thank you for investing")
+                st.session_state['tab'] = "Portfolio"
+                st.stop()
+            elif st.session_state['successful'] == False:
+                column2.warning("Transaction discarded!")
+                st.session_state['captcha'] = ""
+                st.session_state['successful'] = ""
+                st.session_state['company'] = ""
+                st.session_state['shares'] = 1
+                st.session_state['clicked'] = False
+                st.session_state['tab'] = "Portfolio"
+                st.stop()
+        if st.session_state['successful'] not in [True, False, "run"]:
+            if var5.button("No", key=14):
+                var1.empty()
+                var2.empty()
+                var4.empty()
+                var5.empty()
+                st.session_state['captcha'] = ""
+                st.session_state['successful'] = ""
+                st.session_state['company'] = ""
+                st.session_state['shares'] = 1
+                st.session_state['clicked'] = False
+                column2.warning("Transaction discontinued!")
+                st.session_state['tab'] = "Portfolio"
+                st.stop()
+            col7, col8, col9 = st.columns([1, 4.5, 1])
+            col8.markdown("-----------------------------------------------------------------------------")
+    
+
+
+def sell():
+    global column2
+    column2.title("SELL SHARES")
+    db.execute(f"SELECT symbol from transaction where user_id = {st.session_state['user']} group by symbol having sum(shares) != 0;")
+    data = db.fetchall()
+    for i in range(len(data)):
+        data[i] = data[i][0]
+    data = ['<select>'] + data
+    name = column2.empty()
+    st.session_state['stock'] = name.selectbox("Choose a stock to sell:", data, index=data.index(st.session_state['stock']), key=1)
+    num = column2.empty()
+    st.session_state['shares'] = num.number_input("Enter the number of shares to be sold: ", min_value=1, value=st.session_state['shares'], max_value=100000, key=2)
+    btn = column2.empty()
+    if btn.button("Sell") and st.session_state['stock'] != '<select>':
+        st.session_state['clicked'] = True
+    if st.session_state['clicked']:
+        shares = st.session_state['shares']
+        stock = st.session_state['stock']
+        if not internet():
+            column2.warning("No internet connection! Hence current prices cannot be retrieved. Please connect to the internet and refresh the page.")
+            st.session_state['clicked'] = False
+            st.stop()
+        db.execute(f"SELECT sum(shares) from transaction where user_id = {st.session_state['user']} and symbol = '{stock}' group by symbol;")
+        shares_owned = db.fetchall()[0][0]
+        if shares > shares_owned:
+            column2.warning("You own only " + str(shares_owned) + " shares of " + stock + ", you cannot sell " + str(shares) + " shares!")
+            st.stop()
+        name.selectbox("Choose a stock to sell:", data, index=data.index(stock), disabled=True, key=3)
+        num.number_input("Enter the number of shares to be sold: ", disabled=True, value=shares, key=4)
+        btn.empty()
+        data = get_price(stock)
+        price = round(int(shares) * data["Price"], ndigits=2)
+        column2.text("")
+        column2.subheader("Transaction INFO")
+        column2.text("Symbol: " + str(data["Symbol"]))
+        column2.text("Company: " + str(data["Name"]))
+        column2.text("You own: " + str(shares_owned) + " share(s)")
+        column2.text("Current Price: " + str(data["Price"]))
+        column2.text("")
+        column2.text("You are selling " + str(shares) + " share(s) and will be gaining an amount of $" + str(round(price, ndigits=2)))
+        column2.text("")
+        var1 = column2.empty()
+        var1.markdown("-----------------------------------------------------------------------------")
+        var2 = st.empty()
+        col1, col2 = var2.columns([4.8, 10])
+        col2.write("Do you want to continue with the transaction?")
+        var3 = st.empty()
+        col3, col4, col5, col6 = var3.columns([8, 1, 1, 9])
+        var4 = col4.empty()
+        var5 = col5.empty()
+        if var4.button("Yes") or st.session_state['successful'] in [True, False, "run"]:
+            st.session_state['successful'] = "run"
+            var1.empty()
+            var2.empty()
+            var4.empty()
+            column1, column2, column3 = st.columns([1, 4.5, 1])
+            captcha()
+            if st.session_state['successful'] == True:
+                db.execute(f"update users set cash = cash + {price} where user_id = {st.session_state['user']};")
+                db.execute("select transaction_id from transaction;")
+                trans = db.fetchall()
+                trans_id = random.randint(10000, 99999)
+                while trans_id in trans:
+                    trans_id = random.randint(10000, 99999)
+                column2.markdown("-----------------------------------------------------------------------------")
+                col7, col8, col9 = st.columns([1, 4.5, 1.1])
+                col8.subheader("Price of $" + str(price) + " has been added to your account    Transaction ID: " + str(trans_id))
+                col10, col11, col12 = st.columns([1, 4.5, 1])
+                col11.markdown("-----------------------------------------------------------------------------")
+                date_time = str(datetime.now())[:19]
+                shares *= -1
+                db.execute(f"insert into transaction values({st.session_state['user']}, {trans_id}, '{stock}',{shares},{data['Price']},'{date_time}');")
+                col11.text("Thank you for investing")
+                mycon.commit()
+                st.session_state['tab'] = "Portfolio"
+                st.stop()
+            elif st.session_state['successful'] == False:
+                column2.warning("Transaction discarded!")
+                st.session_state['captcha'] = ""
+                st.session_state['successful'] = ""
+                st.session_state['stock'] = "<select>"
+                st.session_state['shares'] = 1
+                st.session_state['clicked'] = False
+                st.session_state['tab'] = "Portfolio"
+                st.stop()
+        if st.session_state['successful'] not in [True, False, "run"]:
+            if var5.button("No"):
+                var1.empty()
+                var2.empty()
+                var4.empty()
+                var5.empty()
+                st.session_state['clicked'] = False
+                column2.warning("Transaction discontinued!")
+                st.session_state['tab'] = "Portfolio"
+                st.stop()
+            col7, col8, col9 = st.columns([1, 4.5, 1])
+            col8.markdown("-----------------------------------------------------------------------------")
+
+
+
+def transactions():
+    column2.title("Your Transactions")
+    db.execute(f'select transaction_id, symbol, shares, price, ABS(shares) * price, transacted from transaction where user_id = {st.session_state["user"]} order by transacted desc;')
+    data = db.fetchall()
+    if not data:
+        column2.warning("No transactions have taken place!")
+        st.stop()
+    data = [("Transaction ID", "Symbol", "Shares", "Price ($)", "Total price ($)", "Transaction Date")] + data
+    column2.table(data)
+
+column2.button("Bye")
