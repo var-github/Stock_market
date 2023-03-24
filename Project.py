@@ -245,7 +245,7 @@ while True:
             form = column2.form(key="Admin_login")
             username = form.text_input('Username')
             password = form.text_input('Password', type="password")
-            if column2.button(label="Login"):
+            if form.form_submit_button(label="Login"):
                 db.execute("SELECT username, password from users where user_id = 1;")
                 data = db.fetchall()
                 if username != data[0][0]:
