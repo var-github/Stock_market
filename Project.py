@@ -658,6 +658,7 @@ def main_code():
 
     # Admin page
     elif st.session_state['page'] == 3:
+        column2.empty()
         column1, column2, column3 = st.columns([1, 4.5, 1])
         st.sidebar.image("https://app.omnistock.io/uploads/logo/yktS4FqNbQGn3TychVaEzDIkHoiJa4Ei5HPSAIAy.png")
         st.sidebar.caption("")
