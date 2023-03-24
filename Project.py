@@ -596,7 +596,7 @@ def transactions():
 
 # MAIN CODE
 # Every page is a separete if block, the variable - st.session_state['page'] - moniters which page is currently displayed
-def main():
+def main_code():
     if st.session_state['page'] == 1:
         column1, column2, column3 = st.columns([1, 4.5, 1])
         home_page = """
@@ -624,7 +624,7 @@ def main():
                 st.experimental_rerun()
             elif current_tab == 'Admin':
                 st.session_state['page'] = 2
-                main()
+                main_code()
                 return
             elif current_tab == 'Help':
                 st.session_state['page'] = 5
@@ -651,7 +651,7 @@ def main():
                 column2.warning("Wrong password")
                 st.stop()
             st.session_state['page'] = 3
-            main()
+            main_code()
             return
 
 
@@ -707,4 +707,4 @@ def main():
                 st.session_state['page'] = 1
                 st.experimental_rerun()
 
-main()
+main_code()
