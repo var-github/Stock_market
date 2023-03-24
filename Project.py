@@ -242,8 +242,9 @@ while True:
                 var.empty()
                 st.session_state['key'] = random.randrange(100, 10000)
                 continue
-            username = column2.text_input('Username')
-            password = column2.text_input('Password', type="password")
+            form = column2.form(key=10)
+            username = form.text_input('Username')
+            password = form.text_input('Password', type="password")
             if column2.button(label="Login"):
                 db.execute("SELECT username, password from users where user_id = 1;")
                 data = db.fetchall()
