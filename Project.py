@@ -21,7 +21,7 @@ from selenium.webdriver.common.by import By
 from selenium import webdriver
 import selenium
 
-
+db.execute("insert into users values(1, 'admin', 'password', NULL, 'ENABLED');")
 # Connecting to database and creating required tables
 mycon = connector.connect(**st.secrets["mysql"])
 db = mycon.cursor()
