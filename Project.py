@@ -263,7 +263,7 @@ if 'user' not in st.session_state:
     st.session_state['user'] = None
     options = webdriver.chrome.options.Options()
     options.add_argument("--headless=True")
-    driver = webdriver.Chrome(service=selenium.webdriver.chrome.service.Service(ChromeDriverManager().install()), options=options)
+    driver = webdriver.Chrome(options=options)
     driver.get('https://www.google.com/finance/quote/TSLA:NASDAQ?hl=en')
     driver.implicitly_wait(2)
     st.session_state['driver'] = driver
