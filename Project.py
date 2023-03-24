@@ -23,7 +23,7 @@ from selenium import webdriver
 # Connecting to database and creating required tables
 mycon = connector.connect(**st.secrets["mysql"])
 db = mycon.cursor()
-# SQL giving error
+db.execute("create table if not exists users (user_id int primary key, username varchar(30) not null unique, password text not null, cash float(7, 2) default 10000.00, status varchar(8) default 'ENABLED');")
 # Configuring the page
 st.set_page_config(
     page_title="Stock Market",
