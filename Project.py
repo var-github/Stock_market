@@ -640,10 +640,8 @@ elif st.session_state['page'] == 2:
     username = form.text_input('Username')
     password = form.text_input('Password', type="password")
     if form.form_submit_button(label="Login"):
-        st.text("Here 1")
         db.execute("SELECT username, password from users where user_id = 1;")
         data = db.fetchall()
-        st.text("Here 2")
         if username != data[0][0]:
             column2.warning('Wrong username')
             st.stop()
@@ -651,12 +649,12 @@ elif st.session_state['page'] == 2:
             column2.warning("Wrong password")
             st.stop()
         st.session_state['page'] = 3
-        st.text("Here 3")
         st.experimental_rerun()
 
 
 # Admin page
 elif st.session_state['page'] == 3:
+    st.text("here")
     column1, column2, column3 = st.columns([1, 4.5, 1])
     st.sidebar.image("https://app.omnistock.io/uploads/logo/yktS4FqNbQGn3TychVaEzDIkHoiJa4Ei5HPSAIAy.png")
     st.sidebar.caption("")
