@@ -611,7 +611,7 @@ def main_code():
             </b>
         </p>
         """
-        st.markdown(home_page, unsafe_allow_html=True)
+        column2.markdown(home_page, unsafe_allow_html=True)
         st.sidebar.image("https://app.omnistock.io/uploads/logo/yktS4FqNbQGn3TychVaEzDIkHoiJa4Ei5HPSAIAy.png")
         st.sidebar.caption("")
         st.sidebar.caption("")
@@ -636,24 +636,28 @@ def main_code():
 
     # Admin login page
     elif st.session_state['page'] == 2:
-        column2.header("ADMIN")
-        column1.text("")
-        if column1.button(label="🔙"):
+        col_2 = column2.container()
+        col_1 = column1.container()
+        col_2.header("ADMIN")
+        col_1.text("")
+        if col_1.button(label="🔙"):
             st.session_state['page'] = 1
             st.experimental_rerun()
-        form = column2.form(key="admin_login")
+        form = col_2.form(key="admin_login")
         username = form.text_input('Username')
         password = form.text_input('Password', type="password")
         if form.form_submit_button(label="Login"):
             db.execute("SELECT username, password from users where user_id = 1;")
             data = db.fetchall()
             if username != data[0][0]:
-                column2.warning('Wrong username')
+                col_2.warning('Wrong username')
                 st.stop()
             if password != data[0][1]:
-                column2.warning("Wrong password")
+                col_2.warning("Wrong password")
                 st.stop()
             st.session_state['page'] = 3
+            col_2.empty()
+            col_1.empty()
             main_code()
             return
 
