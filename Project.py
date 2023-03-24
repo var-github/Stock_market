@@ -640,8 +640,10 @@ elif st.session_state['page'] == 2:
     username = form.text_input('Username')
     password = form.text_input('Password', type="password")
     if form.form_submit_button(label="Login"):
+        st.text("Here 1")
         db.execute("SELECT username, password from users where user_id = 1;")
         data = db.fetchall()
+        st.text("Here 2")
         if username != data[0][0]:
             column2.warning('Wrong username')
             st.stop()
@@ -649,6 +651,7 @@ elif st.session_state['page'] == 2:
             column2.warning("Wrong password")
             st.stop()
         st.session_state['page'] = 3
+        st.text("Here 3")
         st.experimental_rerun()
 
 
