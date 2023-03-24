@@ -635,9 +635,10 @@ elif st.session_state['page'] == 2:
     if column1.button(label="🔙"):
         st.session_state['page'] = 1
         st.experimental_rerun()
-    username = column2.text_input('Username')
-    password = column2.text_input('Password', type="password")
-    if column2.button(label="Login"):
+    form = column2.form()
+    username = form.text_input('Username')
+    password = form.text_input('Password', type="password")
+    if form.form_submit_button(label="Login"):
         db.execute("SELECT username, password from users where user_id = 1;")
         data = db.fetchall()
         if username != data[0][0]:
