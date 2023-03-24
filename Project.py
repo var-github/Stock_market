@@ -599,7 +599,8 @@ def transactions():
 def main_code():
     global column1, column2, column3
     if st.session_state['page'] == 1:
-        column1, column2, column3 = st.columns([1, 4.5, 1])
+        col_1, col_2, col_3 = st.columns([1, 4.5, 1])
+        column2 = col_2.container()
         home_page = """
         <p style="position: absolute; color: lightblack; font-size:24px; left: 15.4%; padding-right:15.4%">
             <b>
@@ -625,6 +626,7 @@ def main_code():
                 st.experimental_rerun()
             elif current_tab == 'Admin':
                 st.session_state['page'] = 2
+                column2.empty()
                 main_code()
                 return
             elif current_tab == 'Help':
