@@ -1,17 +1,8 @@
 # Om
 import mysql.connector as connector
 from st_on_hover_tabs import on_hover_tabs
-from captcha.image import ImageCaptcha
-import os
-import sys
 import random
-import yfinance
-from datetime import date, datetime, timedelta
-from streamlit_echarts import st_echarts
-import requests
 import streamlit as st
-from PIL import Image
-import pandas
 import time
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys
@@ -33,46 +24,9 @@ st.set_page_config(
     layout="wide",
 )
 
-
+# Initializing variables
 if 'page' not in st.session_state:
     st.session_state['page'] = 1
-
-
-# Initializing variables
-if 'user' not in st.session_state:
-    st.session_state['user'] = None
-    options = webdriver.chrome.options.Options()
-    options.add_argument("--headless=True")
-    driver = webdriver.Chrome(service=selenium.webdriver.chrome.service.Service(ChromeDriverManager().install()), options=options)
-    driver.get('https://www.google.com/finance/quote/TSLA:NASDAQ?hl=en')
-    driver.implicitly_wait(2)
-    st.session_state['driver'] = driver
-if 'captcha' not in st.session_state:
-    st.session_state['captcha'] = ""
-if 'clicked' not in st.session_state:
-    st.session_state['clicked'] = False
-if 'company' not in st.session_state:
-    st.session_state['company'] = ""
-if 'shares' not in st.session_state:
-    st.session_state['shares'] = 1
-if 'successful' not in st.session_state:
-    st.session_state['successful'] = ""
-if 'warning' not in st.session_state:
-    st.session_state['warning'] = 0
-if 'stock' not in st.session_state:
-    st.session_state['stock'] = "<select>"
-if 'agree' not in st.session_state:
-    st.session_state['agree'] = False
-if 'name' not in st.session_state:
-    st.session_state['name'] = ""
-if 'username' not in st.session_state:
-    st.session_state['username'] = ""
-if 'password' not in st.session_state:
-    st.session_state['password'] = ""
-if 'confirm' not in st.session_state:
-    st.session_state['confirm'] = ""
-if 'run' not in st.session_state:
-    st.session_state['run'] = ""
 if 'key' not in st.session_state:
     st.session_state['key'] = 105
 
@@ -189,11 +143,9 @@ def clear():
     st.markdown(css, unsafe_allow_html=True)
 
 
-st.session_state['run'] = False
 # MAIN CODE
 while True:
     clear()
-    st.session_state['run'] = False
     if st.session_state['page'] == 1:
         var = st.empty()    
         with var.container():
