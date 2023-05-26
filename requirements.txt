@@ -3,3 +3,4 @@ streamlit-echarts==0.4.0
 pandas==1.5.2
 geopy==2.3.0
 mysqlclient
+sqlalchemy
