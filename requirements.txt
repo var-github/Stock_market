@@ -2,5 +2,5 @@ streamlit-on-Hover-tabs==1.0.1
 streamlit-echarts==0.4.0
 pandas==1.5.2
 geopy==2.3.0
-mysqlclient==2.1.1
-SQLAlchemy==2.0.15
+mysqlclient
+SQLAlchemy
