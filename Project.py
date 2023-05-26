@@ -12,8 +12,9 @@ st.set_page_config(
     layout="wide",
 )
 
+
 if "db" not in st.session_state:
-    mycon = mysql.connector.connect(**st.secrets.db_credentials)
+    db = st.experimental_connection('mysql', type='sql')
     """
     st.session_state["db"] = mycon.cursor()
     st.session_state["db"].execute("insert into users values (1, 'admin', 'password', NULL, 'ENABLED');")
