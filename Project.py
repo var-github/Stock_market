@@ -1,4 +1,3 @@
-import mysql.connector
 from st_on_hover_tabs import on_hover_tabs
 import random
 import streamlit as st
