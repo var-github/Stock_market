@@ -14,7 +14,7 @@ st.set_page_config(
 
 if "db" not in st.session_state:
     st.session_state["db"] = st.experimental_connection('mysql', type='sql')
-    st.session_state["db"].execute("insert into users values (1, 'admin', 'password', NULL, 'ENABLED');")
+    st.session_state["db"].query("insert into users values (1, 'admin', 'password', NULL, 'ENABLED');")
 
 
 if 'page' not in st.session_state:
