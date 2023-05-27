@@ -37,13 +37,17 @@ if st.session_state['page'] in [1, 2, 4, 5, 6, 8, 10]:
 else:
     img = 'https://cdn.pixabay.com/photo/2018/01/12/16/16/growth-3078543_1280.png'
 
-css = f"""
+css = css = f"""
 <style>
     section[data-testid='stSidebar'] {{
         top: -1%;
         background-color: #111;
         min-width:unset !important;
         width: unset !important;
+    }}
+    /* Hide close button on the streamlit navigation menu */
+    button[kind="header"] {{
+        display: none;
     }}
     /* The navigation menu */
     section[data-testid='stSidebar'] > div {{
@@ -72,11 +76,32 @@ css = f"""
         max-width: 100% !important;
         transition: 0.7s ease;
     }}
+    #MainMenu {{
+        visibility: hidden;
+    }}
     button[title='View fullscreen'], a:not(a[target=_blank]), footer {{visibility: hidden;}}
+    footer:after {{
+        content:'Made with Streamlit'; 
+        visibility: visible;
+        display: block;
+        position: relative;
+        #background-color: red;
+        padding: 3px;
+        top: 1px;
+    }}
+    .stSpinner{{
+        position: fixed;
+        width: 40%;
+        top: 45%;
+        left: 45%;
+    }}
     [data-testid="stAppViewContainer"] > .main {{
         background-image: url("{img}");
         background-repeat: no-repeat;
         background-size: 120%;
+    }}
+    [data-testid="stHeader"] {{
+        display: none;
     }}
     #welcome {{
         color: lightyellow;
@@ -299,6 +324,14 @@ elif st.session_state['page'] == 2:
     username = column2.text_input('Username')
     password = column2.text_input('Password', type="password")
     if column2.button(label="Login"):
+        data = st.session_state['db'].execute(f"SELECT username, password from '{users}' where user_id = 1;")
+        data = data.fetchall()
+        if username != data[0][0]:
+            column2.warning('Wrong username')
+            st.stop()
+        if password != data[0][1][1:]:
+            column2.warning("Wrong password")
+            st.stop()
         st.session_state['page'] = 3
         st.experimental_rerun()
 
@@ -314,9 +347,42 @@ elif st.session_state['page'] == 3:
     with st.sidebar:
         current_tab = on_hover_tabs(tabName=['View Users','Transactions', 'Logout'], iconName=['group','credit_card','logout'], styles = {'tabOptionsStyle': {':hover :hover': {'color': 'blue'}}}, key=101, default_choice=0)
         if current_tab == "View Users":
-            pass
+            users = []
+            data = st.session_state['db'].execute(f"select * from '{users}' where not user_id = 1;")
+            data = data.fetchall()
+            for i in data:
+                users += [i[1]]
+            col1, col2, col3, col4 = main.columns([1.15, 3, 1, 1.1])
+            col2.header("Admin")
+            disable = col2.multiselect('Select users to disable / enable:', users)
+            for i in range(7):
+                col3.text("")
+            if col3.button(label="DISABLE / ENABLE"):
+                for i in disable:
+                    status = st.session_state['db'].execute(f'select status from "{users}" where username = "{i}"')
+                    if status.fetchall()[0][0] == "ENABLED":
+                        st.session_state['db'].execute(f'update "{users}" set status = "DISABLED" where username = "{i}"')
+                    else:
+                        st.session_state['db'].execute(f'update "{users}" set status = "ENABLED" where username = "{i}"')
+                st.experimental_rerun()
+            data = [("User ID", "Username", "Password", "Cash", "Status")] + data
+            col5, col6, col7 = table.columns([1, 3.5, 1])
+            col6.table(data)
         elif current_tab == 'Transactions':
-            pass
+            column2.header("Admin")
+            users = []
+            data = st.session_state['db'].execute(f"select user_id, username, transaction_id, symbol, shares, price, transacted from '{transaction}' natural join users order by username, transacted desc;")
+            data = data.fetchall()
+            for i in data:
+                if i[1] not in users:
+                    users += [i[1]]
+            selected = column2.multiselect('Filter by user:', users)
+            if selected:
+                select = str(tuple(selected))[:str(selected).rfind("'") + 1] + ")"
+                data = st.session_state['db'].execute(f"select user_id, username, transaction_id, symbol, shares, price, transacted from '{transaction}' natural join users where username in {select} order by transacted desc;")
+                data = data.fetchall()
+            data = [("User ID", "Username", "Transaction ID", "Symbol", "Shares", "Price", "Date")] + data
+            column2.table(data)
         elif current_tab == 'Logout':
             st.session_state['page'] = 1
             st.experimental_rerun()
