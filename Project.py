@@ -347,14 +347,14 @@ elif st.session_state['page'] == 3:
     with st.sidebar:
         current_tab = on_hover_tabs(tabName=['View Users','Transactions', 'Logout'], iconName=['group','credit_card','logout'], styles = {'tabOptionsStyle': {':hover :hover': {'color': 'blue'}}}, key=101, default_choice=0)
         if current_tab == "View Users":
-            users = []
+            user = []
             data = st.session_state['db'].execute(f"select * from '{users}' where not user_id = 1;")
             data = data.fetchall()
             for i in data:
-                users += [i[1]]
+                user += [i[1]]
             col1, col2, col3, col4 = main.columns([1.15, 3, 1, 1.1])
             col2.header("Admin")
-            disable = col2.multiselect('Select users to disable / enable:', users)
+            disable = col2.multiselect('Select users to disable / enable:', user)
             for i in range(7):
                 col3.text("")
             if col3.button(label="DISABLE / ENABLE"):
@@ -370,13 +370,13 @@ elif st.session_state['page'] == 3:
             col6.table(data)
         elif current_tab == 'Transactions':
             column2.header("Admin")
-            users = []
+            user = []
             data = st.session_state['db'].execute(f"select user_id, username, transaction_id, symbol, shares, price, transacted from '{transaction}' natural join users order by username, transacted desc;")
             data = data.fetchall()
             for i in data:
-                if i[1] not in users:
-                    users += [i[1]]
-            selected = column2.multiselect('Filter by user:', users)
+                if i[1] not in user:
+                    user += [i[1]]
+            selected = column2.multiselect('Filter by user:', user)
             if selected:
                 select = str(tuple(selected))[:str(selected).rfind("'") + 1] + ")"
                 data = st.session_state['db'].execute(f"select user_id, username, transaction_id, symbol, shares, price, transacted from '{transaction}' natural join users where username in {select} order by transacted desc;")
