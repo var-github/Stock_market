@@ -6,3 +6,4 @@ shillelagh[gsheetsapi]
 seleniumbase
 webdriver-manager
 requests
+captcha.image
