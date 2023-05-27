@@ -302,8 +302,9 @@ def captcha():
             captcha = captcha + random.choice(letters)
         captcha = captcha.lower()
         data = image.generate(captcha)
-        column2.image(io.BytesIO(data.getvalue()), width=550)
+        imag.image(io.BytesIO(data.getvalue()), width=550)
         return captcha
+    imag = column2.empty()
     ans = img()
     txt = column2.empty()
     text = txt.text_input("Enter Captcha Code: ")
@@ -311,7 +312,7 @@ def captcha():
     if verify.button("Verify"):
         text = text.lower()
         if text == ans:
-            img.empty()
+            imag.empty()
             txt.empty()
             verify.empty()
             title.empty()
@@ -319,7 +320,7 @@ def captcha():
             return
         else:
             column2.text("Captcha failed!")
-            img.empty()
+            imag.empty()
             txt.empty()
             verify.empty()
             title.empty()
