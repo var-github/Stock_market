@@ -274,7 +274,7 @@ def portfolio():
 @st.cache_data
 def transactions():
     column2.title("Your Transactions")
-    data = st.session_state['db'].execute(f'select transaction_id, symbol, shares, price, ABS(shares) * price, transacted from '{transaction}' where user_id = {st.session_state["user"]} order by transacted desc;')
+    data = st.session_state['db'].execute(f'select transaction_id, symbol, shares, price, ABS(shares) * price, SUBSTRING(transacted,1,LEN(transacted)-1) from '{transaction}' where user_id = {st.session_state["user"]} order by transacted desc;')
     data = data.fetchall()
     if not data:
         column2.warning("No transactions have taken place!")
@@ -390,7 +390,7 @@ elif st.session_state['page'] == 3:
             selected = column2.multiselect('Filter by user:', user)
             if selected:
                 select = str(tuple(selected))[:str(selected).rfind("'") + 1] + ")"
-                data = st.session_state['db'].execute(f"select user_id, username, transaction_id, symbol, shares, price, transacted from '{transaction}' natural join '{users}' where username in {select} order by transacted desc;")
+                data = st.session_state['db'].execute(f"select user_id, username, transaction_id, symbol, shares, price, SUBSTRING(transacted,1,LEN(transacted)-1) from '{transaction}' natural join '{users}' where username in {select} order by transacted desc;")
                 data = data.fetchall()
             data = [("User ID", "Username", "Transaction ID", "Symbol", "Shares", "Price", "Date")] + data
             column2.table(data)
