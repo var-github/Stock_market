@@ -689,8 +689,9 @@ elif st.session_state['page'] == 8:
             var2.text_input('Re-enter password:', type="password", disabled=True, value=confirm, key=20)
             btn.empty()
             btn2.empty()
-            captcha()
-            if st.session_state['successful']:
+            if type(st.session_state['successful']) == str():
+                captcha()
+            if str(st.session_state['successful']) == "True":
                 st.text("Successfull")
                 st.session_state['username'] = ""
                 st.session_state['password'] = ""
@@ -702,7 +703,7 @@ elif st.session_state['page'] == 8:
                 st.session_state['successful'] = ""
                 st.stop()
             elif str(st.session_state['successful']) == "False":
-                st.text("Successfull")
+                st.text("Unsuccessfull")
                 st.session_state['username'] = ""
                 st.session_state['password'] = ""
                 st.session_state['name'] = ""
