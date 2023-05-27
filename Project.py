@@ -162,6 +162,16 @@ def internet():
         return False
 
  
+# Getting USD - INR conversion rates
+@st.cache_data(ttl=120)
+def usd():
+    url = f'https://api.exchangerate.host/timeseries?base={"USD"}&start_date={date.today()}&end_date={date.today()}&symbols={"INR"}'
+    data = requests.get(url).text
+    st.session_state['usd'] = float(data[data.rfind('INR') + 5:-3])
+    return st.session_state['usd']
+usd()
+
+
  # Use selenium and scrape price of stock from google
 @st.cache_data
 def get_price(company):
