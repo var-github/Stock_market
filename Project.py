@@ -563,6 +563,108 @@ elif st.session_state['page'] == 8:
         st.session_state['confirm'] = ""
         st.session_state['page'] = 1
         st.experimental_rerun()
+    if not st.session_state['clicked']:
+        color = """
+        <style>
+            .st-cu, .st-c4 {
+                color: #6a0000 !important;
+                font-style: italic;
+                font-weight: bold;
+            }
+            #register {
+                color: #002e80;
+            }
+        </style>
+        """
+        st.markdown(color, unsafe_allow_html=True)
+        column2.markdown("""            - This program is a simulator of actual investments in stocks and the creation of portfolios in the stock market.
+
+        - When you register the program will give you $10000 online currency - which can only be spent through our program.
+
+        - You can use this money to invest and gain experience on how to invest in the real world. The prices of the stocks are realtime prices (they are not mocks).
+
+        - Any data entered into the program will only be stored locally and will not be shared with any third party companies.
+
+        - The admin will be able to moniter all your activities and can disable your account incase of any fraud.""")
+        column2.text("")
+        st.session_state['agree'] = column2.checkbox("I agree that I have read through the guidelines", value=st.session_state['agree'])
+        col1, col2 = st.columns([3, 1])
+        if col2.button("Next ⇥") and st.session_state['agree']:
+            color = """
+            <style>
+                .st-cu, st-c4 {
+                    color: black !important
+                }
+            </style>
+            """
+            st.markdown(color, unsafe_allow_html=True)
+            st.session_state['clicked'] = True
+            st.experimental_rerun()
+    else:
+        name = column2.empty()
+        st.session_state['username'] = name.text_input('Enter username:', value=st.session_state['username'], key=15)
+        var1 = column2.empty()
+        st.session_state['password'] = var1.text_input('Enter password:', type="password", help="Choose a strong password with letters, numbers and symbols", value=st.session_state['password'], key=16)
+        var2 = column2.empty()
+        st.session_state['confirm'] = var2.text_input('Re-enter password:', type="password", value=st.session_state['confirm'], key=17)
+        col1, col2, col3 = st.columns([1.65, 5, 2.4])
+        btn = col3.empty()
+        btn2 = col2.empty()
+        if btn2.button("⇤ Previous"):
+            st.session_state['clicked'] = False
+            st.experimental_rerun()
+        if btn.button(label="Register") or st.session_state['captcha']:
+            username = st.session_state['username']
+            password = st.session_state['password']
+            confirm = st.session_state['confirm']
+            if not username:
+                column2.warning("Please enter username!")
+                st.stop()
+            if " " in username:
+                column2.warning("Username cannot contain space!")
+                st.stop()
+            data = st.session_state['db'].execute(f"select username from '{users}' where username = '{username}'")
+            data = data.fetchall()
+            if data:
+                column2.warning("This username is already taken! Please try Again.")
+                st.stop()
+            if not password:
+                column2.warning("Please enter password!")
+                st.stop()
+            if " " in password:
+                column2.warning("The password cannot contain space!")
+                st.stop()
+            if password != confirm:
+                column2.warning("Passwords Not Matching!")
+                st.stop()
+            name.text_input('Enter username:', disabled=True, value=username, key=18)
+            var1.text_input('Enter password:', type="password", help="Choose a strong password with letters, numbers and symbols", disabled=True, value=password, key=19)
+            var2.text_input('Re-enter password:', type="password", disabled=True, value=confirm, key=20)
+            btn.empty()
+            btn2.empty()
+            captcha()
+            if st.session_state['successful'] == True:
+                column2.warning("Unfinished code!")
+                st.session_state['username'] = ""
+                st.session_state['password'] = ""
+                st.session_state['name'] = ""
+                st.session_state['agree'] = False
+                st.session_state['confirm'] = ""
+                st.session_state['clicked'] = False
+                st.session_state['captcha'] = ""
+                st.session_state['successful'] = ""
+                st.stop()
+            elif st.session_state['successful'] == False:
+                column2.warning("Registration unsucessfull!")
+                st.session_state['username'] = ""
+                st.session_state['password'] = ""
+                st.session_state['name'] = ""
+                st.session_state['agree'] = False
+                st.session_state['confirm'] = ""
+                st.session_state['clicked'] = False
+                st.session_state['captcha'] = ""
+                st.session_state['successful'] = ""
+                st.stop()
         
   
 
