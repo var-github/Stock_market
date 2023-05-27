@@ -121,7 +121,7 @@ if 'user' not in st.session_state:
     st.session_state['user'] = None
 if 'driver' not in st.session_state:
     options = Options()
-    options.add_argument('--disable-gpu')
+    #options.add_argument('--disable-gpu')
     #options.add_argument('--headless')
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     driver.get('https://www.google.com/finance/quote/TSLA:NASDAQ?hl=en')
