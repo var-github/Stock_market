@@ -185,6 +185,7 @@ def get_price(company):
         time.sleep(0.01)
     else:
         return None
+    st.text(driver.find_element_by_xpath("/html/body").text)
     data["Name"] = driver.find_element(By.CSS_SELECTOR, 'c-wiz[aria-busy="false"] div.zzDege').text
     data['Price'] = driver.find_element(By.CSS_SELECTOR, 'c-wiz[aria-busy="false"] div.YMlKec.fxKbKc').text.replace(',', '')
     if data['Price'][0] == "₹":
