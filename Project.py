@@ -299,7 +299,7 @@ elif st.session_state['page'] == 6:
         if data[0][3] == "DISABLED":
             column2.warning("Your account has been disabled by the ADMIN!")
             st.stop()
-        if password[1:] == data[0][1]:
+        if password == data[0][1][1:]:
             st.session_state['user'] = data[0][2]
             st.session_state['page'] = 7
             st.experimental_rerun()
