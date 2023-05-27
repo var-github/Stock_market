@@ -289,8 +289,8 @@ elif st.session_state['page'] == 6:
     username = column2.text_input('Username')
     password = column2.text_input('Password', type="password")
     if column2.button(label="Login"):
-        db.execute(f"select username, password, user_id, status from '{users}' where username = '{username}'")
-        data = db.fetchall()
+        st.session_state['db'].execute(f"select username, password, user_id, status from '{users}' where username = '{username}'")
+        data = st.session_state['db'].fetchall()
         if not data:
             column2.warning("Username not found, Please Register")
             st.stop()
