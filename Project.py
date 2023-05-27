@@ -145,6 +145,41 @@ def internet():
         return False
 
 
+# This function displays all the stocks the user owns
+def portfolio():
+    column2.title("PORTFOLIO")
+    db.execute(f"select symbol, sum(shares) from '{st.secrets["transaction_url"]}' where user_id = {st.session_state['user']} group by symbol having sum(shares) != 0;")
+    data = db.fetchall()
+    if not data:
+        column2.warning("You currently have not invested in any stocks")
+        st.stop()
+    with st.spinner("Loading..."):
+        if internet():
+            sum = 0
+            for i in range(len(data)):
+                info = get_price(data[i][0])
+                price = info['Price']
+                sum += price * int(data[i][1])
+                data[i] = data[i] + (price,)
+            data = [("Symbol", "Shares", "Current Price")] + data
+        else:
+            data = [("Symbol", "Shares")] + data
+    column2.table(data)
+    if internet():
+        column2.text("Total: $" + str(round(sum, ndigits=2)))
+    db.execute(f"select cash from users where user_id = {st.session_state['user']};")
+    cash = db.fetchall()[0][0]
+    column2.text("Cash left in account: $" + str(cash))
+    if internet():
+        if cash + sum > 10000:
+            column2.text("Profit: $" + str(round(cash + sum - 10000, ndigits=2)))
+        elif cash + sum < 10000:
+            column2.text("Loss: $" + str(round(10000 - (cash + sum), ndigits=2)))
+        column2.subheader("YOUR net worth: $" + str(round(cash + sum, ndigits=2)))
+    else:
+        column2.warning("No internet connection! To view current prices of the stocks - please connect to the internet and refresh the page.")
+
+
 
 # The page is divided into 3 columns - the first column has only back button, column 2 has the rest of the data
 column1, column2, column3 = st.columns([1, 3.5, 1])
