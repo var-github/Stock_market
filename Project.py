@@ -1,5 +1,6 @@
 from st_on_hover_tabs import on_hover_tabs
 import random
+import requests
 import streamlit as st
 from shillelagh.backends.apsw.db import connect
 from geopy.geocoders import Nominatim
@@ -8,6 +9,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
 
 
 # Configuring the page
@@ -203,7 +206,7 @@ def portfolio():
         column2.warning("You currently have not invested in any stocks")
         st.stop()
     with st.spinner("Loading..."):
-        if not internet():
+        if internet():
             sum = 0
             for i in range(len(data)):
                 info = get_price(data[i][0])
@@ -219,7 +222,7 @@ def portfolio():
     cash = st.session_state['db'].execute(f"select cash from '{users}' where user_id = {st.session_state['user']};")
     cash = cash.fetchall()[0][0]
     column2.text("Cash left in account: $" + str(cash))
-    if not internet():
+    if internet():
         if cash + sum > 10000:
             column2.text("Profit: $" + str(round(cash + sum - 10000, ndigits=2)))
         elif cash + sum < 10000:
