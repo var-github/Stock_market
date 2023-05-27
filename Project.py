@@ -654,9 +654,10 @@ elif st.session_state['page'] == 8:
         col1, col2, col3 = st.columns([1.65, 5, 2.4])
         btn = col3.empty()
         btn2 = col2.empty()
-        if btn2.button("⇤ Previous"):
-            st.session_state['clicked'] = False
-            st.experimental_rerun()
+        if not st.session_state['captcha']:
+            if btn2.button("⇤ Previous"):
+                st.session_state['clicked'] = False
+                st.experimental_rerun()
         if btn.button(label="Register") or st.session_state['captcha']:
             username = st.session_state['username']
             password = st.session_state['password']
