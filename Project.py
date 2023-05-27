@@ -370,7 +370,7 @@ elif st.session_state['page'] == 7:
         st.session_state['tab'] = current_tab
         pass
     if current_tab =='Portfolio':
-        pass
+        portfolio()
     elif current_tab == 'Quote':
         pass
     elif current_tab == 'Buy':
