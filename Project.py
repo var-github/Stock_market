@@ -271,6 +271,17 @@ def portfolio():
         column2.warning("No internet connection! To view current prices of the stocks - please connect to the internet and refresh the page.")
 
 
+@st.cache_data
+def transactions():
+    column2.title("Your Transactions")
+    data = st.session_state['db'].execute(f'select transaction_id, symbol, shares, price, ABS(shares) * price, transacted from '{transaction}' where user_id = {st.session_state["user"]} order by transacted desc;')
+    data = data.fetchall()
+    if not data:
+        column2.warning("No transactions have taken place!")
+        st.stop()
+    data = [("Transaction ID", "Symbol", "Shares", "Price ($)", "Total price ($)", "Transaction Date")] + data
+    column2.table(data)
+        
 
 # The page is divided into 3 columns - the first column has only back button, column 2 has the rest of the data
 column1, column2, column3 = st.columns([1, 3.5, 1])
@@ -441,7 +452,17 @@ elif st.session_state['page'] == 5:
     column2.header("Forgotten Password?")
     username = column2.text_input('Username')
     if column2.button("Check"):
-        pass
+        data = st.session_state['db'].execute(f"select username, password, user_id, status from '{users}' where username = '{username}'")
+        data = data.fetchall()
+        if not username:
+            column2.warning("Please enter username !")
+        elif not data:
+            column2.warning("Username not found !!")
+        elif data[0][3] == "DISABLED":
+            column2.warning("Your account has been disabled by the ADMIN!")
+        else:
+            column2.text("")
+            column2.markdown("<font size='4'>Password : </font>" + data[0][1][1:][0] + "*" * (len(data[0][1][1:]) - 2) + data[0][1][1:][-1], unsafe_allow_html=True)
 
 
 # User login page
@@ -507,7 +528,7 @@ elif st.session_state['page'] == 7:
     elif current_tab =='Sell':
         pass
     elif current_tab == 'History':
-        pass
+        transactions()
     elif current_tab == 'Account':
         pass
     elif current_tab == 'Logout':
