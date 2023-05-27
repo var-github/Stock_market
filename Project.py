@@ -16,7 +16,8 @@ st.set_page_config(
 if 'db' not in st.session_state:
     # This connects to google sheets using shillelagh and converts gsheet into sql database
     st.session_state['db'] = eval(st.secrets["connect_to_db"])
-
+users = st.secrets["users_url"]
+transaction = st.secrets["transaction_url"]
 
 if 'page' not in st.session_state:
     st.session_state['page'] = 1
