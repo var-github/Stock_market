@@ -179,6 +179,17 @@ if 'confirm' not in st.session_state:
     st.session_state['confirm'] = ""
 
 
+# This function sets all the variables to their initiall state
+def clear():
+    st.session_state['captcha'] = ""
+    st.session_state['clicked'] = False
+    st.session_state['company'] = ""
+    st.session_state['shares'] = 1
+    st.session_state['successful'] = ""
+    st.session_state['warning'] = 0
+    st.session_state['stock'] = "<select>"
+    
+
 # Function to check for internet connectivity
 def internet():
     try:
@@ -518,7 +529,7 @@ elif st.session_state['page'] == 7:
         current_tab = on_hover_tabs(tabName=['Portfolio', 'Quote', 'Buy', 'Sell', 'History', 'Account', 'Logout'], iconName=['dashboard', 'manage_search', 'money', 'economy', 'history', 'account_circle', 'logout'], styles = {'tabOptionsStyle': {':hover :hover': {'color': 'lightgreen'}}},key=109, default_choice=0)
     if st.session_state['tab'] != current_tab:
         st.session_state['tab'] = current_tab
-        pass
+        clear()
     if current_tab =='Portfolio':
         portfolio()
     elif current_tab == 'Quote':
