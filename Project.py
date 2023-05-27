@@ -122,7 +122,7 @@ if 'user' not in st.session_state:
 if 'driver' not in st.session_state:
     options = Options()
     options.add_argument('--disable-gpu')
-    options.add_argument('--headless=new')
+    options.add_argument('--headless')
     st.session_state['driver'] = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     st.session_state['driver'].get('https://www.google.com/finance/quote/TSLA:NASDAQ?hl=en')
 if 'captcha' not in st.session_state:
