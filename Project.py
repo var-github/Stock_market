@@ -4,6 +4,10 @@ import streamlit as st
 from shillelagh.backends.apsw.db import connect
 from geopy.geocoders import Nominatim
 import pandas
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 
 
 # Configuring the page
@@ -111,6 +115,11 @@ st.markdown(css, unsafe_allow_html=True)
 # Initializing variables
 if 'user' not in st.session_state:
     st.session_state['user'] = None
+if 'driver' not in st.session_state:
+    options = Options()
+    options.add_argument('--disable-gpu')
+    options.add_argument('--headless')
+    st.session_state['driver'] = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 if 'captcha' not in st.session_state:
     st.session_state['captcha'] = ""
 if 'clicked' not in st.session_state:
