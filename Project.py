@@ -155,6 +155,43 @@ def internet():
     except:
         return False
 
+ 
+ # Use selenium and scrape price of stock from google
+ @st.cache_data
+ def get_price(company):
+    company = company.strip('.NS')
+    driver = st.session_state['driver']
+    data = {}
+    input_box = driver.find_element(By.CSS_SELECTOR, '.Ax4B8.ZAGvjd')
+    input_box.send_keys(Keys.CONTROL + "a")
+    input_box.send_keys(Keys.DELETE)
+    input_box.send_keys(company)
+    input_box.send_keys(Keys.RETURN)
+    end = time.time() + 3
+    while time.time() < end:
+        try:
+            sym1 = str(driver.current_url).strip("https://www.google.com/finance/quote/")
+            sym1 = sym1[:sym1.find(":")]
+            sym2 = driver.find_element(By.CSS_SELECTOR, '.Ax4B8.ZAGvjd').get_attribute("value").partition(' ')[2]
+            if sym1 == sym2:
+                data["Symbol"] = sym1
+                break
+        except:
+            pass
+        time.sleep(0.01)
+    else:
+        return None
+    data["Name"] = driver.find_element(By.CSS_SELECTOR, 'c-wiz[aria-busy="false"] div.zzDege').text
+    data['Price'] = driver.find_element(By.CSS_SELECTOR, 'c-wiz[aria-busy="false"] div.YMlKec.fxKbKc').text.replace(',', '')
+    if data['Price'][0] == "₹":
+        data['currency'] = 'INR'
+        data['Price'] = round(float(data['Price'][1:].replace(',', ''))/usd(), ndigits=2)
+    else:
+        data['currency'] = ""
+        data['Price'] = float(data['Price'][1:].replace(',', ''))
+    data['Website'] = driver.find_element(By.CSS_SELECTOR, 'c-wiz[aria-busy="false"] .gyFHrc a[rel~="noopener"]').text
+    return data
+
 
 # This function displays all the stocks the user owns
 @st.cache_data
@@ -165,7 +202,6 @@ def portfolio():
     if not data:
         column2.warning("You currently have not invested in any stocks")
         st.stop()
-    """
     with st.spinner("Loading..."):
         if internet():
             sum = 0
@@ -180,8 +216,8 @@ def portfolio():
     column2.table(data)
     if internet():
         column2.text("Total: $" + str(round(sum, ndigits=2)))
-    db.execute(f"select cash from users where user_id = {st.session_state['user']};")
-    cash = db.fetchall()[0][0]
+    cash = st.session_state['db'].execute(f"select cash from '{users}' where user_id = {st.session_state['user']};")
+    cash = cash.fetchall()[0][0]
     column2.text("Cash left in account: $" + str(cash))
     if internet():
         if cash + sum > 10000:
@@ -190,7 +226,7 @@ def portfolio():
             column2.text("Loss: $" + str(round(10000 - (cash + sum), ndigits=2)))
         column2.subheader("YOUR net worth: $" + str(round(cash + sum, ndigits=2)))
     else:
-        column2.warning("No internet connection! To view current prices of the stocks - please connect to the internet and refresh the page.")"""
+        column2.warning("No internet connection! To view current prices of the stocks - please connect to the internet and refresh the page.")
 
 
 
