@@ -157,8 +157,8 @@ def internet():
 
  
  # Use selenium and scrape price of stock from google
- @st.cache_data
- def get_price(company):
+@st.cache_data
+def get_price(company):
     company = company.strip('.NS')
     driver = st.session_state['driver']
     data = {}
