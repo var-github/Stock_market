@@ -274,7 +274,7 @@ def portfolio():
 @st.cache_data
 def transactions():
     column2.title("Your Transactions")
-    data = st.session_state['db'].execute(f'select transaction_id, symbol, shares, price, shares * price, transacted from '{transaction}' where user_id = {st.session_state["user"]} order by transacted desc;')
+    data = st.session_state['db'].execute(f'select transaction_id, symbol, shares, price, ABS(shares) * price, SUBSTRING(transacted,1,LEN(transacted)-1) from "{transaction}" where user_id = {st.session_state["user"]} order by transacted desc;')
     data = data.fetchall()
     if not data:
         column2.warning("No transactions have taken place!")
@@ -382,7 +382,7 @@ elif st.session_state['page'] == 3:
         elif current_tab == 'Transactions':
             column2.header("Admin")
             user = []
-            data = st.session_state['db'].execute(f"select user_id, username, transaction_id, symbol, shares, price, transacted from '{transaction}' natural join '{users}' order by username, transacted desc;")
+            data = st.session_state['db'].execute(f"select user_id, username, transaction_id, symbol, shares, price, SUBSTRING(transacted,1,LEN(transacted)-1) from '{transaction}' natural join '{users}' order by username, transacted desc;")
             data = data.fetchall()
             for i in data:
                 if i[1] not in user:
