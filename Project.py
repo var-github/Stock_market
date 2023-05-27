@@ -289,29 +289,26 @@ def portfolio():
 def captcha():
     if 'successful' not in st.session_state:
         st.session_state['successful'] = ""
-    st.session_state['captcha'] = "run"
     title = column2.empty()
     title.header("CAPTCHA")
-    
-    @st.cache(suppress_st_warning=True, ttl=300)
-    def img():
+    if not st.session_state['captcha']:
         letters = "ACBDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
         image = ImageCaptcha(width=280, height=90)
         captcha = ""
         for i in range(7):
             captcha = captcha + random.choice(letters)
         captcha = captcha.lower()
+        st.session_state['text'] = captcha
         data = image.generate(captcha)
-        imag.image(io.BytesIO(data.getvalue()), width=550)
-        return captcha
+        st.session_state['captcha'] = data.getvalue()
     imag = column2.empty()
-    ans = img()
+    imag.image(io.BytesIO(st.session_state['captcha']), width=550)
     txt = column2.empty()
     text = txt.text_input("Enter Captcha Code: ")
     verify = column2.empty()
     if verify.button("Verify"):
         text = text.lower()
-        if text == ans:
+        if text == st.session_state['text']:
             imag.empty()
             txt.empty()
             verify.empty()
@@ -693,6 +690,7 @@ elif st.session_state['page'] == 8:
             if str(st.session_state['successful']) == "True":
                 st.text("Successfull")
                 st.session_state['username'] = ""
+                st.session_state['text'] = ""
                 st.session_state['password'] = ""
                 st.session_state['name'] = ""
                 st.session_state['agree'] = False
@@ -705,6 +703,7 @@ elif st.session_state['page'] == 8:
                 st.text("Unsuccessfull")
                 st.session_state['username'] = ""
                 st.session_state['password'] = ""
+                st.session_state['text'] = ""
                 st.session_state['name'] = ""
                 st.session_state['agree'] = False
                 st.session_state['confirm'] = ""
