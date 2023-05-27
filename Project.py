@@ -1,5 +1,6 @@
 from st_on_hover_tabs import on_hover_tabs
 import random
+import time
 import requests
 import streamlit as st
 from shillelagh.backends.apsw.db import connect
