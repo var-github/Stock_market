@@ -289,8 +289,7 @@ def portfolio():
 def captcha():
     if 'successful' not in st.session_state:
         st.session_state['successful'] = ""
-    if 'captcha' not in st.session_state:
-        st.session_state['captcha'] = ""
+    st.session_state['captcha'] = "run"
     title = column2.empty()
     title.header("CAPTCHA")
     
@@ -303,7 +302,7 @@ def captcha():
             captcha = captcha + random.choice(letters)
         captcha = captcha.lower()
         data = image.generate(captcha)
-        st.image(io.BytesIO(data.getvalue()), width=550)
+        column2.image(io.BytesIO(data.getvalue()), width=550)
         return captcha
     ans = img()
     txt = column2.empty()
