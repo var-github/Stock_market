@@ -203,7 +203,7 @@ def portfolio():
         column2.warning("You currently have not invested in any stocks")
         st.stop()
     with st.spinner("Loading..."):
-        if internet():
+        if not internet():
             sum = 0
             for i in range(len(data)):
                 info = get_price(data[i][0])
@@ -219,7 +219,7 @@ def portfolio():
     cash = st.session_state['db'].execute(f"select cash from '{users}' where user_id = {st.session_state['user']};")
     cash = cash.fetchall()[0][0]
     column2.text("Cash left in account: $" + str(cash))
-    if internet():
+    if not internet():
         if cash + sum > 10000:
             column2.text("Profit: $" + str(round(cash + sum - 10000, ndigits=2)))
         elif cash + sum < 10000:
