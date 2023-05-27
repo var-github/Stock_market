@@ -282,47 +282,6 @@ def portfolio():
     else:
         column2.warning("No internet connection! To view current prices of the stocks - please connect to the internet and refresh the page.")
 
-
-# Function to display captcha on screen
-@st.cache_data
-def captcha():
-    if 'successful' not in st.session_state:
-        st.session_state['successful'] = ""
-    if 'captcha' not in st.session_state:
-        st.session_state['captcha'] = ""
-    title = column2.empty()
-    title.header("CAPTCHA")
-    letters = "ACBDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-    if not st.session_state['captcha']:
-        image = ImageCaptcha(width=280, height=90)
-        for i in range(7):
-            st.session_state['captcha'] = st.session_state['captcha'] + random.choice(letters)
-        st.session_state['captcha'] = st.session_state['captcha'].lower()
-        data = image.generate(st.session_state['captcha'])
-        image.write(st.session_state['captcha'], file_path)
-    img = column2.empty()
-    img.image(image, width=550)
-    txt = column2.empty()
-    text = txt.text_input("Enter Captcha Code: ")
-    text = text.lower()
-    verify = column2.empty()
-    if verify.button("Verify"):
-        os.remove(file_path)
-        if text == st.session_state['captcha']:
-            img.empty()
-            txt.empty()
-            verify.empty()
-            title.empty()
-            st.session_state['successful'] = True
-            return
-        else:
-            column2.text("Captcha failed!")
-            img.empty()
-            txt.empty()
-            verify.empty()
-            title.empty()
-            st.session_state['successful'] = False
-            return
         
         
 @st.cache_data
@@ -685,30 +644,16 @@ elif st.session_state['page'] == 8:
             var2.text_input('Re-enter password:', type="password", disabled=True, value=confirm, key=20)
             btn.empty()
             btn2.empty()
-            captcha()
-            if st.session_state['successful'] == True:
-                column2.warning("Unfinished code!")
-                st.session_state['username'] = ""
-                st.session_state['password'] = ""
-                st.session_state['name'] = ""
-                st.session_state['agree'] = False
-                st.session_state['confirm'] = ""
-                st.session_state['clicked'] = False
-                st.session_state['captcha'] = ""
-                st.session_state['successful'] = ""
-                st.stop()
-            elif st.session_state['successful'] == False:
-                column2.warning("Registration unsucessfull!")
-                st.session_state['username'] = ""
-                st.session_state['password'] = ""
-                st.session_state['name'] = ""
-                st.session_state['agree'] = False
-                st.session_state['confirm'] = ""
-                st.session_state['clicked'] = False
-                st.session_state['captcha'] = ""
-                st.session_state['successful'] = ""
-                st.stop()
-        
-  
+            column2.warning("Captcha yet to come!")
+            st.session_state['username'] = ""
+            st.session_state['password'] = ""
+            st.session_state['name'] = ""
+            st.session_state['agree'] = False
+            st.session_state['confirm'] = ""
+            st.session_state['clicked'] = False
+            st.session_state['captcha'] = ""
+            st.session_state['successful'] = ""
+            st.stop()
+
 
 
