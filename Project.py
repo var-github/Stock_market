@@ -285,6 +285,50 @@ def portfolio():
 
         
         
+# Function to display captcha on screen
+def captcha():
+    if 'successful' not in st.session_state:
+        st.session_state['successful'] = ""
+    if 'captcha' not in st.session_state:
+        st.session_state['captcha'] = ""
+    title = column2.empty()
+    title.header("CAPTCHA")
+    
+    @st.cache(suppress_st_warning=True, ttl=300)
+    def img():
+        letters = "ACBDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+        image = ImageCaptcha(width=280, height=90)
+        captcha = ""
+        for i in range(7):
+            captcha = captcha + random.choice(letters)
+        captcha = captcha.lower()
+        data = image.generate(captcha)
+        st.image(io.BytesIO(data.getvalue()), width=550)
+        return captcha
+    ans = img()
+    txt = column2.empty()
+    text = txt.text_input("Enter Captcha Code: ")
+    verify = column2.empty()
+    if verify.button("Verify"):
+        text = text.lower()
+        if text == ans:
+            img.empty()
+            txt.empty()
+            verify.empty()
+            title.empty()
+            st.session_state['successful'] = True
+            return
+        else:
+            column2.text("Captcha failed!")
+            img.empty()
+            txt.empty()
+            verify.empty()
+            title.empty()
+            st.session_state['successful'] = False
+            return
+        
+        
+        
 @st.cache_data
 def transactions():
     column2.title("Your Transactions")
@@ -645,16 +689,29 @@ elif st.session_state['page'] == 8:
             var2.text_input('Re-enter password:', type="password", disabled=True, value=confirm, key=20)
             btn.empty()
             btn2.empty()
-            column2.warning("Captcha yet to come!")
-            st.session_state['username'] = ""
-            st.session_state['password'] = ""
-            st.session_state['name'] = ""
-            st.session_state['agree'] = False
-            st.session_state['confirm'] = ""
-            st.session_state['clicked'] = False
-            st.session_state['captcha'] = ""
-            st.session_state['successful'] = ""
-            st.stop()
+            captcha()
+            if st.session_state['successful']:
+                st.text("Successfull")
+                st.session_state['username'] = ""
+                st.session_state['password'] = ""
+                st.session_state['name'] = ""
+                st.session_state['agree'] = False
+                st.session_state['confirm'] = ""
+                st.session_state['clicked'] = False
+                st.session_state['captcha'] = ""
+                st.session_state['successful'] = ""
+                st.stop()
+            elif str(st.session_state['successful']) == "False":
+                st.text("Successfull")
+                st.session_state['username'] = ""
+                st.session_state['password'] = ""
+                st.session_state['name'] = ""
+                st.session_state['agree'] = False
+                st.session_state['confirm'] = ""
+                st.session_state['clicked'] = False
+                st.session_state['captcha'] = ""
+                st.session_state['successful'] = ""
+                st.stop()
 
 
 
