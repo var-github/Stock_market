@@ -156,6 +156,7 @@ def internet():
 
 
 # This function displays all the stocks the user owns
+@st.cache_data
 def portfolio():
     column2.title("PORTFOLIO")
     data = st.session_state['db'].execute(f"select symbol, sum(shares) from '{transaction}' where user_id = {st.session_state['user']} group by symbol having sum(shares) != 0;")
