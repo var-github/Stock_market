@@ -284,6 +284,7 @@ def portfolio():
 
 
 # Function to display captcha on screen
+@st.cache_data
 def captcha():
     if 'successful' not in st.session_state:
         st.session_state['successful'] = ""
@@ -291,7 +292,6 @@ def captcha():
         st.session_state['captcha'] = ""
     title = column2.empty()
     title.header("CAPTCHA")
-    file_path = "\\\\".join(str(__file__).split("\\")[:-1]) + "\\\\captcha.png"
     letters = "ACBDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
     if not st.session_state['captcha']:
         image = ImageCaptcha(width=280, height=90)
@@ -300,7 +300,6 @@ def captcha():
         st.session_state['captcha'] = st.session_state['captcha'].lower()
         data = image.generate(st.session_state['captcha'])
         image.write(st.session_state['captcha'], file_path)
-    image = Image.open(file_path)
     img = column2.empty()
     img.image(image, width=550)
     txt = column2.empty()
