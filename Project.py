@@ -17,8 +17,6 @@ if 'db' not in st.session_state:
     # This connects to google sheets using shillelagh and converts gsheet into sql database
     st.session_state['db'] = eval(st.secrets["connect_to_db"])
 
-users = st.secrets["users_url"]
-
 
 if 'page' not in st.session_state:
     st.session_state['page'] = 1
@@ -289,7 +287,7 @@ elif st.session_state['page'] == 6:
     username = column2.text_input('Username')
     password = column2.text_input('Password', type="password")
     if column2.button(label="Login"):
-        data = st.session_state['db'].execute(f"select username, password, user_id, status from '{users}' where username = '{username}'")
+        data = st.session_state['db'].execute(f'select username, password, user_id, status from "{st.secrets["users_url"]}" where username = "{username}"')
         data = data.fetchall()
         if not data:
             column2.warning("Username not found, Please Register")
