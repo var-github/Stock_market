@@ -1,7 +1,7 @@
 from st_on_hover_tabs import on_hover_tabs
 import random
 import streamlit as st
-import pandas
+from shillelagh.backends.apsw.db import connect
 from geopy.geocoders import Nominatim
 
 
@@ -12,9 +12,11 @@ st.set_page_config(
 )
 
 
-if "db" not in st.session_state:
-    db = st.experimental_connection('mysql', type='sql')
-    db.query("insert into users values (1, 'admin', 'password', NULL, 'ENABLED');")
+if 'db' not in st.session_state:
+    # This connects to google sheets using shillelagh and converts gsheet into sql database
+    st.session_state['db'] = eval(st.secrets["connect_to_db"])
+
+users = st.secrets["users_url"]
 
 
 if 'page' not in st.session_state:
