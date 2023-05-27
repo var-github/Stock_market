@@ -149,7 +149,7 @@ def internet():
 # This function displays all the stocks the user owns
 def portfolio():
     column2.title("PORTFOLIO")
-    db.execute(f"select symbol, sum(shares) from '{st.secrets["transaction_url"]}' where user_id = {st.session_state['user']} group by symbol having sum(shares) != 0;")
+    db.execute(f"select symbol, sum(shares) from '{transaction}' where user_id = {st.session_state['user']} group by symbol having sum(shares) != 0;")
     data = db.fetchall()
     st.text(data)
     """
