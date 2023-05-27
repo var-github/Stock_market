@@ -151,8 +151,6 @@ def portfolio():
     column2.title("PORTFOLIO")
     data = st.session_state['db'].execute(f"select symbol, sum(shares) from '{transaction}' where user_id = {st.session_state['user']} group by symbol having sum(shares) != 0;")
     data = data.fetchall()
-    st.text(data)
-    """
     if not data:
         column2.warning("You currently have not invested in any stocks")
         st.stop()
@@ -170,6 +168,7 @@ def portfolio():
     column2.table(data)
     if internet():
         column2.text("Total: $" + str(round(sum, ndigits=2)))
+    """
     db.execute(f"select cash from users where user_id = {st.session_state['user']};")
     cash = db.fetchall()[0][0]
     column2.text("Cash left in account: $" + str(cash))
