@@ -274,7 +274,7 @@ def portfolio():
 @st.cache_data
 def transactions():
     column2.title("Your Transactions")
-    data = st.session_state['db'].execute(f'select transaction_id, symbol, shares, price, ABS(shares) * price, SUBSTRING(transacted,1,LEN(transacted)-1) from '{transaction}' where user_id = {st.session_state["user"]} order by transacted desc;')
+    data = st.session_state['db'].execute(f'select transaction_id, symbol, shares, price, ABS(shares) * price, transacted from '{transaction}' where user_id = {st.session_state["user"]} order by transacted desc;')
     data = data.fetchall()
     if not data:
         column2.warning("No transactions have taken place!")
