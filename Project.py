@@ -548,10 +548,22 @@ elif st.session_state['page'] == 7:
 
 
 
-# Explaination
-# If the code was run in the python then the program runs the streamlit command to open GUI
-# Streamlit files have to be run from command prompt to open the website (GUI)
-# The command is 'streamlit run <file name with full path>'
-# When the cmd command runs - streamlit opens the program to display - and it needs to run the actuall code and not try to run cmd prompt command again
-# If st.runtime.scriptrunner.get_script_run_ctx() is None then streamlit command was not run hence run cmd command
-# If st.runtime.scriptrunner.get_script_run_ctx() is not None just run normal code
+# This page is for registering a new user - it has captcha
+elif st.session_state['page'] == 8:
+    column2.header("Register")    
+    column1.text("")
+    if column1.button(label="🔙"):
+        st.session_state['captcha'] = ""
+        st.session_state['clicked'] = False
+        st.session_state['agree'] = False
+        st.session_state['name'] = ""
+        st.session_state['successful'] = ""
+        st.session_state['username'] = ""
+        st.session_state['password'] = ""
+        st.session_state['confirm'] = ""
+        st.session_state['page'] = 1
+        st.experimental_rerun()
+        
+  
+
+
