@@ -689,7 +689,7 @@ elif st.session_state['page'] == 8:
             btn2.empty()
             captcha()
             if str(st.session_state['successful']) == "True":
-                st.text("Successfull")
+                st.text("Store info in database")
                 st.session_state['username'] = ""
                 st.session_state['text'] = ""
                 st.session_state['password'] = ""
@@ -701,7 +701,7 @@ elif st.session_state['page'] == 8:
                 st.session_state['successful'] = ""
                 st.stop()
             elif str(st.session_state['successful']) == "False":
-                st.text("Unsuccessfull")
+                column2.warning("Registration unsucessfull!")
                 st.session_state['username'] = ""
                 st.session_state['password'] = ""
                 st.session_state['text'] = ""
