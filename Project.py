@@ -658,7 +658,7 @@ elif st.session_state['page'] == 8:
             if btn2.button("⇤ Previous"):
                 st.session_state['clicked'] = False
                 st.experimental_rerun()
-        if btn.button(label="Register") or st.session_state['captcha']:
+        if st.session_state['captcha'] or btn.button(label="Register"):
             username = st.session_state['username']
             password = st.session_state['password']
             confirm = st.session_state['confirm']
