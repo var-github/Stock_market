@@ -9,6 +9,7 @@ from shillelagh.backends.apsw.db import connect
 from geopy.geocoders import Nominatim
 import pandas
 from selenium import webdriver
+from streamlit_echarts import st_echarts
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
