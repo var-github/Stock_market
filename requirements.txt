@@ -8,4 +8,4 @@ webdriver-manager
 requests
 captcha
 yfinance
-streamlit_echarts
+streamlit.components.v1
