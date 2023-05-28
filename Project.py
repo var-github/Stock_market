@@ -542,7 +542,6 @@ elif st.session_state['page'] == 6:
         if not data:
             column2.warning("Username not found, Please Register")
             st.stop()
-        st.text(data)
         if data[0][2] == 1:
             column2.warning("The ADMIN cannot login as an user, please login as ADMIN!")
             st.stop()
@@ -738,13 +737,6 @@ elif st.session_state['page'] == 9:
         if current_tab =='Account Details':
             st.session_state['clicked'] = False
             column2.title("ACCOUNT DETAILS")
-            data = st.session_state['db'].execute(f"select password from '{users}' where user_id = {st.session_state['user']}")
-            data = data.fetchall()
-            if password != data[0][0][1:]:
-                column2.warning("Incorrect Password! Try Again!")
-                st.stop()
-            var1.empty()
-            btn.empty()
             user_info = st.session_state['db'].execute(f'select * from "{users}" where user_id = {st.session_state["user"]};')
             user_info = user_info.fetchall()
             companies = st.session_state['db'].execute(f'select distinct(symbol) from "{transaction}" where user_id = {st.session_state["user"]} group by symbol having sum(shares) != 0;')
