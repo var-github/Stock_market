@@ -949,12 +949,12 @@ elif st.session_state['page'] == 14:
         credit = user_info[0][0] + total - 100
         col4.text("Your net Balance is: $" + str(credit))
         col4.text("")
-        col4.text("-----------------------------------------------------------------------------------")
+        col4.markdown("-----------------------------------------------------------------------------------")
         var2 = st.empty()
         col6, col7, col8 = var2.columns([1.1, 3.5, 1.38])
         col7.info("Are you sure you want to delete your account?")
         var3 = st.empty()
-        col9, col_10, col_11, col_12 = var3.columns([8.5, 1, 1, 9])
+        col9, col_10, col_11, col_12 = var3.columns([8.5, 1.2, 1, 9])
         if col_10.button("Yes"):
             st.stop()
         if col_11.button("No"):
@@ -964,7 +964,7 @@ elif st.session_state['page'] == 14:
             st.experimental_rerun()
         if not st.session_state['deleted']:
             col_13, col_14, col_15 = st.columns([1, 3.5, 1])
-            col_14.text("-----------------------------------------------------------------------------------")
+            col_14.markdown("-----------------------------------------------------------------------------------")
 
             
             
