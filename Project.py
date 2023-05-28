@@ -4,6 +4,7 @@ import time
 from datetime import date, datetime, timedelta
 import requests
 import streamlit as st
+import yfinance
 from shillelagh.backends.apsw.db import connect
 from geopy.geocoders import Nominatim
 import pandas
