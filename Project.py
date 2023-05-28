@@ -802,6 +802,7 @@ elif st.session_state['page'] == 9:
                             column2.text("")
                             column2.subheader("Password succesfully changed")
                             st.session_state['clicked'] = False
+                            c
                             st.stop()
                         if col5.button("No", key=32):
                             st.session_state['clicked'] = False
@@ -813,6 +814,7 @@ elif st.session_state['page'] == 9:
                     st.session_state['db'].execute(f'update "{users}" set password = "{password}" where user_id = {st.session_state["user"]};')
                     column2.text("")
                     column2.subheader("Password succesfully changed")
+                    st.session_state['password'] = ""
         elif current_tab == 'Delete Account':
             st.session_state['clicked'] = False
             st.session_state['page'] = 13
