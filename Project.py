@@ -794,7 +794,7 @@ elif st.session_state['page'] == 9:
                         col1, col2 = var5.columns([3.4, 10])
                         col2.markdown("**Are you sure you want to keep the password the same as the OLD password?**")
                         var6 = text2.empty()
-                        col3, col4, col5, col6 = var6.columns([9, 1.5, 1.5, 9])
+                        col3, col4, col5, col6 = var6.columns([9, 1.2, 1.2, 9])
                         if col4.button("Yes", key=31):
                             var4.empty()
                             var5.empty()
@@ -867,7 +867,7 @@ elif st.session_state['page'] == 13:
     col7, col8, col9 = var1.columns([2.15, 3.5, 2.4])
     col8.info("Do you want to continue to delete your account?")
     var2 = st.empty()
-    col10, col11, col12, col13 = var2.columns([8.5, 1, 1, 9.5])
+    col10, col11, col12, col13 = var2.columns([8.5, 1.3, 1.3, 9.5])
     if col11.button("Yes"):
         st.session_state['page'] = 14
         st.experimental_rerun()
