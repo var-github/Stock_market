@@ -9,7 +9,7 @@ from shillelagh.backends.apsw.db import connect
 from geopy.geocoders import Nominatim
 import pandas
 from selenium import webdriver
-from streamlit_echarts import st_pyecharts
+from streamlit_echarts import st_echarts
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
@@ -360,7 +360,7 @@ def quote():
                     value.append(round(graph[i], ndigits=2))
             if value:
                 options = {"height": 500, "tooltip": {"trigger": 'axis'}, "xAxis": {"data": date}, "yAxis": {"type":"value", "axisLine": {"show": True }, "splitLine": {"show": False}}, "series": [{"data": value, "type": 'line'}]}
-                st_pyecharts(options=options)
+                st_echarts(options=options)
             if data['Website']:
                 col1, col2, col3 = st.columns([1, 4.5, 1])
                 col2.write("Website: [" + str(data["Website"]) + "](" + str(data["Website"]) + ")")
