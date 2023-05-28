@@ -802,7 +802,7 @@ elif st.session_state['page'] == 9:
                             column2.text("")
                             column2.subheader("Password succesfully changed")
                             st.session_state['clicked'] = False
-                            c
+                            st.session_state['password'] = ""
                             st.stop()
                         if col5.button("No", key=32):
                             st.session_state['clicked'] = False
@@ -923,9 +923,49 @@ elif st.session_state['page'] == 14:
                 col7.warning("Incorrect password - deletion of account aborted!")
                 st.stop()
             st.session_state['clicked'] = True
+            st.experimental_rerun()
+    elif not st.session_state['deleted']:
+        col2.header("DELETE ACCOUNT")
+        col3, col4, col5 = st.columns([1, 3.5, 1])
+        data = st.session_state['db'].execute(f"select symbol, sum(shares) from '{transaction}' where user_id = {st.session_state['user']} group by symbol;")
+        data = data.fetchall()
+        connection = internet()
+        status = ""
+        total = 0
+        for i in data:
+            if int(i[1]) != 0:
+                if not connection:
+                    status = "Unsold"
+                    break
+                stock = get_price(i[0])
+                total += int(i[1]) * stock["Price"]
+        if status == "Unsold":
+            col4.warning("No internet connection so your stocks cannot be sold! Your account cannot be deleted with unsold stocks! Please connect to the internet and try again.")
             st.stop()
-            
-            
+        col4.text("A total of: $" + str(total) + " will be credited into your account")
+        col4.text("You will also be debitted $100 as fine")
+        user_info = st.session_state['db'].execute(f"select cash from '{users}' where user_id = {st.session_state['user']};")
+        user_info = user_info.fetchall()
+        credit = user_info[0][0] + total - 100
+        col4.text("Your net Balance is: $" + str(credit))
+        col4.text("")
+        col4.text("-----------------------------------------------------------------------------------")
+        var2 = st.empty()
+        col6, col7, col8 = var2.columns([1.1, 3.5, 1.38])
+        col7.info("Are you sure you want to delete your account?")
+        var3 = st.empty()
+        col9, col_10, col_11, col_12 = var3.columns([8.5, 1, 1, 9])
+        if col_10.button("Yes"):
+            st.stop()
+        if col_11.button("No"):
+            st.session_state['deleted'] = False
+            st.session_state['clicked'] = False
+            st.session_state['page'] = 7
+            st.experimental_rerun()
+        if not st.session_state['deleted']:
+            col_13, col_14, col_15 = st.columns([1, 3.5, 1])
+            col_14.text("-----------------------------------------------------------------------------------")
+
             
             
             
