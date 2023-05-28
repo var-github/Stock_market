@@ -956,7 +956,15 @@ elif st.session_state['page'] == 14:
         var3 = st.empty()
         col9, col_10, col_11, col_12 = var3.columns([8.5, 1.2, 1, 9])
         if col_10.button("Yes"):
-            pass
+            data = st.session_state['db'].execute(f"select * from '{users}';")
+            Id = len(data.fetchall())
+            st.session_state['db'].execute(f'delete from "{users}" where user_id = {st.session_state["user"]};')
+            st.session_state['db'].execute(f'delete from "{transaction}" where user_id = {st.session_state["user"]};')
+            for i in range(st.session_state["user"], Id):
+                st.session_state['db'].execute(f"update '{users}' set user_id = {i} where user_id = {i + 1};")
+                st.session_state['db'].execute(f"update '{transaction}' set user_id = {i} where user_id = {i + 1};")
+            st.session_state['deleted'] = True
+            st.experimental_rerun()
         if col_11.button("No"):
             st.session_state['deleted'] = False
             st.session_state['clicked'] = False
@@ -965,6 +973,21 @@ elif st.session_state['page'] == 14:
         if not st.session_state['deleted']:
             col_13, col_14, col_15 = st.columns([1, 3.5, 1])
             col_14.markdown("-----------------------------------------------------------------------------------")
+    else:
+        var1.empty()
+        col3, col4, col5 = st.columns([1, 3.5, 1])
+        col4.markdown("-----------------------------------------------------------------------------------")
+        col6, col7 = st.columns([1.5, 3])
+        col7.subheader("Account deleted successfully")
+        col8, col9 = st.columns([2.2, 3])
+        if col9.button("Go back home"):
+            st.session_state['deleted'] = False
+            st.session_state['clicked'] = False
+            st.session_state['user'] = None
+            st.session_state['page'] = 1
+            st.experimental_rerun()
+        col_10, col_11, col_12 = st.columns([1, 3.5, 1])
+        col_11.markdown("-----------------------------------------------------------------------------------")
 
             
             
