@@ -1,7 +1,7 @@
 from st_on_hover_tabs import on_hover_tabs
 import random
 import time
-from datetime import date
+from datetime import date, datetime, timedelta
 import requests
 import streamlit as st
 from shillelagh.backends.apsw.db import connect
@@ -331,6 +331,42 @@ def captcha():
             return
         
         
+# Displays price and other required information on any stock entered by the user
+def quote():
+    column2.title("QUOTE")
+    company = column2.text_input("Enter stock symbol or company name: ")
+    if column2.button(label="Quote"):
+        if not internet():
+            column2.warning("No internet connection! Hence current prices cannot be retrieved. Please connect to the internet and refresh the page.")
+            st.stop()
+        data = get_price(company)
+        if data:
+            column2.write("Company name: " + str(data["Name"]))
+            column2.write("Stock symbol: " + str(data["Symbol"]))
+            column2.write("Market price: $" + str(data["Price"]))
+            date = []
+            value = []
+            if data["currency"] == "INR":
+                graph = dict(yfinance.download(data['Symbol'] + '.NS', start=str(datetime.now() - timedelta(days=3 * 365))[:10], end=str(datetime.now())[:10])['Open'])
+                for i in graph:
+                    date.append(str(i.strftime("%x")))
+                    value.append(round(graph[i] / usd(), ndigits=2))
+            else:
+                graph = dict(yfinance.download(data['Symbol'], start=str(datetime.now() - timedelta(days=3 * 365))[:10], end=str(datetime.now())[:10])['Open'])
+                for i in graph:
+                    date.append(str(i.strftime("%x")))
+                    value.append(round(graph[i], ndigits=2))
+            if value:
+                options = {"height": 300, "tooltip": {"trigger": 'axis'}, "xAxis": {"data": date}, "yAxis": {"type":"value", "axisLine": {"show": True }, "splitLine": {"show": False}}, "series": [{"data": value, "type": 'line'}]}
+                st_echarts(options=options)
+            if data['Website']:
+                col1, col2, col3 = st.columns([1, 4.5, 1])
+                col2.write("Website: [" + str(data["Website"]) + "](" + str(data["Website"]) + ")")
+        else:
+            column2.warning("No stock or company exists with that name!")
+            st.stop()
+        
+        
 
 def transactions():
     column2.title("Your Transactions")
@@ -581,7 +617,7 @@ elif st.session_state['page'] == 7:
     if current_tab =='Portfolio':
         portfolio()
     elif current_tab == 'Quote':
-        pass
+        quote()
     elif current_tab == 'Buy':
         pass
     elif current_tab =='Sell':
