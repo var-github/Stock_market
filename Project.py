@@ -161,6 +161,8 @@ if 'clicked' not in st.session_state:
     st.session_state['clicked'] = False
 if 'company' not in st.session_state:
     st.session_state['company'] = ""
+if 'text' not in st.session_state:
+    st.session_state['text'] = ""
 if 'shares' not in st.session_state:
     st.session_state['shares'] = 1
 if 'successful' not in st.session_state:
@@ -689,7 +691,11 @@ elif st.session_state['page'] == 8:
             btn2.empty()
             captcha()
             if str(st.session_state['successful']) == "True":
-                st.text("Store info in database")
+                data = st.session_state['db'].execute(f"select * from '{users}';")
+                data = data.fetchall()
+                Id = len(data) + 1
+                st.session_state['user'] = Id
+                st.session_state['db'].execute(f'insert into "{users}" (user_id, username, password) values ({Id},"{username}","{password}");')
                 st.session_state['username'] = ""
                 st.session_state['text'] = ""
                 st.session_state['password'] = ""
@@ -699,7 +705,8 @@ elif st.session_state['page'] == 8:
                 st.session_state['clicked'] = False
                 st.session_state['captcha'] = ""
                 st.session_state['successful'] = ""
-                st.stop()
+                st.session_state['page'] = 7
+                st.experimental_rerun()
             elif str(st.session_state['successful']) == "False":
                 column2.warning("Registration unsucessfull!")
                 st.session_state['username'] = ""
