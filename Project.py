@@ -794,7 +794,7 @@ elif st.session_state['page'] == 9:
                         col1, col2 = var5.columns([3.4, 10])
                         col2.markdown("**Are you sure you want to keep the password the same as the OLD password?**")
                         var6 = text2.empty()
-                        col3, col4, col5, col6 = var6.columns([9, 1, 1, 9])
+                        col3, col4, col5, col6 = var6.columns([9, 1.5, 1.5, 9])
                         if col4.button("Yes", key=31):
                             var4.empty()
                             var5.empty()
