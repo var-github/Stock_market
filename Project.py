@@ -256,7 +256,6 @@ def get_price(company):
 
 
 # This function displays all the stocks the user owns
-@st.cache_data
 def portfolio():
     column2.title("PORTFOLIO")
     data = st.session_state['db'].execute(f"select symbol, sum(shares) from '{transaction}' where user_id = {st.session_state['user']} group by symbol having sum(shares) != 0;")
@@ -332,8 +331,7 @@ def captcha():
             return
         
         
-        
-@st.cache_data
+
 def transactions():
     column2.title("Your Transactions")
     data = st.session_state['db'].execute(f'select transaction_id, symbol, shares, price, ABS(shares) * price, SUBSTRING(transacted,1,LENGTH(transacted)-1) from "{transaction}" where user_id = {st.session_state["user"]} order by transacted desc;')
