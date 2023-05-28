@@ -9,3 +9,5 @@ requests
 captcha
 yfinance
 streamlit.components.v1
+typing
+simplejson
