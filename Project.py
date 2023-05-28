@@ -867,7 +867,7 @@ elif st.session_state['page'] == 13:
     col7, col8, col9 = var1.columns([2.15, 3.5, 2.4])
     col8.info("Do you want to continue to delete your account?")
     var2 = st.empty()
-    col10, col11, col12, col13 = var2.columns([8.5, 1.3, 1.3, 9.5])
+    col10, col11, col12, col13 = var2.columns([9.5, 1.3, 1.3, 9.5])
     if col11.button("Yes"):
         st.session_state['page'] = 14
         st.experimental_rerun()
