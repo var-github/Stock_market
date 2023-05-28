@@ -139,6 +139,11 @@ css = css = f"""
         border: 1.5px solid;
         background: rgba(255, 255, 255, 0.62);
     }}
+    .stCheckbox p{{
+        color: #6a0000 !important;
+        font-style: italic;
+        font-weight: bold;
+    }}
 </style>
 """
 st.markdown(css, unsafe_allow_html=True)
@@ -612,11 +617,6 @@ elif st.session_state['page'] == 8:
     if not st.session_state['clicked']:
         color = """
         <style>
-            .st-cu, .st-c4 {
-                color: #6a0000 !important;
-                font-style: italic;
-                font-weight: bold;
-            }
             #register {
                 color: #002e80;
             }
@@ -636,14 +636,6 @@ elif st.session_state['page'] == 8:
         st.session_state['agree'] = column2.checkbox("I agree that I have read through the guidelines", value=st.session_state['agree'])
         col1, col2 = st.columns([3, 1])
         if col2.button("Next ⇥") and st.session_state['agree']:
-            color = """
-            <style>
-                .st-cu, st-c4 {
-                    color: black !important
-                }
-            </style>
-            """
-            st.markdown(color, unsafe_allow_html=True)
             st.session_state['clicked'] = True
             st.experimental_rerun()
     else:
