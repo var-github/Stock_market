@@ -753,10 +753,178 @@ elif st.session_state['page'] == 9:
             password = var1.text_input('Enter OLD password:', type="password")
             btn = column2.empty()
             if btn.button(label="Verify"):
-                pass
+                data = st.session_state['db'].execute(f"select password from '{users}' where user_id = {st.session_state['user']}")
+                data = data.fetchall()
+                if password == data[0][0][1:]:
+                    st.session_state['clicked'] = True
+                else:
+                    column2.warning("Incorrect Password! Try Again!")
+                    st.stop()
+            if st.session_state['clicked']:
+                var1.empty()
+                btn.empty()
+                var2 = column2.empty()
+                password = var2.text_input('Enter new password:', type="password", help="Choose a strong password with letters, numbers and symbols", value=st.session_state['password'], key=27)
+                var3 = column2.empty()
+                confirm = var3.text_input('Re-enter new password:', type="password", value=st.session_state['password'], key=28)
+                change = column2.empty()
+                if change.button(label="Change password") or st.session_state['password']:
+                    if not password:
+                        column2.warning("Please enter password!")
+                        st.stop()
+                    if " " in password:
+                        column2.warning("The password cannot contain space!")
+                        st.stop()
+                    if password != confirm:
+                        column2.warning("Passwords Not Matching!")
+                        st.stop()
+                    var2.empty()
+                    var3.empty()
+                    change.empty()
+                    var2.text_input('Enter new password:', type="password", help="Choose a strong password with letters, numbers and symbols", disabled=True, value=password, key=29)
+                    var3.text_input('Re-enter new password:', type="password", disabled=True, value=confirm, key=30)
+                    data = st.session_state['db'].execute(f"select password from '{users}' where user_id = {st.session_state['user']}")
+                    data = data.fetchall()
+                    if password == data[0][0][1:]:
+                        st.session_state['password'] = password
+                        column2.text("")
+                        var4 = column2.empty()
+                        var4.markdown("-----------------------------------------------------------------------------------")
+                        var5 = text1.empty()
+                        col1, col2 = var5.columns([3.4, 10])
+                        col2.markdown("**Are you sure you want to keep the password the same as the OLD password?**")
+                        var6 = text2.empty()
+                        col3, col4, col5, col6 = var6.columns([9, 1, 1, 9])
+                        if col4.button("Yes", key=31):
+                            var4.empty()
+                            var5.empty()
+                            var6.empty()
+                            column2.text("")
+                            column2.subheader("Password succesfully changed")
+                            st.session_state['clicked'] = False
+                            st.stop()
+                        if col5.button("No", key=32):
+                            st.session_state['clicked'] = False
+                            st.session_state['password'] = ""
+                            st.experimental_rerun()
+                        col7, col8, col9 = text3.columns([1, 4.5, 1])
+                        col8.markdown("-----------------------------------------------------------------------------------")
+                        st.stop()
+                    st.session_state['db'].execute(f'update "{users}" set password = "{password}" where user_id = {st.session_state["user"]};')
+                    column2.text("")
+                    column2.subheader("Password succesfully changed")
         elif current_tab == 'Delete Account':
-            pass
+            st.session_state['clicked'] = False
+            st.session_state['page'] = 13
+            st.experimental_rerun()
         elif current_tab == 'Go Back':
             st.session_state['clicked'] = False
             st.session_state['page'] = 7
             st.experimental_rerun()
+
+            
+# Delete account confirmation
+elif st.session_state['page'] == 13:
+    col1, col2, col3 = st.columns([3, 3.5, 3])
+    col1.text("")
+    if col1.button(label="🔙"):
+        st.session_state['page'] = 9
+        st.experimental_rerun()
+    col4, col5, col6 = st.columns([2, 4.5, 2])
+    col5.markdown('''            <div id="del"><h1 style="text-align: center; color: darkblue;">DELETE ACCOUNT</h1>
+
+            --------------------------------------------------------
+            <p style="text-align: center; color: green;"><font size="5.9"><b>IMPORTANT: Please Read Terms and Conditions</b></font></p>
+
+            --------------------------------------------------------
+            - **WARNING: All the stocks which you own WILL be SOLD immediately.**
+
+            - **A fine of $100 will be applied for deleting your account and your details.**
+
+            - **A detailed list of all your purchases and shares will be displayed and the FOLLOWING price would be added to your account balance.**
+
+            - **Being a sensitive matter, any wrong detail will abort the deletion of the account.**
+
+            - **This action is irreversible so please be careful !!**
+            --------------------------------------------------------
+            </div><div style="height: 480px"></div>
+            <style>
+            #del{
+                position: absolute;
+                top: -15%
+            }
+            .st-at{
+                background-color: rgba(28, 131, 225, 0.2)
+            }
+            </style>
+            ''', unsafe_allow_html=True)
+    col5.text("")
+    var1 = st.empty()
+    col7, col8, col9 = var1.columns([2.15, 3.5, 2.4])
+    col8.info("Do you want to continue to delete your account?")
+    var2 = st.empty()
+    col10, col11, col12, col13 = var2.columns([8.5, 1, 1, 9.5])
+    if col11.button("Yes"):
+        st.session_state['page'] = 14
+        st.experimental_rerun()
+    if col12.button("No"):
+        st.session_state['clicked'] = False
+        st.session_state['page'] = 7
+        st.experimental_rerun()
+    else:
+        col14, col15, col16 = st.columns([2, 4.5, 2])
+        col15.markdown("--------------------------------------------------------")
+            
+            
+            
+# Final check before deleting account
+elif st.session_state['page'] == 14:
+    if 'deleted' not in st.session_state:
+        st.session_state['deleted'] = False
+    col1, col2 = st.columns([1, 1.7])
+    col1.text("")
+    var1 = col1.empty()
+    if var1.button(label="🔙"):
+        st.session_state['deleted'] = False
+        st.session_state['clicked'] = False
+        st.session_state['page'] = 9
+        st.experimental_rerun()
+    if not st.session_state['clicked']:
+        col2.header("Confirm details")
+        var2 = st.empty()
+        col3, col4, col5 = var2.columns([1, 3.5, 1])
+        username = col4.text_input("Enter your username: ", key=33)
+        password = col4.text_input("Enter your password: ", key=34)
+        if col4.button("Confirm"):
+            data = st.session_state['db'].execute(f"select username, password from '{users}' where user_id={st.session_state['user']};")
+            data = data.fetchall()
+            if not username:
+                col4.warning("Please enter username!")
+                st.stop()
+            if not password:
+                col4.warning("Please enter password!")
+                st.stop()
+            if username != data[0][0]:
+                var2.empty()
+                col6, col7, col8 = var2.columns([1, 3.5, 1])
+                username = col7.text_input("Enter your username: ", disabled=True, value=username, key=35)
+                password = col7.text_input("Enter your password: ", disabled=True, value=password, key=36)
+                col7.warning("Incorrect username - deletion of account aborted!")
+                st.stop()
+            if password != data[0][1][1:]:
+                var2.empty()
+                col6, col7, col8 = var2.columns([1, 3.5, 1])
+                username = col7.text_input("Enter your username: ", disabled=True, value=username, key=37)
+                password = col7.text_input("Enter your password: ", disabled=True, value=password, key=38)
+                col7.warning("Incorrect password - deletion of account aborted!")
+                st.stop()
+            st.session_state['clicked'] = True
+            st.stop()
+            
+            
+            
+            
+            
+            
+            
+            
