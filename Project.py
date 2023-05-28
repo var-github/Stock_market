@@ -592,7 +592,8 @@ elif st.session_state['page'] == 7:
     elif current_tab == 'History':
         transactions()
     elif current_tab == 'Account':
-        pass
+        st.session_state['page'] = 9
+        st.experimental_rerun()
     elif current_tab == 'Logout':
         st.session_state['page'] = 1
         st.experimental_rerun()
@@ -713,4 +714,59 @@ elif st.session_state['page'] == 8:
                 st.stop()
 
 
-
+# Account menu
+elif st.session_state['page'] == 9:
+    column1, column2, column3 = st.columns([1, 4.5, 1])
+    st.sidebar.image("https://app.omnistock.io/uploads/logo/yktS4FqNbQGn3TychVaEzDIkHoiJa4Ei5HPSAIAy.png")
+    st.sidebar.caption("")
+    st.sidebar.caption("")
+    top = """
+    <style>
+        section[data-testid='stSidebar'] > div {
+            position: relative;
+            top: 12%;
+            transition: 0.7s ease;
+        }
+    </style>
+    """
+    st.markdown(top, unsafe_allow_html=True)
+    text1 = st.empty()
+    text2 = st.empty()
+    text3 = st.empty()
+    with st.sidebar:
+        current_tab = on_hover_tabs(tabName=['Account Details','Change Password','Delete Account', 'Go Back'], iconName=['account_circle','lock','delete_sweep','fast_rewind'], styles = {'tabOptionsStyle': {':hover :hover': {'color': 'red'}}}, key=102, default_choice=0)
+        if current_tab =='Account Details':
+            st.session_state['clicked'] = False
+            column2.title("ACCOUNT DETAILS")
+            data = st.session_state['db'].execute(f"select password from '{users}' where user_id = {st.session_state['user']}")
+            data = data.fetchall()
+            if password != data[0][0][1:]:
+                column2.warning("Incorrect Password! Try Again!")
+                st.stop()
+            var1.empty()
+            btn.empty()
+            user_info = st.session_state['db'].execute(f'select * from "{users}" where user_id = {st.session_state["user"]};')
+            user_info = user_info.fetchall()
+            companies = st.session_state['db'].execute(f'select distinct(symbol) from "{transaction}" where user_id = {st.session_state["user"]} group by symbol having sum(shares) != 0;')
+            companies = companies.fetchall()
+            shares = st.session_state['db'].execute(f'select sum(shares) from "{transaction}" where user_id = {st.session_state["user"]};')
+            shares = shares.fetchall()
+            column2.markdown("--------------------------------------------")
+            column2.markdown("**Username**: *" + str(user_info[0][1]) + "*")
+            column2.markdown("**Balance**: *$" + str(user_info[0][3]) + "*")
+            column2.markdown("**No. of companies invested**: *" + str(len(companies)) + "*")
+            column2.markdown("**No. of shares owned**: *" + str(shares[0][0]) + "*")
+            column2.markdown("--------------------------------------------")
+        elif current_tab == 'Change Password':
+            column2.title("CHANGE Password")
+            var1 = column2.empty()
+            password = var1.text_input('Enter OLD password:', type="password")
+            btn = column2.empty()
+            if btn.button(label="Verify"):
+                pass
+        elif current_tab == 'Delete Account':
+            pass
+        elif current_tab == 'Go Back':
+            st.session_state['clicked'] = False
+            st.session_state['page'] = 7
+            st.experimental_rerun()
