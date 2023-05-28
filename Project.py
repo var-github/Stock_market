@@ -956,7 +956,7 @@ elif st.session_state['page'] == 14:
         var3 = st.empty()
         col9, col_10, col_11, col_12 = var3.columns([8.5, 1.2, 1, 9])
         if col_10.button("Yes"):
-            st.stop()
+            pass
         if col_11.button("No"):
             st.session_state['deleted'] = False
             st.session_state['clicked'] = False
