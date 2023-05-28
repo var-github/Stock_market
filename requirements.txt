@@ -7,3 +7,4 @@ seleniumbase
 webdriver-manager
 requests
 captcha
+yfinance
