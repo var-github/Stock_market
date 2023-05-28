@@ -8,5 +8,3 @@ webdriver-manager
 requests
 captcha
 yfinance
-pyecharts
-simplejson
