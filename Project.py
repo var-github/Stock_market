@@ -695,7 +695,7 @@ elif st.session_state['page'] == 8:
                 data = data.fetchall()
                 Id = len(data) + 1
                 st.session_state['user'] = Id
-                st.session_state['db'].execute(f'insert into "{users}" (user_id, username, password) values ({Id},"{username}","{password}");')
+                st.session_state['db'].execute(f'insert into "{users}" values ({Id},"{username}","{"a" + password}", 100000.00, "ENABLED");')
                 st.session_state['username'] = ""
                 st.session_state['text'] = ""
                 st.session_state['password'] = ""
