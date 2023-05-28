@@ -811,7 +811,7 @@ elif st.session_state['page'] == 9:
                         col7, col8, col9 = text3.columns([1, 4.5, 1])
                         col8.markdown("-----------------------------------------------------------------------------------")
                         st.stop()
-                    st.session_state['db'].execute(f'update "{users}" set password = "{password}" where user_id = {st.session_state["user"]};')
+                    st.session_state['db'].execute(f'update "{users}" set password = "{'a' + password}" where user_id = {st.session_state["user"]};')
                     column2.text("")
                     column2.subheader("Password succesfully changed")
                     st.session_state['clicked'] = False
