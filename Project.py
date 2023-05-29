@@ -24,6 +24,7 @@ src = str(f.read())
 f.seek(0)
 src = src[:src.find('height: str = "') + 15] + "400" + src[src.find('height: str = "') + 18:]
 f.write(bytes(src, 'utf-8'))
+f.flush()
 f.close()
 import streamlit_echarts
 st.write(inspect.getsource(streamlit_echarts))
