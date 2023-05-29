@@ -17,13 +17,6 @@ from selenium.webdriver.common.by import By
 from captcha.image import ImageCaptcha
 import io
 from streamlit_echarts import st_echarts
-import inspect
-import sys
-src = inspect.getsource(st_echarts)
-src = src[:src.find('height: str = "') + 15] + "400" + src[src.find('height: str = "') + 18:]
-st.text(src)
-exec(src)
-sys.exit()
 
 # Configuring the page
 st.set_page_config(
