@@ -145,7 +145,7 @@ css = css = f"""
         font-style: italic;
         font-weight: bold;
     }}
-    iframe{{
+    iframe[title="streamlit_echarts.st_echarts"]{{
         height: 500px;
     }}
 </style>
