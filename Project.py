@@ -366,8 +366,7 @@ def quote():
                 st_echarts(options=options)
                 js = """
                 <script>
-                    var ifram = document.getElementsByTagName("iframe")[0];
-                    var iframe = ifram.contentWindow.document.getElementsByTagName("iframe")[1];
+                    var iframe = document.contentWindow.document.getElementsByTagName("iframe")[1];
                     var doc = iframe.contentWindow.document.getElementsByTagName("div")[0];
                     doc.style.display = "none";
                 </script>
