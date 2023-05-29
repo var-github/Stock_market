@@ -28,7 +28,7 @@ st.set_page_config(
 
 js = '''
 <script language="javascript">
-  document.querySelector('iframe[title="streamlit_echarts.st_echarts"]').style.display = "None";
+    document.querySelector('iframe').contentDocument.body.querySelector('div').style.display = 'none';
 </script>
 '''
 components.html(js)
