@@ -369,7 +369,7 @@ def quote():
                     value.append(round(graph[i], ndigits=2))
             if value:
                 options = {"height": 500, "tooltip": {"trigger": 'axis'}, "xAxis": {"data": date}, "yAxis": {"type":"value", "axisLine": {"show": True }, "splitLine": {"show": False}}, "series": [{"data": value, "type": 'line'}]}
-                st_echarts(options=options)
+                streamlit_echarts.st_echarts(options=options)
             if data['Website']:
                 col1, col2, col3 = st.columns([1, 4.5, 1])
                 col2.write("Website: [" + str(data["Website"]) + "](" + str(data["Website"]) + ")")
