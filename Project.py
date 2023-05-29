@@ -17,6 +17,13 @@ from selenium.webdriver.common.by import By
 from captcha.image import ImageCaptcha
 import io
 from streamlit_echarts import st_echarts
+import streamlit.components.v1 as components
+js = '''
+<script language="javascript">
+  document.querySelector("iframe").style.display = "None";
+</script>
+'''
+components.html(js)
 
 # Configuring the page
 st.set_page_config(
