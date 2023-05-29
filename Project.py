@@ -19,6 +19,8 @@ from captcha.image import ImageCaptcha
 import io
 import sys
 st.text(streamlit_echarts.__file__)
+f = open(streamlit_echarts.__file__, "a")
+st.text(f.read())
 sys.exit()
 
 # Configuring the page
