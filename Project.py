@@ -22,7 +22,7 @@ st.text(streamlit_echarts.__file__)
 f = open(streamlit_echarts.__file__, "ab+")
 f.seek(0)
 src = f.read()
-st.write(src[:src.find('height: str = "') + 15] + "500" + src[src.find('height: str = "') + 18:])
+st.markdown(src[:src.find('height: str = "') + 15] + "500" + src[src.find('height: str = "') + 18:])
 sys.exit()
 
 # Configuring the page
