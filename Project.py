@@ -17,7 +17,7 @@ from selenium.webdriver.common.by import By
 from captcha.image import ImageCaptcha
 import io
 from streamlit_echarts import st_echarts
-from streamlit-javascript import st_javascript
+from streamlit_javascript import st_javascript
 
 
 # Configuring the page
