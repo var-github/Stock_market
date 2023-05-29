@@ -17,7 +17,6 @@ from selenium.webdriver.common.by import By
 from captcha.image import ImageCaptcha
 import io
 from streamlit_echarts import st_echarts
-from streamlit_javascript import st_javascript
 
 
 # Configuring the page
@@ -26,12 +25,6 @@ st.set_page_config(
     layout="wide",
 )
 
-js = '''
-<script language="javascript">
-    document.querySelector('iframe').contentDocument.body.querySelector('div').style.display = 'none';
-</script>
-'''
-st_javascript(js)
 
 if 'db' not in st.session_state:
     # This connects to google sheets using shillelagh and converts gsheet into sql database
