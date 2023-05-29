@@ -145,6 +145,9 @@ css = css = f"""
         font-style: italic;
         font-weight: bold;
     }}
+    iframe{{
+        height: 500px;
+    }}
 </style>
 """
 st.markdown(css, unsafe_allow_html=True)
