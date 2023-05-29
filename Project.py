@@ -9,7 +9,6 @@ from shillelagh.backends.apsw.db import connect
 from geopy.geocoders import Nominatim
 import pandas
 from selenium import webdriver
-import streamlit_echarts
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
@@ -18,8 +17,7 @@ from selenium.webdriver.common.by import By
 from captcha.image import ImageCaptcha
 import io
 import sys
-st.text(streamlit_echarts.__file__)
-f = open(streamlit_echarts.__file__, "ab+")
+f = open("/home/appuser/venv/lib/python3.9/site-packages/streamlit_echarts/__init__.py", "ab+")
 f.seek(0)
 src = str(f.read())
 f.seek(0)
