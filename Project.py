@@ -22,7 +22,7 @@ f.seek(0)
 src = str(f.read())
 f.seek(0)
 src = src[:src.find('height: str = "') + 15] + "400" + src[src.find('height: str = "') + 18:]
-f.write(src)
+f.write(bytes(src))
 sys.exit()
 
 # Configuring the page
