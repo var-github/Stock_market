@@ -18,6 +18,7 @@ from captcha.image import ImageCaptcha
 import io
 import inspect
 import sys
+import streamlit_echarts
 f = open("/home/appuser/venv/lib/python3.9/site-packages/streamlit_echarts/__init__.py", "ab+")
 f.seek(0)
 src = str(f.read())
@@ -26,7 +27,6 @@ src = src[:src.find('height: str = "') + 15] + "400" + src[src.find('height: str
 f.write(bytes(src, 'utf-8'))
 f.flush()
 f.close()
-import streamlit_echarts
 st.write(inspect.getsource(streamlit_echarts))
 sys.exit()
 
