@@ -16,17 +16,13 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from captcha.image import ImageCaptcha
 import io
+from streamlit_echarts import st_echarts
 import inspect
 import sys
-f = open("/home/appuser/venv/lib/python3.9/site-packages/streamlit_echarts/__init__.py", "r")
-src = str(f.read())
-f.close()
-f = open("/home/appuser/venv/lib/python3.9/site-packages/streamlit_echarts/__init__.py", "w")
+src = inspect.getsource(st_echarts)
 src = src[:src.find('height: str = "') + 15] + "400" + src[src.find('height: str = "') + 18:]
-f.write(src)
-f.flush()
-f.close()
-import streamlit_echarts
+st.text(src)
+sys.exit()
 
 # Configuring the page
 st.set_page_config(
