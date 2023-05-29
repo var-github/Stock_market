@@ -21,7 +21,8 @@ import sys
 st.text(streamlit_echarts.__file__)
 f = open(streamlit_echarts.__file__, "ab+")
 f.seek(0)
-st.text(f.read())
+src = f.read()
+st.write(src[:src.find('height: str = "') + 15] + "500" + src[src.find('height: str = "') + 18:])
 sys.exit()
 
 # Configuring the page
