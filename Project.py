@@ -19,15 +19,15 @@ import io
 import inspect
 import sys
 import streamlit_echarts
-f = open("/home/appuser/venv/lib/python3.9/site-packages/streamlit_echarts/__init__.py", "ab+")
-f.seek(0)
+f = open("/home/appuser/venv/lib/python3.9/site-packages/streamlit_echarts/__init__.py", "r")
 src = str(f.read())
-f.seek(0)
+f.close()
+f = open("/home/appuser/venv/lib/python3.9/site-packages/streamlit_echarts/__init__.py", "w")
 src = src[:src.find('height: str = "') + 15] + "400" + src[src.find('height: str = "') + 18:]
-f.write(bytes(src, 'utf-8'))
+f.write(src)
 f.flush()
 f.close()
-st.markdown(inspect.getsource(streamlit_echarts))
+st.text(inspect.getsource(streamlit_echarts))
 sys.exit()
 
 # Configuring the page
