@@ -9,7 +9,7 @@ from shillelagh.backends.apsw.db import connect
 from geopy.geocoders import Nominatim
 import pandas
 from selenium import webdriver
-from streamlit_echarts import st_echarts
+import streamlit_echarts
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
@@ -17,7 +17,9 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from captcha.image import ImageCaptcha
 import io
-
+import sys
+st.text(streamlit_echarts.__file__)
+sys.exit()
 
 # Configuring the page
 st.set_page_config(
