@@ -27,7 +27,6 @@ src = src[:src.find('height: str = "') + 15] + "400" + src[src.find('height: str
 f.write(src)
 f.flush()
 f.close()
-st.text(inspect.getsource(streamlit_echarts))
 sys.exit()
 
 # Configuring the page
