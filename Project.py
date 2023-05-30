@@ -146,9 +146,6 @@ css = css = f"""
         font-style: italic;
         font-weight: bold;
     }}
-    iframe[title="streamlit_echarts.st_echarts"]{{
-        height: 500px;
-    }}
 </style>
 """
 st.markdown(css, unsafe_allow_html=True)
@@ -367,9 +364,18 @@ def quote():
                 js = """
                 <script>
                     var ifram = parent.document.getElementsByTagName("iframe")[1];
+                    ifram.style.height = "650px";
                     var iframe = ifram.contentWindow.document.getElementsByTagName("div")[0];
                     iframe.style.height = "600px";
                     var iframe = ifram.contentWindow.document.getElementsByTagName("div")[1];
+                    iframe.style.height = "600px";
+                    var iframe = ifram.contentWindow.document.getElementsByTagName("div")[2];
+                    iframe.style.height = "600px";
+                    var iframe = ifram.contentWindow.document.getElementsByTagName("div")[3];
+                    iframe.style.height = "600px";
+                    var iframe = ifram.contentWindow.document.getElementsByTagName("div")[4];
+                    iframe.style.height = "600px";
+                    var iframe = ifram.contentWindow.document.getElementsByTagName("div")[5];
                     iframe.style.height = "600px";
                 </script>
                 """
