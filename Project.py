@@ -365,8 +365,10 @@ def quote():
                 options = {"height": 500, "tooltip": {"trigger": 'axis'}, "xAxis": {"data": date}, "yAxis": {"type":"value", "axisLine": {"show": True }, "splitLine": {"show": False}}, "series": [{"data": value, "type": 'line'}]}
                 st_echarts(options=options)
                 js = """
+                <script>
                     var ifram = document.getElementsByTagName("iframe")[0];
                     ifram.style.display = "none";
+                </script>
                 """
                 st.markdown(js, unsafe_allow_html=True)
             if data['Website']:
