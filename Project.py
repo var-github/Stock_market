@@ -17,7 +17,7 @@ from selenium.webdriver.common.by import By
 from captcha.image import ImageCaptcha
 import io
 from streamlit_echarts import st_echarts
-
+from streamlit.components.v1 import html
 
 # Configuring the page
 st.set_page_config(
@@ -375,7 +375,7 @@ def quote():
                     }
                 </script>
                 """
-                st.markdown(js, unsafe_allow_html=True)
+                html(js)
             if data['Website']:
                 col1, col2, col3 = st.columns([1, 4.5, 1])
                 col2.write("Website: [" + str(data["Website"]) + "](" + str(data["Website"]) + ")")
