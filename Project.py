@@ -366,8 +366,8 @@ def quote():
                 st_echarts(options=options)
                 js = """
                 <script>
-                    var ifram = document.getElementsByTagName("iframe")[0];
-                    ifram.style.display = "none";
+                    var ifram = document.getElementsByTagName("iframe");
+                    document.querySelector("[href='tesla.com']").innerHTML = ifram;
                 </script>
                 """
                 st.markdown(js, unsafe_allow_html=True)
