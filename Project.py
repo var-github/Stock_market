@@ -364,7 +364,7 @@ def quote():
                 js = """
                 <script>
                     var iframe = parent.document.getElementsByTagName("iframe")[1];
-                    var elmnt = iframe.contentWindow.document.getElementsByTagName("div");
+                    var elmnt = iframe.contentWindow.document.querySelector("canvas");
                     elmnt.style.display = "none";
                 </script>
                 """
