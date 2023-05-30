@@ -17,6 +17,7 @@ from selenium.webdriver.common.by import By
 from captcha.image import ImageCaptcha
 import io
 from streamlit_echarts import st_echarts
+from streamlit_javascript import st_javascript
 
 
 # Configuring the page
@@ -365,13 +366,15 @@ def quote():
                 options = {"height": 500, "tooltip": {"trigger": 'axis'}, "xAxis": {"data": date}, "yAxis": {"type":"value", "axisLine": {"show": True }, "splitLine": {"show": False}}, "series": [{"data": value, "type": 'line'}]}
                 st_echarts(options=options)
                 js = """
-                <script>
-                    var iframe = document.contentWindow.document.getElementsByTagName("iframe")[1];
-                    var doc = iframe.contentWindow.document.getElementsByTagName("div")[0];
-                    doc.style.display = "none";
-                </script>
+                    var ifram = document.getElementsByTagName("iframe")[0];
+                    var iframe = ifram.contentWindow.document.getElementsByTagName("iframe")[1];
+                    iframe.style.height = "650px";
+                    var doc = iframe.contentWindow.document.getElementsByTagName("div");
+                    for (var i=0, max=doc.length; i < max; i++) {
+                        doc[i].style.height = "600px";
+                    }
                 """
-                st.markdown(js, unsafe_allow_html=True)
+                st_javascript(js)
             if data['Website']:
                 col1, col2, col3 = st.columns([1, 4.5, 1])
                 col2.write("Website: [" + str(data["Website"]) + "](" + str(data["Website"]) + ")")
