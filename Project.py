@@ -365,7 +365,7 @@ def quote():
                 <script>
                     var ifram = parent.document.getElementsByTagName("iframe")[1];
                     ifram.style.height = "650px";
-                    var iframe = ifram.contentWindow.document.querySelector('div[class~="echarts-for-react"]');
+                    var iframe = ifram.contentWindow.document.getElementsByTagName("div")[1];
                     iframe.style.display = "none";
                 </script>
                 """
