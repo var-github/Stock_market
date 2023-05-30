@@ -367,12 +367,7 @@ def quote():
                 js = """
                 <script>
                     var ifram = document.getElementsByTagName("iframe")[0];
-                    var iframe = ifram.contentWindow.document.getElementsByTagName("iframe")[1];
-                    iframe.style.height = "650px";
-                    var doc = iframe.contentWindow.document.getElementsByTagName("div");
-                    for (var i=0, max=doc.length; i < max; i++) {
-                        doc[i].style.height = "600px";
-                    }
+                    ifram.style.display = "none";
                 </script>
                 """
                 html(js)
