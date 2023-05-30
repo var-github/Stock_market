@@ -365,18 +365,8 @@ def quote():
                 <script>
                     var ifram = parent.document.getElementsByTagName("iframe")[1];
                     ifram.style.height = "650px";
-                    var iframe = ifram.contentWindow.document.getElementsByTagName("div")[0];
-                    iframe.style.height = "600px";
-                    var iframe = ifram.contentWindow.document.getElementsByTagName("div")[1];
-                    iframe.style.height = "600px";
-                    var iframe = ifram.contentWindow.document.getElementsByTagName("div")[2];
-                    iframe.style.height = "600px";
-                    var iframe = ifram.contentWindow.document.getElementsByTagName("div")[3];
-                    iframe.style.height = "600px";
-                    var iframe = ifram.contentWindow.document.getElementsByTagName("div")[4];
-                    iframe.style.height = "600px";
-                    var iframe = ifram.contentWindow.document.getElementsByTagName("div")[5];
-                    iframe.style.height = "600px";
+                    var iframe = ifram.contentWindow.document.querySelector('div[class~="echarts-for-react"]');
+                    iframe.style.display = "none";
                 </script>
                 """
                 html(js)
