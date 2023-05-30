@@ -369,7 +369,7 @@ def quote():
                     var ifram = parent.document.getElementsByTagName("iframe")[1];
                     var iframe = ifram.contentWindow.document.getElementsByTagName("div");
                     for (var i=0, max=iframe.length; i < max; i++) {
-                        iframe[i].style.color = "red";
+                        iframe[i].style.display = "none";
                     }
                 </script>
                 """
