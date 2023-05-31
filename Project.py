@@ -18,6 +18,7 @@ from captcha.image import ImageCaptcha
 from streamlit_echarts import st_echarts
 from streamlit.components.v1 import html
 
+
 # Configuring the page
 st.set_page_config(
     page_title="Stock Market",
@@ -36,9 +37,9 @@ if 'page' not in st.session_state:
 
 # Background image
 if st.session_state['page'] in [1, 2, 4, 5, 6, 8, 10]:
-    img = 'https://img.freepik.com/stock-market-forex-trading-graph-graphic-double-exposure_73426-193.jpg'
+    img = st.secrets["main_bg_image"]
 else:
-    img = 'https://cdn.pixabay.com/photo/2018/01/12/16/16/growth-3078543_1280.png'
+    img = st.secrets["bg_image"]
 
 # Styling the webpage
 css = f"""
