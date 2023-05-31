@@ -3,7 +3,7 @@ streamlit-echarts
 pandas==1.5.2
 geopy==2.3.0
 shillelagh[gsheetsapi]
-seleniumbase
+seleniumbase=4.14.10
 webdriver-manager
 requests
 captcha
