@@ -364,7 +364,7 @@ def quote():
                 js = """
                 <script>
                     function execute(){
-                        console.log("running");
+                        console.log("running1");
                         var iframe = parent.document.getElementsByTagName("iframe")[1];
                         iframe.style.height = "550px";
                         iframe.onload = function () {
@@ -376,7 +376,7 @@ def quote():
                     }
                     execute()
                     function exec(){
-                        setInterval(function () {console.log("running");
+                        setInterval(function () {console.log("running2");
                             var iframe = parent.document.getElementsByTagName("iframe")[1];
                             iframe.style.height = "550px";
                             iframe.onload = function () {
