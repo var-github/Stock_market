@@ -696,6 +696,7 @@ elif st.session_state['page'] == 3:
     st.sidebar.caption("")
     main = st.empty()
     table = st.empty()
+    spin = st.empty()
     with st.sidebar:
         current_tab = on_hover_tabs(tabName=['View Users','Transactions', 'Logout'], iconName=['group','credit_card','logout'], styles = {'tabOptionsStyle': {':hover :hover': {'color': 'blue'}}}, key=101, default_choice=0)
         if current_tab == "View Users":
@@ -725,7 +726,7 @@ elif st.session_state['page'] == 3:
         elif current_tab == 'Transactions':
             column2.header("Admin")
             user = []
-            with st.spinner("Running get_all_transactions..."):
+            with spin.spinner("Getting all transactions..."):
                 data = st.session_state['db'].execute(f"select user_id, username, transaction_id, symbol, shares, price, SUBSTRING(transacted,1,LENGTH(transacted)-1) from '{transaction}' natural join '{users}' order by username, transacted desc;")
                 data = data.fetchall()
                 for i in data:
