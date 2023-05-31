@@ -256,7 +256,10 @@ def get_price(company):
     else:
         data['currency'] = ""
         data['Price'] = float(data['Price'][1:].replace(',', ''))
-    data['Website'] = driver.find_element(By.CSS_SELECTOR, 'c-wiz[aria-busy="false"] .gyFHrc a[rel~="noopener"]').text
+    try:
+        data['Website'] = driver.find_element(By.CSS_SELECTOR, 'c-wiz[aria-busy="false"] .gyFHrc a[rel~="noopener"]').text
+    except:
+        data['Website'] = None
     return data
 
 
