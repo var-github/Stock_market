@@ -410,8 +410,8 @@ def quote():
 def buy():
     global column2
     column2.title("BUY SHARES")
-    st.session_state['db'].execute(f"SELECT cash from '{users}' where user_id = {st.session_state['user']};")
-    cash = db.fetchall()
+    cash = st.session_state['db'].execute(f"SELECT cash from '{users}' where user_id = {st.session_state['user']};")
+    cash = cash.fetchall()
     if cash[0][0] < 100:
         column2.warning("Low Balance!, Your balance is below 100 so you cannot buy any more shares!")
         st.stop()
