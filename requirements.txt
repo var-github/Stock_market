@@ -1,11 +1,8 @@
 streamlit-on-Hover-tabs==1.0.1
-streamlit-echarts
-pandas==1.5.2
-geopy==2.3.0
+streamlit-echarts==0.4.0
 shillelagh[gsheetsapi]
-seleniumbase
-requests
-captcha
-yfinance
-streamlit-javascript
-chromedriver_autoinstaller
+seleniumbase==4.14.11
+requests==2.31.0
+captcha==0.4
+yfinance==0.2.18
+chromedriver_autoinstaller==0.4.0
