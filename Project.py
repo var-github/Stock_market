@@ -465,34 +465,51 @@ def buy():
         col3, col4, col5, col6 = var3.columns([8, 1.1, 1.1, 9])
         var4 = col4.empty()
         var5 = col5.empty()
-        if var4.button("Yes", key=13):
+        if var4.button("Yes", key=13) or st.session_state['successful'] in [True, False, "run"]:
+            st.session_state['successful'] = "run"
             var1.empty()
             var2.empty()
             var4.empty()
-            var5.empty()
-            st.session_state['captcha'] = ""
-            st.session_state['successful'] = ""
-            st.session_state['company'] = ""
-            st.session_state['shares'] = 1
-            st.session_state['clicked'] = False
-            column2.warning("Code yet to come!")
-            st.session_state['tab'] = "Portfolio"
-            st.stop()
-        if var5.button("No", key=14):
-            var1.empty()
-            var2.empty()
-            var4.empty()
-            var5.empty()
-            st.session_state['captcha'] = ""
-            st.session_state['successful'] = ""
-            st.session_state['company'] = ""
-            st.session_state['shares'] = 1
-            st.session_state['clicked'] = False
-            column2.warning("Transaction discontinued!")
-            st.session_state['tab'] = "Portfolio"
-            st.stop()
-        col7, col8, col9 = st.columns([1, 4.5, 1])
-        col8.markdown("-----------------------------------------------------------------------------")
+            column1, column2, column3 = st.columns([1, 4.5, 1])
+            captcha()
+            if st.session_state['successful'] == True:
+                var1.empty()
+                var2.empty()
+                var4.empty()
+                var5.empty()
+                st.session_state['captcha'] = ""
+                st.session_state['successful'] = ""
+                st.session_state['company'] = ""
+                st.session_state['shares'] = 1
+                st.session_state['clicked'] = False
+                column2.warning("Code yet to come!")
+                st.session_state['tab'] = "Portfolio"
+                st.stop()
+            elif st.session_state['successful'] == False:
+                column2.warning("Transaction discarded!")
+                st.session_state['captcha'] = ""
+                st.session_state['successful'] = ""
+                st.session_state['company'] = ""
+                st.session_state['shares'] = 1
+                st.session_state['clicked'] = False
+                st.session_state['tab'] = "Portfolio"
+                st.stop()
+        if st.session_state['successful'] not in [True, False, "run"]:
+            if var5.button("No", key=14):
+                var1.empty()
+                var2.empty()
+                var4.empty()
+                var5.empty()
+                st.session_state['captcha'] = ""
+                st.session_state['successful'] = ""
+                st.session_state['company'] = ""
+                st.session_state['shares'] = 1
+                st.session_state['clicked'] = False
+                column2.warning("Transaction discontinued!")
+                st.session_state['tab'] = "Portfolio"
+                st.stop()
+            col7, col8, col9 = st.columns([1, 4.5, 1])
+            col8.markdown("-----------------------------------------------------------------------------")
 
         
         
