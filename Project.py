@@ -136,7 +136,7 @@ css = css = f"""
     }}
     iframe[title="streamlit_echarts.st_echarts"] {{
         position: relative;
-        left: 185px;
+        left: 170px;
         width: 800px;
         border: 1.5px solid;
         background: rgba(255, 255, 255, 0.62);
@@ -145,6 +145,9 @@ css = css = f"""
         color: #6a0000 !important;
         font-style: italic;
         font-weight: bold;
+    }}
+    iframe[title="st.iframe"] {{
+        display: none;
     }}
 </style>
 """
