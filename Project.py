@@ -363,7 +363,7 @@ def quote():
                 st_echarts(options=options)
                 js = """
                 <script>
-                    console.log(parent.document.getElementsByTagName("iframe")[2]);
+                    parent.document.getElementsByTagName("iframe")[2].style.height = "1px";
                     function execute(){
                         console.log("running1");
                         var iframe = parent.document.getElementsByTagName("iframe")[1];
