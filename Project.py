@@ -462,7 +462,7 @@ def buy():
         col1, col2 = var2.columns([4.8, 10])
         col2.write("Do you want to continue with the transaction?")
         var3 = st.empty()
-        col3, col4, col5, col6 = var3.columns([8, 1.1, 1, 9])
+        col3, col4, col5, col6 = var3.columns([8, 1.1, 1.1, 9])
         var4 = col4.empty()
         var5 = col5.empty()
         if var4.button("Yes", key=13):
