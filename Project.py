@@ -473,16 +473,18 @@ def buy():
             column1, column2, column3 = st.columns([1, 4.5, 1])
             captcha()
             if st.session_state['successful'] == True:
-                var1.empty()
-                var2.empty()
-                var4.empty()
-                var5.empty()
-                st.session_state['captcha'] = ""
-                st.session_state['successful'] = ""
-                st.session_state['company'] = ""
-                st.session_state['shares'] = 1
-                st.session_state['clicked'] = False
-                column2.warning("Code yet to come!")
+                st.session_state['db'].execute(f"update '{users}' set cash = cash - {price} where user_id = {st.session_state['user']};")
+                trans = st.session_state['db'].execute(f"select transaction_id from '{transaction}'")
+                trans = trans.fetchall()
+                trans_id = random.randint(10000, 99999)
+                while trans_id in trans:
+                    trans_id = random.randint(10000, 99999)
+                column2.markdown("-----------------------------------------------------------------------------")
+                column2.subheader("Price of $" + str(round(price, ndigits=2)) + " has been deducted from your account   Transaction ID: " + str(trans_id))
+                column2.markdown("-----------------------------------------------------------------------------")
+                date_time = str(datetime.now())[:19] + "a"
+                st.session_state['db'].execute(f"insert into '{transaction}' values({st.session_state['user']}, {trans_id}, '{data['Symbol']}',{shares},{data['Price']},'{date_time}');")
+                column2.text("Thank you for investing")
                 st.session_state['tab'] = "Portfolio"
                 st.stop()
             elif st.session_state['successful'] == False:
