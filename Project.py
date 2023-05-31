@@ -363,6 +363,7 @@ def quote():
                 st_echarts(options=options)
                 js = """
                 <script>
+                    console.log(parent.document.getElementsByTagName("iframe")[2]);
                     function execute(){
                         console.log("running1");
                         var iframe = parent.document.getElementsByTagName("iframe")[1];
@@ -392,14 +393,6 @@ def quote():
                 </script>
                 """
                 html(js)
-                css = """
-                <style>
-                    [title = "st.iframe"] {
-                        height = 1px;
-                    }
-                </style>
-                """
-                st.markdown(css, unsafe_allow_html = True)
             if data['Website']:
                 col1, col2, col3 = st.columns([1, 4.5, 1])
                 col2.write("Website: [" + str(data["Website"]) + "](" + str(data["Website"]) + ")")
