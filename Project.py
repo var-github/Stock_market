@@ -363,17 +363,15 @@ def quote():
                 st_echarts(options=options)
                 js = """
                 <script>
-                    execute()
-                    function execute() {
-                        var iframe = parent.document.getElementsByTagName("iframe")[1];
-                        iframe.style.height = "550px";
-                        iframe.onload = function () {
-                            doc = iframe.contentWindow.document.getElementsByTagName("div");
-                            for (var i=0, max=doc.length; i < max; i++) {
-                                doc[i].style.height = "500px";
-                            }
+                    var iframe = parent.document.getElementsByTagName("iframe")[1];
+                    iframe.style.height = "550px";
+                    iframe.onload = function () {
+                        doc = iframe.contentWindow.document.getElementsByTagName("div");
+                        for (var i=0, max=doc.length; i < max; i++) {
+                            doc[i].style.height = "500px";
                         }
                     }
+                    console.log(parent.document.getElementsByTagName("iframe")[2]);
                 </script>
                 """
                 html(js)
