@@ -1,3 +1,4 @@
+# Importing required modules
 from st_on_hover_tabs import on_hover_tabs
 import random
 import time
@@ -6,16 +7,14 @@ import requests
 import chromedriver_autoinstaller
 import streamlit as st
 import yfinance
+import io
 from shillelagh.backends.apsw.db import connect
-from geopy.geocoders import Nominatim
-import pandas
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from captcha.image import ImageCaptcha
-import io
 from streamlit_echarts import st_echarts
 from streamlit.components.v1 import html
 
@@ -650,7 +649,7 @@ if st.session_state['page'] == 1:
     st.sidebar.caption("")
     column2.header("WELCOME", anchor="welcome")
     with st.sidebar:
-        current_tab = on_hover_tabs(tabName=['Home','Login', 'Register', 'Admin','Contact Us','Help'], iconName=['home','account_circle','economy','dashboard','phone','help_center'], styles = {'tabOptionsStyle': {':hover :hover': {'color': 'blue'}}}, key=105, default_choice=0)
+        current_tab = on_hover_tabs(tabName=['Home','Login', 'Register', 'Admin','Help','About'], iconName=['home','account_circle','economy','dashboard','help_center','description'], styles = {'tabOptionsStyle': {':hover :hover': {'color': 'blue'}}}, key=105, default_choice=0)
         if current_tab =='Login':
             st.session_state['page'] = 6
             st.experimental_rerun()
@@ -660,7 +659,7 @@ if st.session_state['page'] == 1:
         elif current_tab == 'Admin':
             st.session_state['page'] = 2
             st.experimental_rerun()
-        elif current_tab == 'Contact Us':
+        elif current_tab == 'About':
             st.session_state['page'] = 4
             st.experimental_rerun()
         elif current_tab == 'Help':
@@ -743,35 +742,11 @@ elif st.session_state['page'] == 3:
 
 
 elif st.session_state['page'] == 4:
-    column2.header("Contact Us")
+    column2.header("About")
     column1.text("")
     if column1.button(label="🔙"):
         st.session_state['page'] = 1
         st.experimental_rerun()
-    data = pandas.DataFrame({'locations' : ['NPS RNR', 'WTC Bengaluru', 'Manyata Tech Park'], 'lat' : [12.984104, 13.012611,  13.046943], 'lon' : [77.549458, 77.555953, 77.621297]})
-    city = column2.text_input('Please enter your city so we cannect you to the closest customer care center').lower()
-    if not internet():
-        column2.warning("No internet !!")
-        st.stop()
-    if column2.button("Check"):
-        if not city:
-            column2.warning("Please enter city name !!")
-        else:
-            geolocator = Nominatim(user_agent="Finance123")
-            location = geolocator.geocode(city)
-            if not location:
-                column2.warning("Please enter valid city name !!")
-                st.stop()
-            if city.lower() not in ["bengaluru","bangalore"]:
-                lat = location.latitude
-                long = location.longitude
-                data = pandas.DataFrame({'locations' : [city], 'lat' : [lat], 'lon' : [long]})
-            column2.text("Thank you for contacting, we have an available line")
-            mob = random.randint(9000000000,9999999999)
-            column2.text("Mobile Number:" + str(mob))
-            column2.text("")
-    col1, col2, col3 = st.columns([1, 11, 1])
-    col2.map(data)
 
 
 elif st.session_state['page'] == 5:
