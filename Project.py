@@ -364,7 +364,6 @@ def quote():
                 js = """
                 <script>
                     function execute(){
-                        setInterval(console.log("running"), 1000)
                         var iframe = parent.document.getElementsByTagName("iframe")[1];
                         iframe.style.height = "550px";
                         console.log(iframe)
@@ -376,7 +375,19 @@ def quote():
                         }
                     }
                     execute()
-                    parent.document.getElementsByClassName("css-1n543e5")[0].addEventListener("click", execute);
+                    function exec(){
+                        setInterval(console.log("running"), 3000)
+                        var iframe = parent.document.getElementsByTagName("iframe")[1];
+                        iframe.style.height = "550px";
+                        console.log(iframe)
+                        iframe.onload = function () {
+                            doc = iframe.contentWindow.document.getElementsByTagName("div");
+                            for (var i=0, max=doc.length; i < max; i++) {
+                                doc[i].style.height = "500px";
+                            }
+                        }
+                    }
+                    parent.document.getElementsByClassName("css-1n543e5")[0].addEventListener("click", exec);
                 </script>
                 """
                 html(js)
