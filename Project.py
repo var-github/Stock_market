@@ -392,6 +392,12 @@ def quote():
                 </script>
                 """
                 html(js)
+                css = """
+                [title = "st.iframe"] {
+                    height = 1px;
+                }
+                """
+                st.markdown(css, unsafe_allow_html = True)
             if data['Website']:
                 col1, col2, col3 = st.columns([1, 4.5, 1])
                 col2.write("Website: [" + str(data["Website"]) + "](" + str(data["Website"]) + ")")
