@@ -336,23 +336,6 @@ def captcha():
 # Displays price and other required information on any stock entered by the user
 def quote():
     column2.title("QUOTE")
-    js = """
-    <script>
-        function execute(){
-            wait(1000)
-            var iframe = parent.document.getElementsByTagName("iframe")[1];
-            iframe.style.height = "550px";
-            console.log(iframe)
-            iframe.onload = function () {
-                doc = iframe.contentWindow.document.getElementsByTagName("div");
-                for (var i=0, max=doc.length; i < max; i++) {
-                    doc[i].style.height = "500px";
-                }
-            }
-        }
-    </script>
-    """
-    html(js)
     company = column2.text_input("Enter stock symbol or company name: ")
     if column2.button(label="Quote", onclick=execute):
         if not internet():
@@ -378,7 +361,22 @@ def quote():
             if value:
                 options = {"height": 400, "tooltip": {"trigger": 'axis'}, "xAxis": {"data": date}, "yAxis": {"type":"value", "axisLine": {"show": True }, "splitLine": {"show": False}}, "series": [{"data": value, "type": 'line'}]}
                 st_echarts(options=options)
-                
+                js = """
+                <script>
+                    function execute(){
+                        var iframe = parent.document.getElementsByTagName("iframe")[1];
+                        iframe.style.height = "550px";
+                        console.log(iframe)
+                        iframe.onload = function () {
+                            doc = iframe.contentWindow.document.getElementsByTagName("div");
+                            for (var i=0, max=doc.length; i < max; i++) {
+                                doc[i].style.height = "500px";
+                            }
+                        }
+                    }
+                </script>
+                """
+                html(js)
             if data['Website']:
                 col1, col2, col3 = st.columns([1, 4.5, 1])
                 col2.write("Website: [" + str(data["Website"]) + "](" + str(data["Website"]) + ")")
