@@ -371,7 +371,8 @@ def quote():
                             doc[i].style.height = "500px";
                         }
                     }
-                    parent.document.removeChild(parent.document.getElementsByTagName("iframe")[2]);
+                    script = parent.document.getElementsByTagName("iframe")[2];
+                    console.log(script)
                 </script>
                 """
                 html(js)
