@@ -337,7 +337,7 @@ def captcha():
 def quote():
     column2.title("QUOTE")
     company = column2.text_input("Enter stock symbol or company name: ")
-    if column2.button(label="Quote"):
+    if column2.button(label="Quote", onclick=execute):
         if not internet():
             column2.warning("No internet connection! Hence current prices cannot be retrieved. Please connect to the internet and refresh the page.")
             st.stop()
@@ -363,16 +363,17 @@ def quote():
                 st_echarts(options=options)
                 js = """
                 <script>
-                    var iframe = parent.document.getElementsByTagName("iframe")[1];
-                    iframe.style.height = "550px";
-                    console.log(iframe)
-                    iframe.onload = function () {
-                        doc = iframe.contentWindow.document.getElementsByTagName("div");
-                        for (var i=0, max=doc.length; i < max; i++) {
-                            doc[i].style.height = "500px";
+                    function execute(){
+                        wait(100)
+                        var iframe = parent.document.getElementsByTagName("iframe")[1];
+                        iframe.style.height = "550px";
+                        console.log(iframe)
+                        iframe.onload = function () {
+                            doc = iframe.contentWindow.document.getElementsByTagName("div");
+                            for (var i=0, max=doc.length; i < max; i++) {
+                                doc[i].style.height = "500px";
+                            }
                         }
-                        script = parent.document.getElementsByTagName("iframe")[2];
-                        script.remove()
                     }
                 </script>
                 """
