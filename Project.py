@@ -367,6 +367,9 @@ def quote():
                     iframe.style.height = "650px";
                     console.log(iframe)
                     console.log(iframe.contentDocument)
+                    console.log(iframe.contentWindow.document)
+                    console.log(iframe.contentWindow.document.body)
+                    console.log(iframe.contentDocument.body)
                     var doc = iframe.contentWindow.document.getElementsByTagName("div");
                     console.log(doc)
                     for (var i=0, max=doc.length; i < max; i++) {
