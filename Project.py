@@ -365,6 +365,7 @@ def quote():
                 <script>
                     var iframe = parent.document.getElementsByTagName("iframe")[1];
                     iframe.style.height = "550px";
+                    console.log(iframe)
                     iframe.onload = function () {
                         doc = iframe.contentWindow.document.getElementsByTagName("div");
                         for (var i=0, max=doc.length; i < max; i++) {
