@@ -34,13 +34,14 @@ transaction = st.secrets["transaction_url"]
 if 'page' not in st.session_state:
     st.session_state['page'] = 1
 
-
+# Background image
 if st.session_state['page'] in [1, 2, 4, 5, 6, 8, 10]:
     img = 'https://img.freepik.com/stock-market-forex-trading-graph-graphic-double-exposure_73426-193.jpg'
 else:
     img = 'https://cdn.pixabay.com/photo/2018/01/12/16/16/growth-3078543_1280.png'
 
-css = css = f"""
+# Styling the webpage
+css = f"""
 <style>
     section[data-testid='stSidebar'] {{
         top: -1%;
@@ -405,7 +406,6 @@ def quote():
             st.stop()
         
         
-
 def buy():
     global column2
     column2.title("BUY SHARES")
@@ -612,8 +612,7 @@ def sell():
             col8.markdown("-----------------------------------------------------------------------------")
 
         
-        
-        
+# Show all transactions made by the user
 def transactions():
     column2.title("Your Transactions")
     data = st.session_state['db'].execute(f'select transaction_id, symbol, shares, price, ABS(shares) * price, SUBSTRING(transacted,1,LENGTH(transacted)-1) from "{transaction}" where user_id = {st.session_state["user"]} order by transacted desc;')
@@ -741,6 +740,7 @@ elif st.session_state['page'] == 3:
             st.experimental_rerun()
 
 
+# About page
 elif st.session_state['page'] == 4:
     column2.header("About")
     column1.text("")
@@ -749,6 +749,7 @@ elif st.session_state['page'] == 4:
         st.experimental_rerun()
 
 
+# Help page
 elif st.session_state['page'] == 5:
     column2.header("Help")
     column1.text("")
@@ -1247,9 +1248,7 @@ elif st.session_state['page'] == 14:
         col_10, col_11, col_12 = st.columns([1, 3.5, 1])
         col_11.markdown("-----------------------------------------------------------------------------------")
 
-            
-            
-            
-            
-            
-            
+
+
+
+
