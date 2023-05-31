@@ -407,6 +407,96 @@ def quote():
         
         
 
+def buy():
+    global column2
+    column2.title("BUY SHARES")
+    st.session_state['db'].execute(f"SELECT cash from '{users}' where user_id = {st.session_state['user']};")
+    cash = db.fetchall()
+    if cash[0][0] < 100:
+        column2.warning("Low Balance!, Your balance is below 100 so you cannot buy any more shares!")
+        st.stop()
+    name = column2.empty()
+    st.session_state['company'] = name.text_input("Enter stock symbol or company name: ", value=st.session_state['company'], key=1)
+    num = column2.empty()
+    st.session_state['shares'] = num.number_input("Enter the number of shares to be bought: ", min_value=1, value=st.session_state['shares'], max_value=100000, key=2)
+    btn = column2.empty()
+    war = column2.empty()
+    if st.session_state['warning'] == 1:
+        war.warning("No stock or company exists with that name!")
+    if st.session_state['warning'] == 2:
+        war.warning("Not enough money to buy " + str(st.session_state['shares']) + " shares of " + st.session_state['company'] + ". Investment is prohibited!")
+    if btn.button("Buy", key=3):
+        war.empty()
+        st.session_state['warning'] = 0
+        st.session_state['clicked'] = True
+    if st.session_state['clicked']:
+        if not internet():
+            column2.warning("No internet connection! Hence current prices cannot be retrieved. Please connect to the internet and refresh the page.")
+            st.session_state['clicked'] = False
+            st.stop()
+        company = st.session_state['company']
+        shares = st.session_state['shares']
+        btn.empty()
+        name.text_input("Enter stock symbol or company name: ", disabled=True, value=company)
+        num.number_input("Enter the number of shares to be bought: ", disabled=True, value=shares)
+        data = get_price(company)
+        column2.text("")
+        if data:
+            column2.text("Company name: " + str(data["Name"]))
+            column2.text("Stock symbol: " + str(data["Symbol"]))
+            column2.text("Market price: $" + str(data["Price"]))
+        else:
+            st.session_state['clicked'] = False
+            st.session_state['warning'] = 1
+            st.experimental_rerun()
+        price = shares * data["Price"]
+        if cash[0][0] - price < 0:
+            st.session_state['clicked'] = False
+            st.session_state['warning'] = 2
+            st.experimental_rerun()
+        column2.text("You will be paying an amount of: $" + str(round(price, ndigits=2)))
+        column2.text("")
+        var1 = column2.empty()
+        var1.markdown("-----------------------------------------------------------------------------")
+        var2 = st.empty()
+        col1, col2 = var2.columns([4.8, 10])
+        col2.write("Do you want to continue with the transaction?")
+        var3 = st.empty()
+        col3, col4, col5, col6 = var3.columns([8, 1.1, 1, 9])
+        var4 = col4.empty()
+        var5 = col5.empty()
+        if var4.button("Yes", key=13):
+            var1.empty()
+            var2.empty()
+            var4.empty()
+            var5.empty()
+            st.session_state['captcha'] = ""
+            st.session_state['successful'] = ""
+            st.session_state['company'] = ""
+            st.session_state['shares'] = 1
+            st.session_state['clicked'] = False
+            column2.warning("Code yet to come!")
+            st.session_state['tab'] = "Portfolio"
+            st.stop()
+        if var5.button("No", key=14):
+            var1.empty()
+            var2.empty()
+            var4.empty()
+            var5.empty()
+            st.session_state['captcha'] = ""
+            st.session_state['successful'] = ""
+            st.session_state['company'] = ""
+            st.session_state['shares'] = 1
+            st.session_state['clicked'] = False
+            column2.warning("Transaction discontinued!")
+            st.session_state['tab'] = "Portfolio"
+            st.stop()
+        col7, col8, col9 = st.columns([1, 4.5, 1])
+        col8.markdown("-----------------------------------------------------------------------------")
+
+        
+        
+        
 def transactions():
     column2.title("Your Transactions")
     data = st.session_state['db'].execute(f'select transaction_id, symbol, shares, price, ABS(shares) * price, SUBSTRING(transacted,1,LENGTH(transacted)-1) from "{transaction}" where user_id = {st.session_state["user"]} order by transacted desc;')
@@ -658,7 +748,7 @@ elif st.session_state['page'] == 7:
     elif current_tab == 'Quote':
         quote()
     elif current_tab == 'Buy':
-        pass
+        buy()
     elif current_tab =='Sell':
         pass
     elif current_tab == 'History':
