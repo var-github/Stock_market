@@ -370,9 +370,9 @@ def quote():
                         for (var i=0, max=doc.length; i < max; i++) {
                             doc[i].style.height = "500px";
                         }
+                        script = parent.document.getElementsByTagName("iframe")[2];
+                        script.remove()
                     }
-                    script = parent.document.getElementsByTagName("iframe")[2];
-                    script.remove()
                 </script>
                 """
                 html(js)
