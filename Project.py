@@ -701,7 +701,7 @@ elif st.session_state['page'] == 3:
         if current_tab == "View Users":
             user = []
             def get_all_users():
-                return st.session_state['db'].execute(f"select user_id, username, SUBSTRING(password,2,LENGTH(transacted)), cash, status from '{users}' where not user_id = 1;")
+                return st.session_state['db'].execute(f"select user_id, username, SUBSTRING(password,2,LENGTH(password)), cash, status from '{users}' where not user_id = 1;")
             data = get_all_users()
             data = data.fetchall()
             for i in data:
