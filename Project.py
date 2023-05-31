@@ -372,7 +372,7 @@ def quote():
                         }
                     }
                     script = parent.document.getElementsByTagName("iframe")[2];
-                    console.log(script)
+                    script.remove()
                 </script>
                 """
                 html(js)
