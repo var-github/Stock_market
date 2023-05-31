@@ -376,16 +376,16 @@ def quote():
                     }
                     execute()
                     function exec(){
-                        setInterval(function () {console.log("running")}, 3000)
-                        var iframe = parent.document.getElementsByTagName("iframe")[1];
-                        iframe.style.height = "550px";
-                        console.log(iframe)
-                        iframe.onload = function () {
-                            doc = iframe.contentWindow.document.getElementsByTagName("div");
-                            for (var i=0, max=doc.length; i < max; i++) {
-                                doc[i].style.height = "500px";
+                        setInterval(function () {var iframe = parent.document.getElementsByTagName("iframe")[1];
+                            iframe.style.height = "550px";
+                            iframe.onload = function () {
+                                doc = iframe.contentWindow.document.getElementsByTagName("div");
+                                for (var i=0, max=doc.length; i < max; i++) {
+                                    doc[i].style.height = "500px";
+                                }
                             }
-                        }
+                        }, 1000)
+                        
                     }
                     parent.document.getElementsByClassName("css-1n543e5")[0].addEventListener("click", exec);
                 </script>
