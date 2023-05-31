@@ -515,6 +515,79 @@ def buy():
 
         
         
+def sell():
+    global column2
+    column2.title("SELL SHARES")
+    data = st.session_state['db'].execute(f"SELECT symbol from '{transaction}' where user_id = {st.session_state['user']} group by symbol having sum(shares) != 0;")
+    data = data.fetchall()
+    for i in range(len(data)):
+        data[i] = data[i][0]
+    data = ['<select>'] + data
+    name = column2.empty()
+    st.session_state['stock'] = name.selectbox("Choose a stock to sell:", data, index=data.index(st.session_state['stock']), key=1)
+    num = column2.empty()
+    st.session_state['shares'] = num.number_input("Enter the number of shares to be sold: ", min_value=1, value=st.session_state['shares'], max_value=100000, key=2)
+    btn = column2.empty()
+    if btn.button("Sell") and st.session_state['stock'] != '<select>':
+        st.session_state['clicked'] = True
+    if st.session_state['clicked']:
+        shares = st.session_state['shares']
+        stock = st.session_state['stock']
+        if not internet():
+            column2.warning("No internet connection! Hence current prices cannot be retrieved. Please connect to the internet and refresh the page.")
+            st.session_state['clicked'] = False
+            st.stop()
+        shares_owned = st.session_state['db'].execute(f"SELECT sum(shares) from '{transaction}' where user_id = {st.session_state['user']} and symbol = '{stock}' group by symbol;")
+        shares_owned = shares_owned.fetchall()[0][0]
+        if shares > shares_owned:
+            column2.warning("You own only " + str(shares_owned) + " shares of " + stock + ", you cannot sell " + str(shares) + " shares!")
+            st.stop()
+        name.selectbox("Choose a stock to sell:", data, index=data.index(stock), disabled=True, key=3)
+        num.number_input("Enter the number of shares to be sold: ", disabled=True, value=shares, key=4)
+        btn.empty()
+        data = get_price(stock)
+        price = round(int(shares) * data["Price"], ndigits=2)
+        column2.text("")
+        column2.subheader("Transaction INFO")
+        column2.text("Symbol: " + str(data["Symbol"]))
+        column2.text("Company: " + str(data["Name"]))
+        column2.text("You own: " + str(shares_owned) + " share(s)")
+        column2.text("Current Price: " + str(data["Price"]))
+        column2.text("")
+        column2.text("You are selling " + str(shares) + " share(s) and will be gaining an amount of $" + str(round(price, ndigits=2)))
+        column2.text("")
+        var1 = column2.empty()
+        var1.markdown("-----------------------------------------------------------------------------")
+        var2 = st.empty()
+        col1, col2 = var2.columns([4.8, 10])
+        col2.write("Do you want to continue with the transaction?")
+        var3 = st.empty()
+        col3, col4, col5, col6 = var3.columns([8, 1, 1, 9])
+        var4 = col4.empty()
+        var5 = col5.empty()
+        if var4.button("Yes") or st.session_state['successful'] in [True, False, "run"]:
+            var1.empty()
+            var2.empty()
+            var4.empty()
+            var5.empty()
+            st.session_state['clicked'] = False
+            column2.warning("Code yet to come!")
+            st.session_state['tab'] = "Portfolio"
+            st.stop()
+        if var5.button("No"):
+            var1.empty()
+            var2.empty()
+            var4.empty()
+            var5.empty()
+            st.session_state['clicked'] = False
+            column2.warning("Transaction discontinued!")
+            st.session_state['tab'] = "Portfolio"
+            st.stop()
+        col7, col8, col9 = st.columns([1, 4.5, 1])
+        col8.markdown("-----------------------------------------------------------------------------")
+
+        
+        
         
 def transactions():
     column2.title("Your Transactions")
@@ -769,7 +842,7 @@ elif st.session_state['page'] == 7:
     elif current_tab == 'Buy':
         buy()
     elif current_tab =='Sell':
-        pass
+        sell()
     elif current_tab == 'History':
         transactions()
     elif current_tab == 'Account':
