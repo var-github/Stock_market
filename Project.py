@@ -644,7 +644,7 @@ if st.session_state['page'] == 1:
     </p>
     """
     st.markdown(home_page, unsafe_allow_html=True)
-    st.sidebar.image("https://app.omnistock.io/uploads/logo/yktS4FqNbQGn3TychVaEzDIkHoiJa4Ei5HPSAIAy.png")
+    st.sidebar.image(st.secrets["logo"])
     st.sidebar.caption("")
     st.sidebar.caption("")
     column2.header("WELCOME", anchor="welcome")
@@ -692,7 +692,7 @@ elif st.session_state['page'] == 2:
 # Admin page
 elif st.session_state['page'] == 3:
     column1, column2, column3 = st.columns([1, 4.5, 1])
-    st.sidebar.image("https://app.omnistock.io/uploads/logo/yktS4FqNbQGn3TychVaEzDIkHoiJa4Ei5HPSAIAy.png")
+    st.sidebar.image(st.secrets["logo"])
     st.sidebar.caption("")
     st.sidebar.caption("")
     main = st.empty()
@@ -832,7 +832,7 @@ elif st.session_state['page'] == 7:
     </style>
     """
     st.markdown(top, unsafe_allow_html=True)
-    st.sidebar.image("https://app.omnistock.io/uploads/logo/yktS4FqNbQGn3TychVaEzDIkHoiJa4Ei5HPSAIAy.png")
+    st.sidebar.image(st.secrets["logo"])
     st.sidebar.caption("")
     with st.sidebar:
         current_tab = on_hover_tabs(tabName=['Portfolio', 'Quote', 'Buy', 'Sell', 'History', 'Account', 'Logout'], iconName=['dashboard', 'manage_search', 'money', 'economy', 'history', 'account_circle', 'logout'], styles = {'tabOptionsStyle': {':hover :hover': {'color': 'lightgreen'}}},key=109, default_choice=0)
@@ -975,7 +975,7 @@ elif st.session_state['page'] == 8:
 # Account menu
 elif st.session_state['page'] == 9:
     column1, column2, column3 = st.columns([1, 4.5, 1])
-    st.sidebar.image("https://app.omnistock.io/uploads/logo/yktS4FqNbQGn3TychVaEzDIkHoiJa4Ei5HPSAIAy.png")
+    st.sidebar.image(st.secrets["logo"])
     st.sidebar.caption("")
     st.sidebar.caption("")
     top = """
