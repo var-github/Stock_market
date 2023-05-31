@@ -136,7 +136,7 @@ css = css = f"""
     }}
     iframe[title="streamlit_echarts.st_echarts"] {{
         position: relative;
-        left: 170px;
+        left: 165px;
         width: 800px;
         border: 1.5px solid;
         background: rgba(255, 255, 255, 0.62);
@@ -362,18 +362,18 @@ def quote():
                     date.append(str(i.strftime("%x")))
                     value.append(round(graph[i], ndigits=2))
             if value:
-                options = {"height": 400, "tooltip": {"trigger": 'axis'}, "xAxis": {"data": date}, "yAxis": {"type":"value", "axisLine": {"show": True }, "splitLine": {"show": False}}, "series": [{"data": value, "type": 'line'}]}
+                options = {"height": 300, "tooltip": {"trigger": 'axis'}, "xAxis": {"data": date}, "yAxis": {"type":"value", "axisLine": {"show": True }, "splitLine": {"show": False}}, "series": [{"data": value, "type": 'line'}]}
                 st_echarts(options=options)
                 js = """
                 <script>
                     function execute(){
                         console.log("running1");
                         var iframe = parent.document.getElementsByTagName("iframe")[1];
-                        iframe.style.height = "550px";
+                        iframe.style.height = "450px";
                         iframe.onload = function () {
                             doc = iframe.contentWindow.document.getElementsByTagName("div");
                             for (var i=0, max=doc.length; i < max; i++) {
-                                doc[i].style.height = "500px";
+                                doc[i].style.height = "400px";
                             }
                         }
                     }
@@ -381,11 +381,11 @@ def quote():
                     function exec(){
                         setInterval(function () {console.log("running2");
                             var iframe = parent.document.getElementsByTagName("iframe")[1];
-                            iframe.style.height = "550px";
+                            iframe.style.height = "450px";
                             iframe.onload = function () {
                                 doc = iframe.contentWindow.document.getElementsByTagName("div");
                                 for (var i=0, max=doc.length; i < max; i++) {
-                                    doc[i].style.height = "500px";
+                                    doc[i].style.height = "400px";
                                 }
                             }
                         }, 1000)
