@@ -364,11 +364,11 @@ def quote():
                 js = """
                 <script>
                     var iframe = parent.document.getElementsByTagName("iframe")[1];
-                    iframe.style.height = "650px";
+                    iframe.style.height = "450px";
                     iframe.onload = function () {
                         doc = iframe.contentWindow.document.getElementsByTagName("div");
                         for (var i=0, max=doc.length; i < max; i++) {
-                            doc[i].style.height = "600px";
+                            doc[i].style.height = "400px";
                         }
                     }
                 </script>
