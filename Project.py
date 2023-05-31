@@ -365,17 +365,10 @@ def quote():
                 <script>
                     var iframe = parent.document.getElementsByTagName("iframe")[1];
                     iframe.style.height = "650px";
-                    console.log(iframe)
-                    console.log(iframe.contentDocument)
+                    console.log(iframe);
                     console.log(iframe.contentWindow.document)
-                    console.log(iframe.contentWindow.document.body)
-                    console.log(iframe.contentDocument.body)
-                    var doc = iframe.contentWindow.document.getElementsByTagName("div");
-                    console.log(doc)
-                    for (var i=0, max=doc.length; i < max; i++) {
-                        console.log(doc[i])
-                        doc[i].style.height = "600px";
-                    }
+                    console.log(iframe.contentWindow.document.body.innerHTML);
+                    console.log(iframe.innerHTML);
                 </script>
                 """
                 html(js)
