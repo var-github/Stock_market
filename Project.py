@@ -393,9 +393,11 @@ def quote():
                 """
                 html(js)
                 css = """
-                [title = "st.iframe"] {
-                    height = 1px;
-                }
+                <style>
+                    [title = "st.iframe"] {
+                        height = 1px;
+                    }
+                </style>
                 """
                 st.markdown(css, unsafe_allow_html = True)
             if data['Website']:
