@@ -338,7 +338,7 @@ def quote():
     column2.title("QUOTE")
     js = """
     <script>
-        parent.document.getElementsByClassName("css-1n543e5").addEventListener("click", execute);
+        parent.document.getElementsByClassName("css-1n543e5")[0].addEventListener("click", execute);
         function execute(){
             console.log("Running")
             var iframe = parent.document.getElementsByTagName("iframe")[1];
