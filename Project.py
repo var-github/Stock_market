@@ -340,6 +340,7 @@ def quote():
     <script>
         parent.document.getElementsByClassName("css-1n543e5").addEventListener("click", setTimeout(execute, 1000));
         function execute(){
+            console.log("Running")
             var iframe = parent.document.getElementsByTagName("iframe")[1];
             iframe.style.height = "550px";
             console.log(iframe)
