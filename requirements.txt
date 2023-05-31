@@ -9,3 +9,4 @@ requests
 captcha
 yfinance
 streamlit-javascript
+chromedriver_autoinstaller
