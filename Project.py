@@ -368,10 +368,7 @@ def quote():
                     iframe.onload = function () {
                         console.log(iframe.contentWindow.document)
                     }
-                    console.log(iframe);
-                    console.log(iframe.contentWindow.document)
-                    console.log(iframe.contentWindow.document.body.innerHTML);
-                    console.log(iframe.innerHTML);
+                    
                 </script>
                 """
                 html(js)
