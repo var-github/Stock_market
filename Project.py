@@ -272,17 +272,16 @@ def portfolio():
     if not data:
         column2.warning("You currently have not invested in any stocks")
         st.stop()
-    with st.spinner("Loading..."):
-        if internet():
-            sum = 0
-            for i in range(len(data)):
-                info = get_price(data[i][0])
-                price = info['Price']
-                sum += price * int(data[i][1])
-                data[i] = data[i] + (price,)
-            data = [("Symbol", "Shares", "Current Price")] + data
-        else:
-            data = [("Symbol", "Shares")] + data
+    if internet():
+        sum = 0
+        for i in range(len(data)):
+            info = get_price(data[i][0])
+            price = info['Price']
+            sum += price * int(data[i][1])
+            data[i] = data[i] + (price,)
+        data = [("Symbol", "Shares", "Current Price")] + data
+    else:
+        data = [("Symbol", "Shares")] + data
     column2.table(data)
     if internet():
         column2.text("Total: $" + str(round(sum, ndigits=2)))
@@ -701,7 +700,9 @@ elif st.session_state['page'] == 3:
         current_tab = on_hover_tabs(tabName=['View Users','Transactions', 'Logout'], iconName=['group','credit_card','logout'], styles = {'tabOptionsStyle': {':hover :hover': {'color': 'blue'}}}, key=101, default_choice=0)
         if current_tab == "View Users":
             user = []
-            data = st.session_state['db'].execute(f"select * from '{users}' where not user_id = 1;")
+            def get_all_users():
+                return st.session_state['db'].execute(f"select user_id, username, SUBSTRING(password,2,LENGTH(transacted)), cash, status from '{users}' where not user_id = 1;")
+            data = get_all_users()
             data = data.fetchall()
             for i in data:
                 user += [i[1]]
@@ -724,7 +725,9 @@ elif st.session_state['page'] == 3:
         elif current_tab == 'Transactions':
             column2.header("Admin")
             user = []
-            data = st.session_state['db'].execute(f"select user_id, username, transaction_id, symbol, shares, price, SUBSTRING(transacted,1,LENGTH(transacted)-1) from '{transaction}' natural join '{users}' order by username, transacted desc;")
+            def get_all_transactions():
+                return st.session_state['db'].execute(f"select user_id, username, transaction_id, symbol, shares, price, SUBSTRING(transacted,1,LENGTH(transacted)-1) from '{transaction}' natural join '{users}' order by username, transacted desc;")
+            data = get_all_transactions()
             data = data.fetchall()
             for i in data:
                 if i[1] not in user:
