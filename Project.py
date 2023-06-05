@@ -893,7 +893,7 @@ elif st.session_state['page'] == 8:
 
         - The admin will be able to moniter all your activities and can disable your account incase of any fraud.""")
         column2.text("")
-        col1, col2, col3, col4 = st.columns([0.7, 1.2, 1, 1])
+        col1, col2, col3, col4 = st.columns([0.7, 1.5, 1.2, 1])
         st.session_state['agree'] = col2.checkbox("I agree that I have read through the guidelines", value=st.session_state['agree'])
         if col4.button("Next ⇥") and st.session_state['agree']:
             st.session_state['clicked'] = True
