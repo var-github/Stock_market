@@ -754,24 +754,11 @@ elif st.session_state['page'] == 4:
 
 # Help page
 elif st.session_state['page'] == 5:
-    column2.header("Help")
+    column2.header("Forgotten Password?")
     column1.text("")
     if column1.button("🔙"):
         st.session_state['page'] = 1
         st.experimental_rerun()
-
-    column2.markdown("""            - **This program is a simulator of actual investments in stocks and the creation of portfolios in the stock market.**
-
-    - **When you register the program will give you $10000 online currency - which can only be spent through our program.**
-
-    - **You can use this money to invest and gain experience on how to invest in the real world. The prices of the stocks are realtime prices (they are not mocks).**
-
-    - **Any data entered into the program will only be stored locally and will not be shared with any third party companies.**
-
-    - **The admin will be able to moniter all your activities and can disable your account incase of any fraud.**""")
-    
-    column2.text("")    
-    column2.header("Forgotten Password?")
     username = column2.text_input('Username')
     if column2.button("Check"):
         data = st.session_state['db'].execute(f"select username, password, user_id, status from '{users}' where username = '{username}'")
