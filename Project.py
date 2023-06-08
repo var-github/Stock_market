@@ -281,6 +281,7 @@ def portfolio():
                 try:
                     info = get_price(data[i][0])
                 except:
+                    st.session_state['count'] = 2
                     del st.session_state['driver']
                     st.experimental_rerun()
             else:
