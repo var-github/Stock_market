@@ -192,6 +192,8 @@ if 'password' not in st.session_state:
     st.session_state['password'] = ""
 if 'confirm' not in st.session_state:
     st.session_state['confirm'] = ""
+if 'count' not in st.session_state:
+    st.session_state['count'] = 1
 
 
 # This function sets all the variables to their initiall state
@@ -275,7 +277,14 @@ def portfolio():
     if internet():
         sum = 0
         for i in range(len(data)):
-            info = get_price(data[i][0])
+            if st.session_state['count'] == 1:
+                try:
+                    info = get_price(data[i][0])
+                except:
+                    del st.session_state['driver']
+                    st.experimental_rerun()
+            else:
+                info = get_price(data[i][0])
             price = info['Price']
             sum += price * int(data[i][1])
             data[i] = data[i] + (price,)
