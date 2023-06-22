@@ -825,7 +825,8 @@ elif st.session_state['page'] == 5:
             btn.empty()
             selctbx.empty()
             prmpt.empty()
-            selctbx.selectbox("Security Question", l, disabled=True, key=l.find(q))
+            selctbx.selectbox("Security Question", l, disabled=True, index=l.index(q))
+            prmpt.text_input("Security prompt", disabled=True, value=ans)
             column2.text("Your password is "+data[0][0][1:])
 
 
