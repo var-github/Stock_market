@@ -644,10 +644,10 @@ def transactions():
 
 def admin_transactions():
     with placeholder:
-        column1, column2, column3 = st.columns([1, 3.5, 1])
-        column2.header("Admin")
-        user = []
         with st.spinner("Loading..."):
+            column1, column2, column3 = st.columns([1, 3.5, 1])
+            column2.header("Admin")
+            user = []        
             data = st.session_state['db'].execute(f"select user_id, username, transaction_id, symbol, shares, price, SUBSTRING(transacted,1,LENGTH(transacted)-1) from '{transaction}' natural join '{users}' order by username, transacted desc;")
             data = data.fetchall()
             for i in data:
