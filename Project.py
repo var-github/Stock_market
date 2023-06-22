@@ -739,11 +739,12 @@ elif st.session_state['page'] == 3:
         elif current_tab == 'Transactions':
             column2.header("Admin")
             user = []
-            data = st.session_state['db'].execute(f"select user_id, username, transaction_id, symbol, shares, price, SUBSTRING(transacted,1,LENGTH(transacted)-1) from '{transaction}' natural join '{users}' order by username, transacted desc;")
-            data = data.fetchall()
-            for i in data:
-                if i[1] not in user:
-                    user += [i[1]]
+            with st.spinner("Loading..."):
+                data = st.session_state['db'].execute(f"select user_id, username, transaction_id, symbol, shares, price, SUBSTRING(transacted,1,LENGTH(transacted)-1) from '{transaction}' natural join '{users}' order by username, transacted desc;")
+                data = data.fetchall()
+                for i in data:
+                    if i[1] not in user:
+                        user += [i[1]]
             selected = column2.multiselect('Filter by user:', user)
             if selected:
                 select = str(tuple(selected))[:str(selected).rfind("'") + 1] + ")"
