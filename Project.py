@@ -766,9 +766,14 @@ elif st.session_state['page'] == 3:
                     st.text(select)
                     st.text("")
                     st.write(st.session_state["information"])
+                    x = st.session_state["information"]
+                    for i in x:
+                        st.text(i)
                 data = [("User ID", "Username", "Transaction ID", "Symbol", "Shares", "Price", "Date")] + data
                 column2.table(data)
         elif current_tab == 'Logout':
+            st.session_state["people"] = ""
+            st.session_state["information"] = ""
             st.session_state['page'] = 1
             st.experimental_rerun()
 
