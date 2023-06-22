@@ -166,6 +166,7 @@ if 'driver' not in st.session_state:
     try:
         driver.get('https://www.google.com/finance/quote/TSLA:NASDAQ?hl=en')
     except:
+        st.text("EXCEPT LOOP")
         driver = webdriver.Chrome(service=Service(chromedriver_autoinstaller.install()), options=options)
         driver.get('https://www.google.com/finance/quote/TSLA:NASDAQ?hl=en')
     driver.implicitly_wait(2)
