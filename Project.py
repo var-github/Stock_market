@@ -812,6 +812,9 @@ elif st.session_state['page'] == 5:
         if not data:
             column2.warning("Username not found !!")
             st.stop()
+        elif (data[0][2] != q) or (data[0][3] != ans):
+            column2.warning("Incorect security question or prompt !!")
+            st.stop()
         elif data[0][1] == "DISABLED":
             column2.warning("Your account has been disabled by the ADMIN!")
             st.stop()
