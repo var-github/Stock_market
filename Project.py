@@ -800,8 +800,7 @@ elif st.session_state['page'] == 5:
          "Whats your dream job ?", "First movie you watched :", "Keyword"]
     q = column2.selectbox("Security Question", l)
     ans = column2.text_input("Security prompt")
-    if column2.button("Check") and l != "SELECT":
-        st.text("Running"+l)
+    if column2.button("Check") and l[0] != "SELECT":
         data = st.session_state['db'].execute(f"select password, status, security_q, prompt from '{users}' where username = '{username}'")
         data = data.fetchall()
         if not username:
