@@ -162,6 +162,7 @@ if 'driver' not in st.session_state:
     options = Options()
     options.add_argument('--disable-gpu')
     options.add_argument('--headless=new')
+    options.add_argument('--no-sandbox')
     driver = webdriver.Chrome(service=Service(chromedriver_autoinstaller.install()), options=options)
     try:
         driver.get('https://www.google.com/finance/quote/TSLA:NASDAQ?hl=en')
