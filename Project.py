@@ -163,7 +163,11 @@ if 'driver' not in st.session_state:
     options.add_argument('--disable-gpu')
     options.add_argument('--headless=new')
     driver = webdriver.Chrome(service=Service(chromedriver_autoinstaller.install()), options=options)
-    driver.get('https://www.google.com/finance/quote/TSLA:NASDAQ?hl=en')
+    try:
+        driver.get('https://www.google.com/finance/quote/TSLA:NASDAQ?hl=en')
+    except:
+        driver = webdriver.Chrome(service=Service(chromedriver_autoinstaller.install()), options=options)
+        driver.get('https://www.google.com/finance/quote/TSLA:NASDAQ?hl=en')
     driver.implicitly_wait(2)
     st.session_state['driver'] = driver
 if 'captcha' not in st.session_state:
