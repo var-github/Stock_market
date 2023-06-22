@@ -795,7 +795,8 @@ elif st.session_state['page'] == 5:
     if column1.button("🔙"):
         st.session_state['page'] = 1
         st.experimental_rerun()
-    username = column2.text_input('Username')
+    usrname = column2.empty()
+    username = usrname.text_input('Username')
     l = ["SELECT", "Which city were you born in ?", "Which college did you go to ?", "What is your favourite sport ?",
          "Whats your dream job ?", "First movie you watched :", "Keyword"]
     selctbx = column2.empty()
@@ -825,6 +826,8 @@ elif st.session_state['page'] == 5:
             btn.empty()
             selctbx.empty()
             prmpt.empty()
+            usrname.empty()
+            username = usrname.text_input('Username', disabled=True, value=username)
             selctbx.selectbox("Security Question", l, disabled=True, index=l.index(q))
             prmpt.text_input("Security prompt", disabled=True, value=ans)
             column2.text("Your password is "+data[0][0][1:])
