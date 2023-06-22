@@ -759,10 +759,13 @@ elif st.session_state['page'] == 3:
                                 user += [i[1]]
                         st.session_state["people"] = user
                 user = st.session_state["people"]
+                data = st.session_state["information"]
                 selected = column2.multiselect('Filter by user:', user)
                 if selected:
                     select = str(tuple(selected))[:str(selected).rfind("'") + 1] + ")"
-                    st.text(st.session_state["information"])
+                    st.text(select)
+                    st.text("")
+                    st.write(st.session_state["information"])
                 data = [("User ID", "Username", "Transaction ID", "Symbol", "Shares", "Price", "Date")] + data
                 column2.table(data)
         elif current_tab == 'Logout':
