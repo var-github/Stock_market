@@ -796,18 +796,26 @@ elif st.session_state['page'] == 5:
         st.session_state['page'] = 1
         st.experimental_rerun()
     username = column2.text_input('Username')
+    l = ["Which city were you born in ?", "Which college did you go to ?", "What is your favourite sport ?",
+         "Whats your dream job ?", "First movie you watched :", "Keyword"]
+    q = column2.selectbox("Security Question", l)
+    ans = column2.text_input("")
     if column2.button("Check"):
-        data = st.session_state['db'].execute(f"select username, password, user_id, status from '{users}' where username = '{username}'")
+        data = st.session_state['db'].execute(f"select password, status, security_q, prompt from '{users}' where username = '{username}'")
         data = data.fetchall()
         if not username:
             column2.warning("Please enter username !")
         elif not data:
             column2.warning("Username not found !!")
-        elif data[0][3] == "DISABLED":
+        elif data[0][1] == "DISABLED":
             column2.warning("Your account has been disabled by the ADMIN!")
         else:
             column2.text("")
-            column2.markdown("<font size='4'>Password : </font>" + data[0][1][1:][0] + "*" * (len(data[0][1][1:]) - 2) + data[0][1][1:][-1], unsafe_allow_html=True)
+            st.text("Your "+q)
+            st.text("Correct "+data[0][2])
+            column2.text("")
+            st.text("Your "+ans)
+            st.text("Correct "+data[0][3])
 
 
 # User login page
