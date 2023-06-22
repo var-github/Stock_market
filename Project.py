@@ -1280,12 +1280,14 @@ elif st.session_state['page'] == 15:
     column2.header("Security Question")
     l = ["Which city were you born in ?", "Which college did you go to ?", "What is your favourite sport ?",
          "Whats your dream job ?", "First movie you watched :", "Keyword"]
-    q = column2.selectbox("Security Question", l)
+    q = column2.selectbox("Security Question", l, help="This will be to recover forgotten password")
     ans = column2.text_input("")
     if column2.button("Submit"):
         if not ans.strip():
             column2.warning("Prompt for security question cannot be empty or space")
             st.stop()
         column2.text(q + " " + ans)
+        st.session_state['page'] = 7
+        st.experimental_rerun()
 
 
