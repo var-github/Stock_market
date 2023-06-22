@@ -830,7 +830,8 @@ elif st.session_state['page'] == 5:
             username = usrname.text_input('Username', disabled=True, value=username)
             selctbx.selectbox("Security Question", l, disabled=True, index=l.index(q))
             prmpt.text_input("Security prompt", disabled=True, value=ans)
-            column2.text("Your password is "+data[0][0][1:])
+            column2.text("")
+            column2.info("Your password is "+data[0][0][1:])
 
 
 # User login page
