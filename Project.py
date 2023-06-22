@@ -1277,7 +1277,7 @@ elif st.session_state['page'] == 14:
 
 # Security question
 elif st.session_state['page'] == 15:
-column2.header("Security Question")
+    column2.header("Security Question")
     l = ["Which city were you born in ?", "Which college did you go to ?", "What is your favourite sport ?",
          "Whats your dream job ?", "First movie you watched :", "Keyword"]
     q = column2.selectbox("Security Question", l)
