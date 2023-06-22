@@ -646,12 +646,13 @@ def admin_transactions():
     column1, column2, column3 = table.columns([1, 3.5, 1])
     column2.header("Admin")
     user = []
-    with st.spinner("Loading..."):
-        data = st.session_state['db'].execute(f"select user_id, username, transaction_id, symbol, shares, price, SUBSTRING(transacted,1,LENGTH(transacted)-1) from '{transaction}' natural join '{users}' order by username, transacted desc;")
-        data = data.fetchall()
-        for i in data:
-            if i[1] not in user:
-                user += [i[1]]
+    with table:
+        with st.spinner("Loading..."):
+            data = st.session_state['db'].execute(f"select user_id, username, transaction_id, symbol, shares, price, SUBSTRING(transacted,1,LENGTH(transacted)-1) from '{transaction}' natural join '{users}' order by username, transacted desc;")
+            data = data.fetchall()
+            for i in data:
+                if i[1] not in user:
+                    user += [i[1]]
     selected = column2.multiselect('Filter by user:', user)
     if selected:
         select = str(tuple(selected))[:str(selected).rfind("'") + 1] + ")"
