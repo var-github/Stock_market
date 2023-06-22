@@ -801,6 +801,7 @@ elif st.session_state['page'] == 5:
     q = column2.selectbox("Security Question", l)
     ans = column2.text_input("Security prompt")
     if column2.button("Check") and l[0] != "SELECT":
+        st.text("Running")
         if not username:
             column2.warning("Please enter username !")
             st.stop()
