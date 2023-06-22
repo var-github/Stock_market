@@ -640,7 +640,7 @@ def transactions():
 
 
 def admin_transactions():
-    column1, column2, column3 = st.columns([1, 3.5, 1])
+    column1, column2, column3 = table.columns([1, 3.5, 1])
     column2.header("Admin")
     user = []
     with st.spinner("Loading..."):
@@ -658,7 +658,7 @@ def admin_transactions():
     column2.table(data)
 
 
-
+table = st.empty()
 # The page is divided into 3 columns - the first column has only back button, column 2 has the rest of the data
 column1, column2, column3 = st.columns([1, 3.5, 1])
 
