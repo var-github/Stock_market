@@ -638,6 +638,25 @@ def transactions():
     column2.table(data)
         
 
+
+def admin_transactions():
+    column2.header("Admin")
+    user = []        
+    data = st.session_state['db'].execute(f"select user_id, username, transaction_id, symbol, shares, price, SUBSTRING(transacted,1,LENGTH(transacted)-1) from '{transaction}' natural join '{users}' order by username, transacted desc;")
+    data = data.fetchall()
+    for i in data:
+        if i[1] not in user:
+            user += [i[1]]
+    selected = column2.multiselect('Filter by user:', user)
+    if selected:
+        select = str(tuple(selected))[:str(selected).rfind("'") + 1] + ")"
+        data = st.session_state['db'].execute(f"select user_id, username, transaction_id, symbol, shares, price, SUBSTRING(transacted,1,LENGTH(transacted)-1) from '{transaction}' natural join '{users}' where username in {select} order by transacted desc;")
+        data = data.fetchall()
+    data = [("User ID", "Username", "Transaction ID", "Symbol", "Shares", "Price", "Date")] + data
+    column2.table(data)
+
+
+
 # The page is divided into 3 columns - the first column has only back button, column 2 has the rest of the data
 column1, column2, column3 = st.columns([1, 3.5, 1])
 
@@ -737,21 +756,7 @@ elif st.session_state['page'] == 3:
             col5, col6, col7 = table.columns([1, 3.5, 1])
             col6.table(data)
         elif current_tab == 'Transactions':
-            column2.header("Admin")
-            user = []
-            with st.spinner("Loading..."):
-                data = st.session_state['db'].execute(f"select user_id, username, transaction_id, symbol, shares, price, SUBSTRING(transacted,1,LENGTH(transacted)-1) from '{transaction}' natural join '{users}' order by username, transacted desc;")
-                data = data.fetchall()
-                for i in data:
-                    if i[1] not in user:
-                        user += [i[1]]
-            selected = column2.multiselect('Filter by user:', user)
-            if selected:
-                select = str(tuple(selected))[:str(selected).rfind("'") + 1] + ")"
-                data = st.session_state['db'].execute(f"select user_id, username, transaction_id, symbol, shares, price, SUBSTRING(transacted,1,LENGTH(transacted)-1) from '{transaction}' natural join '{users}' where username in {select} order by transacted desc;")
-                data = data.fetchall()
-            data = [("User ID", "Username", "Transaction ID", "Symbol", "Shares", "Price", "Date")] + data
-            column2.table(data)
+            admin_transactions()
         elif current_tab == 'Logout':
             st.session_state['page'] = 1
             st.experimental_rerun()
