@@ -970,7 +970,6 @@ elif st.session_state['page'] == 8:
                 data = data.fetchall()
                 Id = len(data) + 1
                 st.session_state['user'] = Id
-                st.session_state['db'].execute(f'insert into "{users}" values ({Id},"{username}","{"a" + password}", 10000.00, "ENABLED");')
                 st.session_state['text'] = ""
                 st.session_state['name'] = ""
                 st.session_state['agree'] = False
@@ -1284,8 +1283,11 @@ elif st.session_state['page'] == 15:
         if not ans.strip():
             column2.warning("Prompt for security question cannot be empty or space")
             st.stop()
-        column2.text(st.session_state["username"])
-        column2.text(st.session_state["password"])
-        column2.text(q + " " + ans)
+        username = st.session_state["username"]
+        password = st.session_state["password"]
+        Id = st.session_state["user"]
+        st.session_state['db'].execute(f'insert into "{users}" values ({Id},"{username}","{"a" + password}", 10000.00, "ENABLED", "{q}", "{ans}");')
+        st.session_state['page'] = 7
+        st.experimental_rerun()
 
 
