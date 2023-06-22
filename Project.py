@@ -800,7 +800,8 @@ elif st.session_state['page'] == 5:
          "Whats your dream job ?", "First movie you watched :", "Keyword"]
     q = column2.selectbox("Security Question", l)
     ans = column2.text_input("Security prompt")
-    if column2.button("Check") and q != "SELECT":
+    btn = column2.empty()
+    if btn.button("Check") and q != "SELECT":
         if not username:
             column2.warning("Please enter username !")
             st.stop()
@@ -819,12 +820,8 @@ elif st.session_state['page'] == 5:
             column2.warning("Your account has been disabled by the ADMIN!")
             st.stop()
         else:
-            column2.text("")
-            st.text("Your "+q)
-            st.text("Correct "+data[0][2])
-            column2.text("")
-            st.text("Your "+ans)
-            st.text("Correct "+data[0][3])
+            btn.empty()
+            st.text("Your password is "+data[0][0])
 
 
 # User login page
