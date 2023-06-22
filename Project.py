@@ -980,7 +980,7 @@ elif st.session_state['page'] == 8:
                 st.session_state['clicked'] = False
                 st.session_state['captcha'] = ""
                 st.session_state['successful'] = ""
-                st.session_state['page'] = 7
+                st.session_state['page'] = 15
                 st.experimental_rerun()
             elif str(st.session_state['successful']) == "False":
                 column2.warning("Registration unsucessfull!")
@@ -1275,6 +1275,17 @@ elif st.session_state['page'] == 14:
         col_11.markdown("-----------------------------------------------------------------------------------")
 
 
-
+# Security question
+elif st.session_state['page'] == 15:
+column2.header("Security Question")
+    l = ["Which city were you born in ?", "Which college did you go to ?", "What is your favourite sport ?",
+         "Whats your dream job ?", "First movie you watched :", "Keyword"]
+    q = column2.selectbox("Security Question", l)
+    ans = column2.text_input("")
+    if column2.button("Submit"):
+        if not ans.strip():
+            column2.warning("Prompt for security question cannot be empty or space")
+            st.stop()
+        column2.text(q + " " + ans)
 
 
