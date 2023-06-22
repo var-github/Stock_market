@@ -201,6 +201,10 @@ if 'confirm' not in st.session_state:
     st.session_state['confirm'] = ""
 if 'count' not in st.session_state:
     st.session_state['count'] = 1
+if 'people' not in st.session_state:
+    st.session_state['people'] = ""
+if 'information' not in st.session_state:
+    st.session_state['information'] = ""
 
 
 # This function sets all the variables to their initiall state
@@ -742,20 +746,23 @@ elif st.session_state['page'] == 3:
             col6.table(data)
         elif current_tab == 'Transactions':
             with placeholder.container():
-                with st.spinner("Loading..."):
-                    column1, column2, column3 = st.columns([1, 3.5, 1])
-                    column2.header("Admin")
-                    user = []        
-                    data = st.session_state['db'].execute(f"select user_id, username, transaction_id, symbol, shares, price, SUBSTRING(transacted,1,LENGTH(transacted)-1) from '{transaction}' natural join '{users}' order by username, transacted desc;")
-                    data = data.fetchall()
-                    for i in data:
-                        if i[1] not in user:
-                            user += [i[1]]
+                column1, column2, column3 = st.columns([1, 3.5, 1])
+                column2.header("Admin")
+                if not st.session_state["people"]:
+                    with st.spinner("Loading..."):
+                        user = []
+                        data = st.session_state['db'].execute(f"select user_id, username, transaction_id, symbol, shares, price, SUBSTRING(transacted,1,LENGTH(transacted)-1) from '{transaction}' natural join '{users}' order by username, transacted desc;")
+                        data = data.fetchall()
+                        st.session_state["information"] = data
+                        for i in data:
+                            if i[1] not in user:
+                                user += [i[1]]
+                        st.session_state["people"] = user
+                user = st.session_state["people"]
                 selected = column2.multiselect('Filter by user:', user)
                 if selected:
                     select = str(tuple(selected))[:str(selected).rfind("'") + 1] + ")"
-                    data = st.session_state['db'].execute(f"select user_id, username, transaction_id, symbol, shares, price, SUBSTRING(transacted,1,LENGTH(transacted)-1) from '{transaction}' natural join '{users}' where username in {select} order by transacted desc;")
-                    data = data.fetchall()
+                    st.text(st.session_state["information"])
                 data = [("User ID", "Username", "Transaction ID", "Symbol", "Shares", "Price", "Date")] + data
                 column2.table(data)
         elif current_tab == 'Logout':
