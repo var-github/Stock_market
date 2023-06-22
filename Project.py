@@ -768,7 +768,7 @@ elif st.session_state['page'] == 3:
                     x = st.session_state["information"]
                     for j in select:
                         for i in x:
-                            st.text(i[1])
+                            st.text(i[1] + j)
                             if i[1] == j:
                                 st.text(i)
                 data = [("User ID", "Username", "Transaction ID", "Symbol", "Shares", "Price", "Date")] + data
