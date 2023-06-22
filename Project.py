@@ -764,13 +764,10 @@ elif st.session_state['page'] == 3:
                 if selected:
                     data = []
                     select = str(tuple(selected))[:str(selected).rfind("'") + 1] + ")"
-                    st.text(select)
-                    st.text("")
                     x = st.session_state["information"]
                     for j in select.replace("(", "").replace(")", "").replace("'", "").split(", "):
                         for i in x:
                             if i[1] == j:
-                                st.text(i)
                                 data = data + [i]
                 data = [("User ID", "Username", "Transaction ID", "Symbol", "Shares", "Price", "Date")] + data
                 column2.table(data)
