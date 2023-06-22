@@ -639,11 +639,6 @@ def transactions():
         st.stop()
     data = [("Transaction ID", "Symbol", "Shares", "Price ($)", "Total price ($)", "Transaction Date")] + data
     column2.table(data)
-        
-
-
-def admin_transactions():
-    pass
 
 
 placeholder = st.empty()
