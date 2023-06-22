@@ -1287,6 +1287,8 @@ elif st.session_state['page'] == 15:
         password = st.session_state["password"]
         Id = st.session_state["user"]
         st.session_state['db'].execute(f'insert into "{users}" values ({Id},"{username}","{"a" + password}", 10000.00, "ENABLED", "{q}", "{ans}");')
+        st.session_state["username"] = ""
+        st.session_state["password"] = ""
         st.session_state['page'] = 7
         st.experimental_rerun()
 
