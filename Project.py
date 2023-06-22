@@ -643,7 +643,7 @@ def transactions():
 
 
 def admin_transactions():
-    with placeholder:
+    with placeholder.container():
         with st.spinner("Loading..."):
             column1, column2, column3 = st.columns([1, 3.5, 1])
             column2.header("Admin")
