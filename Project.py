@@ -798,8 +798,10 @@ elif st.session_state['page'] == 5:
     username = column2.text_input('Username')
     l = ["SELECT", "Which city were you born in ?", "Which college did you go to ?", "What is your favourite sport ?",
          "Whats your dream job ?", "First movie you watched :", "Keyword"]
-    q = column2.selectbox("Security Question", l)
-    ans = column2.text_input("Security prompt")
+    selctbx = column2.empty()
+    q = selctbx.selectbox("Security Question", l)
+    prmpt = column2.empty()
+    ans = prmpt.text_input("Security prompt")
     btn = column2.empty()
     if btn.button("Check") and q != "SELECT":
         if not username:
@@ -821,7 +823,10 @@ elif st.session_state['page'] == 5:
             st.stop()
         else:
             btn.empty()
-            st.text("Your password is "+data[0][0])
+            selctbx.empty()
+            prmpt.empty()
+            selctbx.selectbox("Security Question", l, disabled=True, key=l.find(q))
+            column2.text("Your password is "+data[0][0][1:])
 
 
 # User login page
