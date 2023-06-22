@@ -658,8 +658,8 @@ def admin_transactions():
         #    select = str(tuple(selected))[:str(selected).rfind("'") + 1] + ")"
         #    data = st.session_state['db'].execute(f"select user_id, username, transaction_id, symbol, shares, price, SUBSTRING(transacted,1,LENGTH(transacted)-1) from '{transaction}' natural join '{users}' where username in {select} order by transacted desc;")
         #    data = data.fetchall()
-        data = [("User ID", "Username", "Transaction ID", "Symbol", "Shares", "Price", "Date")] + data
-        column2.table(data)
+        #data = [("User ID", "Username", "Transaction ID", "Symbol", "Shares", "Price", "Date")] + data
+        #column2.table(data)
 
 
 placeholder = st.empty()
