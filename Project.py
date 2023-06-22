@@ -162,15 +162,16 @@ if 'driver' not in st.session_state:
     options = Options()
     options.add_argument('--disable-gpu')
     options.add_argument('--headless=new')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
     driver = webdriver.Chrome(service=Service(chromedriver_autoinstaller.install()), options=options)
     try:
         driver.get('https://www.google.com/finance/quote/TSLA:NASDAQ?hl=en')
     except:
         st.text("EXCEPT LOOP")
         driver = webdriver.Chrome(service=Service(chromedriver_autoinstaller.install()), options=options)
-        driver.implicitly_wait(3)
         driver.get('https://www.google.com/finance/quote/TSLA:NASDAQ?hl=en')
-    driver.implicitly_wait(3)
+    driver.implicitly_wait(2)
     st.session_state['driver'] = driver
 if 'captcha' not in st.session_state:
     st.session_state['captcha'] = ""
