@@ -801,14 +801,20 @@ elif st.session_state['page'] == 5:
     q = column2.selectbox("Security Question", l)
     ans = column2.text_input("Security prompt")
     if column2.button("Check") and l[0] != "SELECT":
-        data = st.session_state['db'].execute(f"select password, status, security_q, prompt from '{users}' where username = '{username}'")
-        data = data.fetchall()
         if not username:
             column2.warning("Please enter username !")
-        elif not data:
+            st.stop()
+        elif not ans:
+            column2.warning("Please enter security prompt !")
+            st.stop()
+        data = st.session_state['db'].execute(f"select password, status, security_q, prompt from '{users}' where username = '{username}'")
+        data = data.fetchall()
+        if not data:
             column2.warning("Username not found !!")
+            st.stop()
         elif data[0][1] == "DISABLED":
             column2.warning("Your account has been disabled by the ADMIN!")
+            st.stop()
         else:
             column2.text("")
             st.text("Your "+q)
