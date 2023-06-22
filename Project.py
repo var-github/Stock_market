@@ -765,10 +765,11 @@ elif st.session_state['page'] == 3:
                     select = str(tuple(selected))[:str(selected).rfind("'") + 1] + ")"
                     st.text(select)
                     st.text("")
-                    st.write(st.session_state["information"])
                     x = st.session_state["information"]
-                    for i in x:
-                        st.text(i)
+                    for j in select:
+                        for i in x:
+                            if i[1] == j:
+                                st.text(i)
                 data = [("User ID", "Username", "Transaction ID", "Symbol", "Shares", "Price", "Date")] + data
                 column2.table(data)
         elif current_tab == 'Logout':
