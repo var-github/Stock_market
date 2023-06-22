@@ -796,11 +796,11 @@ elif st.session_state['page'] == 5:
         st.session_state['page'] = 1
         st.experimental_rerun()
     username = column2.text_input('Username')
-    l = ["Which city were you born in ?", "Which college did you go to ?", "What is your favourite sport ?",
+    l = ["SELECT", "Which city were you born in ?", "Which college did you go to ?", "What is your favourite sport ?",
          "Whats your dream job ?", "First movie you watched :", "Keyword"]
     q = column2.selectbox("Security Question", l)
-    ans = column2.text_input("")
-    if column2.button("Check"):
+    ans = column2.text_input("Security prompt")
+    if column2.button("Check") and l != "SELECT":
         data = st.session_state['db'].execute(f"select password, status, security_q, prompt from '{users}' where username = '{username}'")
         data = data.fetchall()
         if not username:
