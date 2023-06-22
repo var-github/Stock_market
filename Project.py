@@ -643,7 +643,7 @@ def transactions():
 
 
 def admin_transactions():
-    with table:
+    with placeholder:
         column1, column2, column3 = st.columns([1, 3.5, 1])
         column2.header("Admin")
         user = []
@@ -662,7 +662,7 @@ def admin_transactions():
         column2.table(data)
 
 
-table = st.empty()
+placeholder = st.empty()
 # The page is divided into 3 columns - the first column has only back button, column 2 has the rest of the data
 column1, column2, column3 = st.columns([1, 3.5, 1])
 
