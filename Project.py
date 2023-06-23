@@ -31,7 +31,9 @@ user_agent = streamlit_js_eval(js_expressions='/iPhone|iPad|Android/i.test(navig
 if str(user_agent) == "True" or str(user_agent) == "None":
     extra = "position: relative; left: 30%; top: 50%;"
     zoom = 350
+    other = "body{{width: 100vh;}}"
 else:
+    other = ""
     extra = ""
     zoom = 120
 
@@ -161,6 +163,7 @@ css = f"""
     iframe[title="st.iframe"] {{
         display: none;
     }}
+    {other}
 </style>
 """
 st.markdown(css, unsafe_allow_html=True)
