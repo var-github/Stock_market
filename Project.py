@@ -30,8 +30,10 @@ st.set_page_config(
 user_agent = streamlit_js_eval(js_expressions='/iPhone|iPad|Android/i.test(navigator.userAgent)', key = 'UA')
 if str(user_agent) == "True" or str(user_agent) == "None":
     streamlit_js_eval(js_expressions='parent.document.body.style.zoom = "65%"', key = 'ZM')
+    extra = "left: 25%;"
     zoom = 350
 else:
+    extra = ""
     zoom = 120
 
 
@@ -120,7 +122,8 @@ css = f"""
     #welcome {{
         color: lightyellow;
         font-size:50px;
-        border-radius:2%
+        border-radius:2%;
+        {extra}
     }}
     table {{
         background-color: rgba(255, 255, 255, 0.3);
