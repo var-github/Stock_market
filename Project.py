@@ -34,6 +34,7 @@ if str(user_agent) == "True" or str(user_agent) == "None":
     zoom = 350
 else:
     extra = ""
+    streamlit_js_eval(js_expressions='parent.document.body.style.zoom = "100%"', key = 'ZOM')
     zoom = 120
 
 
