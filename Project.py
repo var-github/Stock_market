@@ -30,7 +30,9 @@ st.set_page_config(
 user_agent = streamlit_js_eval(js_expressions='/iPhone|iPad|Android/i.test(navigator.userAgent)', key = 'UA')
 if str(user_agent) == "True" or str(user_agent) == "None":
     st.header("This website is only viewable on desktop")
-    st.stop()
+    zoom = 300
+else:
+    zoom = 120
 
 
 if 'db' not in st.session_state:
@@ -110,7 +112,7 @@ css = f"""
     [data-testid="stAppViewContainer"] > .main {{
         background-image: url("{img}");
         background-repeat: no-repeat;
-        background-size: 120%;
+        background-size: {zoom}%;
     }}
     [data-testid="stHeader"] {{
         display: none;
