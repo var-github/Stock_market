@@ -6,3 +6,4 @@ requests==2.31.0
 captcha==0.4
 yfinance==0.2.18
 chromedriver_autoinstaller==0.4.0
+streamlit_js_eval
