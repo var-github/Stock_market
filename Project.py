@@ -162,7 +162,7 @@ css = f"""
     iframe[title="st.iframe"] {{
         display: none;
     }}
-    *{{
+    html{{
         overflow-x:hidden;
     }}
 </style>
