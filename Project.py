@@ -19,16 +19,18 @@ from streamlit_echarts import st_echarts
 from streamlit.components.v1 import html
 from streamlit_js_eval import streamlit_js_eval
 
-user_agent = streamlit_js_eval(js_expressions='/iPhone|iPad|Android/i.test(navigator.userAgent)', key = 'UA')
-if str(user_agent) == "True" or str(user_agent) == "None":
-    st.header("This website is only viewable on desktop")
-    st.stop()
 
 # Configuring the page
 st.set_page_config(
     page_title="Stock Market",
     layout="wide",
 )
+
+
+user_agent = streamlit_js_eval(js_expressions='/iPhone|iPad|Android/i.test(navigator.userAgent)', key = 'UA')
+if str(user_agent) == "True" or str(user_agent) == "None":
+    st.header("This website is only viewable on desktop")
+    st.stop()
 
 
 if 'db' not in st.session_state:
