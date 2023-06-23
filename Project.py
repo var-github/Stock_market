@@ -17,9 +17,9 @@ from selenium.webdriver.common.by import By
 from captcha.image import ImageCaptcha
 from streamlit_echarts import st_echarts
 from streamlit.components.v1 import html
-import streamlit_js_eval
+from streamlit_js_eval import get_user_agent
 
-st.write(f"Screen width is {streamlit_js_eval(js_expressions='screen.width', key = 'SCR')}")
+st.write({get_user_agent())
 st.stop()
 
 # Configuring the page
