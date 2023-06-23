@@ -27,8 +27,13 @@ st.set_page_config(
 )
 
 
-zoom = 120
-extra = ""
+user_agent = streamlit_js_eval(js_expressions='/iPhone|iPad|Android/i.test(navigator.userAgent)', key = 'UA')
+if str(user_agent) == "True" or str(user_agent) == "None":
+    extra = "position: relative; left: 30%; top: 50%;"
+    zoom = 350
+else:
+    extra = ""
+    zoom = 120
 
 
 if 'db' not in st.session_state:
