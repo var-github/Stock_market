@@ -17,9 +17,9 @@ from selenium.webdriver.common.by import By
 from captcha.image import ImageCaptcha
 from streamlit_echarts import st_echarts
 from streamlit.components.v1 import html
-from streamlit_js_eval import get_user_agent
+from streamlit_js_eval import streamlit_js_eval
 
-st.write(get_user_agent())
+st.write(streamlit_js_eval(js_expressions='/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)', key = 'UA'))
 st.stop()
 
 # Configuring the page
