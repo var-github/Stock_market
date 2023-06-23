@@ -28,8 +28,6 @@ st.set_page_config(
 
 
 zoom = 120
-extra = ""
-scroll = ""
 
 
 if 'db' not in st.session_state:
@@ -118,7 +116,6 @@ css = f"""
         color: lightyellow;
         font-size:50px;
         border-radius:2%;
-        {extra}
     }}
     table {{
         background-color: rgba(255, 255, 255, 0.3);
@@ -157,7 +154,6 @@ css = f"""
     iframe[title="st.iframe"] {{
         display: none;
     }}
-    {scroll}
 </style>
 """
 st.markdown(css, unsafe_allow_html=True)
