@@ -30,7 +30,7 @@ st.set_page_config(
 user_agent = streamlit_js_eval(js_expressions='/iPhone|iPad|Android/i.test(navigator.userAgent)', key = 'UA')
 if str(user_agent) == "True" or str(user_agent) == "None":
     streamlit_js_eval(js_expressions='parent.document.body.style.zoom = "65%"', key = 'ZM')
-    extra = "position: absolute; left: 30%; top: 50%;"
+    extra = "position: relative; left: 30%; top: 50%;"
     zoom = 350
 else:
     extra = ""
