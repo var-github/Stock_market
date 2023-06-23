@@ -19,7 +19,7 @@ from streamlit_echarts import st_echarts
 from streamlit.components.v1 import html
 from streamlit_js_eval import get_user_agent
 
-st.write({get_user_agent())
+st.write(get_user_agent())
 st.stop()
 
 # Configuring the page
