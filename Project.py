@@ -31,10 +31,11 @@ user_agent = streamlit_js_eval(js_expressions='/iPhone|iPad|Android/i.test(navig
 if str(user_agent) == "True" or str(user_agent) == "None":
     streamlit_js_eval(js_expressions='parent.document.body.style.zoom = "65%"', key = 'ZM')
     extra = "position: relative; left: 30%; top: 50%;"
+    scroll = "html{{overflow-x:hidden;}}"
     zoom = 350
 else:
+    scroll = ""
     extra = ""
-    streamlit_js_eval(js_expressions='parent.document.body.style.zoom = "100%"', key = 'ZOM')
     zoom = 120
 
 
@@ -163,9 +164,7 @@ css = f"""
     iframe[title="st.iframe"] {{
         display: none;
     }}
-    html{{
-        overflow-x:hidden;
-    }}
+    {scroll}
 </style>
 """
 st.markdown(css, unsafe_allow_html=True)
