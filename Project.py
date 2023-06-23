@@ -162,6 +162,9 @@ css = f"""
     iframe[title="st.iframe"] {{
         display: none;
     }}
+    *{{
+        overflow-x:hidden;
+    }}
 </style>
 """
 st.markdown(css, unsafe_allow_html=True)
