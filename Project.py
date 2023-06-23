@@ -19,7 +19,8 @@ from streamlit_echarts import st_echarts
 from streamlit.components.v1 import html
 from streamlit_js_eval import streamlit_js_eval
 
-st.write(streamlit_js_eval(js_expressions='/iPhone|iPad|Android/i.test(navigator.userAgent)', key = 'UA'))
+user_agent = streamlit_js_eval(js_expressions='/iPhone|iPad|Android/i.test(navigator.userAgent)', key = 'UA')
+st.write(str(user_agent))
 st.stop()
 
 # Configuring the page
