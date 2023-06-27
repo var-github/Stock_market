@@ -26,7 +26,7 @@ st.set_page_config(
     layout="wide",
 )
 
-
+"""
 user_agent = streamlit_js_eval(js_expressions='/iPhone|iPad|Android/i.test(navigator.userAgent)', key = 'UA')
 time.sleep(0.1)
 if str(user_agent) == "True" or str(user_agent) == "None":
@@ -35,7 +35,9 @@ if str(user_agent) == "True" or str(user_agent) == "None":
 else:
     extra = ""
     zoom = 120
-
+"""
+extra = ""
+zoom = 120
 
 if 'db' not in st.session_state:
     # This connects to google sheets using shillelagh and converts gsheet into sql database
