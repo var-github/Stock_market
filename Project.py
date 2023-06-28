@@ -28,8 +28,9 @@ st.set_page_config(
 
 
 user_agent = streamlit_js_eval(js_expressions='/iPhone|iPad|Android/i.test(navigator.userAgent)', key = 'UA')
-time.sleep(0.1)
-if str(user_agent) == "True" or str(user_agent) == "None":
+while str(user_agent) == "None":
+    pass
+if str(user_agent) == "True":
     st.header("This app can only be viewed on a desktop")
     st.stop()
 
