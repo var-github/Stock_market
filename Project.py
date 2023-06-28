@@ -31,7 +31,7 @@ user_agent = streamlit_js_eval(js_expressions='/iPhone|iPad|Android/i.test(navig
 while str(user_agent) == "None":
     pass
 if str(user_agent) == "True":
-    st.header("This app can only be viewed on a desktop")
+    st.header("This app can only be viewed on a desktop browser")
     st.stop()
 
 
