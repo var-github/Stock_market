@@ -158,6 +158,9 @@ css = f"""
     iframe[title="st.iframe"] {{
         display: none;
     }}
+    iframe[title="streamlit_js_eval.streamlit_js_eval"]{{
+        display: none;
+    }}
 </style>
 """
 st.markdown(css, unsafe_allow_html=True)
