@@ -30,7 +30,7 @@ if 'user' not in st.session_state:
     js = """
     <script>
         console.log("running1");
-        var iframe = parent.document.getElementsByTagName("iframe");
+        var iframe = parent.document.getElementsByTagName("iframe")[1];
         console.log(iframe)
     </script>
     """
