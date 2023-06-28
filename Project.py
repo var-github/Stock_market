@@ -26,16 +26,25 @@ st.set_page_config(
     layout="wide",
 )
 
-"""
-user_agent = streamlit_js_eval(js_expressions='/iPhone|iPad|Android/i.test(navigator.userAgent)', key = 'UA')
-time.sleep(0.1)
-if str(user_agent) == "True" or str(user_agent) == "None":
-    extra = "position: relative; left: 30%; top: 50%;"
-    zoom = 350
-else:
-    extra = ""
-    zoom = 120
-"""
+if 'user' not in st.session_state:
+    js = """
+    <script>
+        console.log("running1");
+        var iframe = parent.document.getElementsByTagName("iframe");
+        console.log(iframe)
+    </script>
+    """
+    html(js)
+    """
+    user_agent = streamlit_js_eval(js_expressions='/iPhone|iPad|Android/i.test(navigator.userAgent)', key = 'UA')
+    time.sleep(0.1)
+    if str(user_agent) == "True" or str(user_agent) == "None":
+        extra = "position: relative; left: 30%; top: 50%;"
+        zoom = 350
+    else:
+        extra = ""
+        zoom = 120
+    """
 extra = ""
 zoom = 120
 
