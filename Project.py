@@ -26,27 +26,13 @@ st.set_page_config(
     layout="wide",
 )
 
-if 'user' not in st.session_state:
-    js = """
-    <script>
-        console.log("running1");
-        var iframe = parent.document.getElementsByTagName("iframe")[1];
-        console.log(iframe)
-    </script>
-    """
-    html(js)
-    """
-    user_agent = streamlit_js_eval(js_expressions='/iPhone|iPad|Android/i.test(navigator.userAgent)', key = 'UA')
-    time.sleep(0.1)
-    if str(user_agent) == "True" or str(user_agent) == "None":
-        extra = "position: relative; left: 30%; top: 50%;"
-        zoom = 350
-    else:
-        extra = ""
-        zoom = 120
-    """
-extra = ""
-zoom = 120
+
+user_agent = streamlit_js_eval(js_expressions='/iPhone|iPad|Android/i.test(navigator.userAgent)', key = 'UA')
+time.sleep(0.1)
+if str(user_agent) == "True" or str(user_agent) == "None":
+    st.header("This app can only be viewed on a desktop")
+    st.stop()
+
 
 if 'db' not in st.session_state:
     # This connects to google sheets using shillelagh and converts gsheet into sql database
@@ -125,7 +111,7 @@ css = f"""
     [data-testid="stAppViewContainer"] > .main {{
         background-image: url("{img}");
         background-repeat: no-repeat;
-        background-size: {zoom}%;
+        background-size: 120%;
     }}
     [data-testid="stHeader"] {{
         display: none;
@@ -134,7 +120,6 @@ css = f"""
         color: lightyellow;
         font-size:50px;
         border-radius:2%;
-        {extra}
     }}
     table {{
         background-color: rgba(255, 255, 255, 0.3);
