@@ -26,11 +26,12 @@ st.set_page_config(
     layout="wide",
 )
 
-
-user_agent = streamlit_js_eval(js_expressions='/iPhone|iPad|Android/i.test(navigator.userAgent)', key = 'UA')
-while str(user_agent) == "None":
-    pass
-if str(user_agent) == "True":
+if "user_agent" not in st.session_state:
+    user_agent = streamlit_js_eval(js_expressions='/iPhone|iPad|Android/i.test(navigator.userAgent)', key = 'UA')
+    while str(user_agent) == "None":
+        pass
+    st.session_state['user_agent'] = user_agent
+if str(st.session_state['user_agent']) == "True":
     st.header("This app can only be viewed on a desktop browser")
     st.stop()
 
