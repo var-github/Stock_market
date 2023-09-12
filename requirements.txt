@@ -1,7 +1,7 @@
 streamlit-on-Hover-tabs==1.0.1
 streamlit-echarts==0.4.0
 shillelagh[gsheetsapi]==1.2.4
-seleniumbase==4.14.11
+seleniumbase==4.18.5
 requests==2.31.0
 captcha==0.4
 yfinance==0.2.18
