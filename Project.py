@@ -181,7 +181,8 @@ if 'driver' not in st.session_state:
     try:
         driver.get('https://www.google.com/finance/quote/TSLA:NASDAQ?hl=en')
     except:
-        driver = webdriver.Chrome(service=Service(chromedriver_autoinstaller.install()), options=options)
+        chromedriver_autoinstaller.install()
+        driver = webdriver.Chrome(options=options)
         driver.get('https://www.google.com/finance/quote/TSLA:NASDAQ?hl=en')
     driver.implicitly_wait(2)
     st.session_state['driver'] = driver
