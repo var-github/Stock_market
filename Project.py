@@ -4,7 +4,6 @@ import random
 import time
 from datetime import date, datetime, timedelta
 import requests
-import chromedriver_autoinstaller
 import streamlit as st
 import yfinance
 import io
@@ -177,12 +176,10 @@ if 'driver' not in st.session_state:
     options.add_argument('--headless=new')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
-    # chromedriver_autoinstaller.install()
     driver = webdriver.Chrome(options=options)
     try:
         driver.get('https://www.google.com/finance/quote/TSLA:NASDAQ?hl=en')
     except:
-        # chromedriver_autoinstaller.install()
         driver = webdriver.Chrome(options=options)
         driver.get('https://www.google.com/finance/quote/TSLA:NASDAQ?hl=en')
     driver.implicitly_wait(2)
