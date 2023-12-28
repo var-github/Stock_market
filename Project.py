@@ -17,6 +17,7 @@ from captcha.image import ImageCaptcha
 from streamlit_echarts import st_echarts
 from streamlit.components.v1 import html
 from streamlit_js_eval import streamlit_js_eval
+from forex_python.converter import CurrencyRates
 
 
 # Configuring the page
@@ -241,9 +242,8 @@ def internet():
 # Getting USD - INR conversion rates
 @st.cache_data(ttl=120)
 def usd():
-    url = f'https://api.exchangerate.host/timeseries?base={"USD"}&start_date={date.today()}&end_date={date.today()}&symbols={"INR"}'
-    data = requests.get(url).text
-    st.session_state['usd'] = float(data[data.rfind('INR') + 5:-3])
+    c = CurrencyRates()
+    st.session_state['usd'] = round(float(c.get_rate('USD', 'INR')), ndigits=2)
     return st.session_state['usd']
 usd()
 
