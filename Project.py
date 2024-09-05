@@ -91,7 +91,7 @@ css = f"""
         transition: 0.7s ease;
     }}
     section[data-testid='stSidebarHeader']{{
-        display: none;
+        visibility: hidden;
     }}
     #MainMenu {{
         visibility: hidden;
