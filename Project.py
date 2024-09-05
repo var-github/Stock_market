@@ -305,7 +305,7 @@ def portfolio():
                 except:
                     st.session_state['count'] = 2
                     del st.session_state['driver']
-                    st.experimental_rerun()
+                    st.rerun()
             else:
                 info = get_price(data[i][0])
             price = info['Price']
@@ -480,12 +480,12 @@ def buy():
         else:
             st.session_state['clicked'] = False
             st.session_state['warning'] = 1
-            st.experimental_rerun()
+            st.rerun()
         price = shares * data["Price"]
         if cash[0][0] - price < 0:
             st.session_state['clicked'] = False
             st.session_state['warning'] = 2
-            st.experimental_rerun()
+            st.rerun()
         column2.text("You will be paying an amount of: $" + str(round(price, ndigits=2)))
         column2.text("")
         var1 = column2.empty()
@@ -685,19 +685,19 @@ if st.session_state['page'] == 1:
         current_tab = on_hover_tabs(tabName=['Home','Login', 'Register', 'Admin','Help','About'], iconName=['home','account_circle','economy','dashboard','help_center','description'], styles = {'tabOptionsStyle': {':hover :hover': {'color': 'blue'}}}, key=105, default_choice=0)
         if current_tab =='Login':
             st.session_state['page'] = 6
-            st.experimental_rerun()
+            st.rerun()
         elif current_tab == 'Register':
             st.session_state['page'] = 8
-            st.experimental_rerun()
+            st.rerun()
         elif current_tab == 'Admin':
             st.session_state['page'] = 2
-            st.experimental_rerun()
+            st.rerun()
         elif current_tab == 'About':
             st.session_state['page'] = 4
-            st.experimental_rerun()
+            st.rerun()
         elif current_tab == 'Help':
             st.session_state['page'] = 5
-            st.experimental_rerun()
+            st.rerun()
 
 
 # Admin login page
@@ -706,7 +706,7 @@ elif st.session_state['page'] == 2:
     column1.text("")
     if column1.button(label="🔙"):
         st.session_state['page'] = 1
-        st.experimental_rerun()
+        st.rerun()
     username = column2.text_input('Username')
     password = column2.text_input('Password', type="password")
     if column2.button(label="Login"):
@@ -719,7 +719,7 @@ elif st.session_state['page'] == 2:
             column2.warning("Wrong password")
             st.stop()
         st.session_state['page'] = 3
-        st.experimental_rerun()
+        st.rerun()
 
 
 # Admin page
@@ -752,7 +752,7 @@ elif st.session_state['page'] == 3:
                         st.session_state['db'].execute(f'update "{users}" set status = "DISABLED" where username = "{i}"')
                     else:
                         st.session_state['db'].execute(f'update "{users}" set status = "ENABLED" where username = "{i}"')
-                st.experimental_rerun()
+                st.rerun()
             data = [("User ID", "Username", "Password", "Cash", "Status")] + data
             col5, col6, col7 = table.columns([1, 3.5, 1])
             col6.table(data)
@@ -787,7 +787,7 @@ elif st.session_state['page'] == 3:
             st.session_state["people"] = ""
             st.session_state["information"] = ""
             st.session_state['page'] = 1
-            st.experimental_rerun()
+            st.rerun()
 
 
 # About page
@@ -796,7 +796,7 @@ elif st.session_state['page'] == 4:
     column1.text("")
     if column1.button(label="🔙"):
         st.session_state['page'] = 1
-        st.experimental_rerun()
+        st.rerun()
     column2.warning("Code yet to come!")
 
 
@@ -806,7 +806,7 @@ elif st.session_state['page'] == 5:
     column1.text("")
     if column1.button("🔙"):
         st.session_state['page'] = 1
-        st.experimental_rerun()
+        st.rerun()
     usrname = column2.empty()
     username = usrname.text_input('Username')
     l = ["SELECT", "Which city were you born in ?", "Which college did you go to ?", "What is your favourite sport ?",
@@ -852,7 +852,7 @@ elif st.session_state['page'] == 6:
     column1.text("")
     if column1.button(label="🔙"):
         st.session_state['page'] = 1
-        st.experimental_rerun()
+        st.rerun()
     username = column2.text_input('Username')
     password = column2.text_input('Password', type="password")
     if column2.button(label="Login"):
@@ -870,7 +870,7 @@ elif st.session_state['page'] == 6:
         if password == data[0][1][1:]:
             st.session_state['user'] = data[0][2]
             st.session_state['page'] = 7
-            st.experimental_rerun()
+            st.rerun()
         else:
             column2.warning("Wrong password")
 
@@ -911,10 +911,10 @@ elif st.session_state['page'] == 7:
         transactions()
     elif current_tab == 'Account':
         st.session_state['page'] = 9
-        st.experimental_rerun()
+        st.rerun()
     elif current_tab == 'Logout':
         st.session_state['page'] = 1
-        st.experimental_rerun()
+        st.rerun()
 
 
 
@@ -932,7 +932,7 @@ elif st.session_state['page'] == 8:
         st.session_state['password'] = ""
         st.session_state['confirm'] = ""
         st.session_state['page'] = 1
-        st.experimental_rerun()
+        st.rerun()
     if not st.session_state['clicked']:
         color = """
         <style>
@@ -956,7 +956,7 @@ elif st.session_state['page'] == 8:
         st.session_state['agree'] = col2.checkbox("I agree that I have read through the guidelines", value=st.session_state['agree'])
         if col4.button("Next ⇥") and st.session_state['agree']:
             st.session_state['clicked'] = True
-            st.experimental_rerun()
+            st.rerun()
     else:
         name = column2.empty()
         st.session_state['username'] = name.text_input('Enter username:', value=st.session_state['username'], key=15)
@@ -970,7 +970,7 @@ elif st.session_state['page'] == 8:
         if not st.session_state['captcha']:
             if btn2.button("⇤ Previous"):
                 st.session_state['clicked'] = False
-                st.experimental_rerun()
+                st.rerun()
         if st.session_state['captcha'] or btn.button(label="Register"):
             username = st.session_state['username']
             password = st.session_state['password']
@@ -1014,7 +1014,7 @@ elif st.session_state['page'] == 8:
                 st.session_state['captcha'] = ""
                 st.session_state['successful'] = ""
                 st.session_state['page'] = 15
-                st.experimental_rerun()
+                st.rerun()
             elif str(st.session_state['successful']) == "False":
                 column2.warning("Registration unsucessfull!")
                 st.session_state['username'] = ""
@@ -1125,7 +1125,7 @@ elif st.session_state['page'] == 9:
                         if col5.button("No", key=32):
                             st.session_state['clicked'] = False
                             st.session_state['password'] = ""
-                            st.experimental_rerun()
+                            st.rerun()
                         col7, col8, col9 = text3.columns([1, 4.5, 1])
                         col8.markdown("-----------------------------------------------------------------------------------")
                         st.stop()
@@ -1138,11 +1138,11 @@ elif st.session_state['page'] == 9:
         elif current_tab == 'Delete Account':
             st.session_state['clicked'] = False
             st.session_state['page'] = 13
-            st.experimental_rerun()
+            st.rerun()
         elif current_tab == 'Go Back':
             st.session_state['clicked'] = False
             st.session_state['page'] = 7
-            st.experimental_rerun()
+            st.rerun()
 
             
 # Delete account confirmation
@@ -1151,7 +1151,7 @@ elif st.session_state['page'] == 13:
     col1.text("")
     if col1.button(label="🔙"):
         st.session_state['page'] = 9
-        st.experimental_rerun()
+        st.rerun()
     col4, col5, col6 = st.columns([2, 4.5, 2])
     col5.markdown('''            <div id="del"><h1 style="text-align: center; color: darkblue;">DELETE ACCOUNT</h1>
 
@@ -1188,11 +1188,11 @@ elif st.session_state['page'] == 13:
     col10, col11, col12, col13 = var2.columns([9, 1.3, 1.3, 9.5])
     if col11.button("Yes"):
         st.session_state['page'] = 14
-        st.experimental_rerun()
+        st.rerun()
     if col12.button("No"):
         st.session_state['clicked'] = False
         st.session_state['page'] = 7
-        st.experimental_rerun()
+        st.rerun()
     else:
         col14, col15, col16 = st.columns([2, 4.5, 2])
         col15.markdown("--------------------------------------------------------")
@@ -1210,7 +1210,7 @@ elif st.session_state['page'] == 14:
         st.session_state['deleted'] = False
         st.session_state['clicked'] = False
         st.session_state['page'] = 9
-        st.experimental_rerun()
+        st.rerun()
     if not st.session_state['clicked']:
         col2.header("Confirm details")
         var2 = st.empty()
@@ -1241,7 +1241,7 @@ elif st.session_state['page'] == 14:
                 col7.warning("Incorrect password - deletion of account aborted!")
                 st.stop()
             st.session_state['clicked'] = True
-            st.experimental_rerun()
+            st.rerun()
     elif not st.session_state['deleted']:
         col2.header("DELETE ACCOUNT")
         col3, col4, col5 = st.columns([1, 3.5, 1])
@@ -1282,12 +1282,12 @@ elif st.session_state['page'] == 14:
                 st.session_state['db'].execute(f"update '{users}' set user_id = {i} where user_id = {i + 1};")
                 st.session_state['db'].execute(f"update '{transaction}' set user_id = {i} where user_id = {i + 1};")
             st.session_state['deleted'] = True
-            st.experimental_rerun()
+            st.rerun()
         if col_11.button("No"):
             st.session_state['deleted'] = False
             st.session_state['clicked'] = False
             st.session_state['page'] = 7
-            st.experimental_rerun()
+            st.rerun()
         if not st.session_state['deleted']:
             col_13, col_14, col_15 = st.columns([1, 3.5, 1])
             col_14.markdown("-----------------------------------------------------------------------------------")
@@ -1303,7 +1303,7 @@ elif st.session_state['page'] == 14:
             st.session_state['clicked'] = False
             st.session_state['user'] = None
             st.session_state['page'] = 1
-            st.experimental_rerun()
+            st.rerun()
         col_10, col_11, col_12 = st.columns([1, 3.5, 1])
         col_11.markdown("-----------------------------------------------------------------------------------")
 
@@ -1326,6 +1326,6 @@ elif st.session_state['page'] == 15:
         st.session_state["username"] = ""
         st.session_state["password"] = ""
         st.session_state['page'] = 7
-        st.experimental_rerun()
+        st.rerun()
 
 
