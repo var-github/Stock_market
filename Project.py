@@ -76,7 +76,6 @@ css = f"""
     }}
     /* The navigation menu on hover */
     section[data-testid='stSidebar'] > div:hover{{
-        top: -10%;
         width: 270px;
     }}
     section[data-testid='stSidebar'] > div:hover img{{
