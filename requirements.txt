@@ -6,4 +6,4 @@ requests==2.31.0
 captcha==0.5
 yfinance==0.2.18
 streamlit_js_eval
-forex-python
+CurrencyConverter
