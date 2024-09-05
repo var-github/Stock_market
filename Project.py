@@ -84,6 +84,7 @@ css = f"""
         transition: 0.7s ease;
         max-width: 80% !important;
         left: 10% !important;
+        top: 5%;
     }}
     section[data-testid='stSidebar'] > div img{{
         position: relative;
