@@ -90,8 +90,8 @@ css = f"""
         max-width: 100% !important;
         transition: 0.7s ease;
     }}
-    div[data-testid='stSidebarHeader']{{
-        display: block;
+    div[data-testid='stSidebarCollapseButton']{{
+        display: none;
     }}
     #MainMenu {{
         visibility: hidden;
