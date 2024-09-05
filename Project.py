@@ -90,8 +90,8 @@ css = f"""
         max-width: 100% !important;
         transition: 0.7s ease;
     }}
-    section[data-testid='stSidebarHeader']{{
-        visibility: hidden;
+    section[data-testid='stSidebarHeader'] > div{{
+        display: none;
     }}
     #MainMenu {{
         visibility: hidden;
