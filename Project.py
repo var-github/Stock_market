@@ -79,11 +79,12 @@ css = f"""
         top: -10%;
         width: 270px;
     }}
-    section[data-testid='stSidebarUserContent'] > div:hover img{{
+    section[data-testid='stSidebar'] > div:hover img{{
         position: relative;
         transition: 0.7s ease;
         max-width: 80% !important;
         left: 10% !important;
+        top:50%!important;
     }}
     section[data-testid='stSidebar'] > div img{{
         position: relative;
