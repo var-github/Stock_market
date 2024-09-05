@@ -90,7 +90,7 @@ css = f"""
         max-width: 100% !important;
         transition: 0.7s ease;
     }}
-    section[data-testid='stSidebarHeader'] > div button{{
+    section[data-testid='stSidebarHeader']{{
         display: none;
     }}
     #MainMenu {{
