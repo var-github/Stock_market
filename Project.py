@@ -17,7 +17,7 @@ from captcha.image import ImageCaptcha
 from streamlit_echarts import st_echarts
 from streamlit.components.v1 import html
 from streamlit_js_eval import streamlit_js_eval
-from forex_python.converter import CurrencyRates
+from currency_converter import CurrencyConverter
 
 
 # Configuring the page
@@ -242,8 +242,8 @@ def internet():
 # Getting USD - INR conversion rates
 @st.cache_data(ttl=120)
 def usd():
-    c = CurrencyRates()
-    st.session_state['usd'] = round(float(c.get_rate('USD', 'INR')), ndigits=2)
+    c = CurrencyConverter()
+    st.session_state['usd'] = round(float(c.convert(1, 'USD', 'INR')), ndigits=2)
     return st.session_state['usd']
 usd()
 
