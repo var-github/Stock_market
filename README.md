@@ -5,3 +5,5 @@ This project is a web-based stock trading application developed using Python pro
 
 
 <sub>The app logo is taken from https://omnistock.io/ , by any means this project is not meant to copy or imitate their application.</sub>
+
+This app is hosted at [https://stock-market-python-project.streamlit.app/][https://stock-market-python-project.streamlit.app/]
