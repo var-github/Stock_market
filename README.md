@@ -10,5 +10,3 @@ This app is hosted at [https://stock-market-python-project.streamlit.app/](https
 
 You can use username : press123, and password : 1234 to check the application
 
-If the app is slow please wait or refresh
-
