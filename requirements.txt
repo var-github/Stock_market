@@ -6,4 +6,4 @@ requests==2.31.0
 captcha==0.6
 yfinance==0.2.18
 streamlit_js_eval==0.1.7
-CurrencyConverter
+CurrencyConverter==0.17.30
