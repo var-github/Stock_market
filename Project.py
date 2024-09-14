@@ -746,7 +746,7 @@ elif st.session_state['page'] == 3:
             col1, col2, col3, col4 = main.columns([1.15, 3, 1, 1.1])
             col2.header("Admin")
             disable = col2.multiselect('Select users to disable / enable:', user)
-            for i in range(7):
+            for i in range(6):
                 col3.text("")
             if col3.button(label="DISABLE / ENABLE"):
                 for i in disable:
@@ -795,12 +795,25 @@ elif st.session_state['page'] == 3:
 
 # About page
 elif st.session_state['page'] == 4:
-    column2.header("About")
+    column2.header("About Me")
     column1.text("")
     if column1.button(label="🔙"):
         st.session_state['page'] = 1
         st.rerun()
-    column2.warning("Code yet to come!")
+    st.write("""Hello, I’m Varun!
+I am a dedicated student pursuing a dual degree in Computer Science and Mathematics at Birla Institute of Technology and Science (BITS), Hyderabad. My academic journey and passion for financial strategies have inspired me to create a platform where enthusiasts and learners can dive into the world of investing without the financial risk.
+
+My Mission
+My mission is to empower individuals to explore and master stock market strategies in a risk-free virtual setting. By combining my knowledge in Computer Science and Mathematics, I aim to offer a comprehensive, user-friendly platform that facilitates learning and strategic experimentation in stock market investments.
+
+What the website offers
+Invest in a Virtual Stock Market: Experiment with stock trading and investment strategies in a simulated environment that mirrors real-world market dynamics.
+Learn Strategies: Access resources and tools designed to help you understand market trends, analyze stocks, and refine your investment approach.
+Educational Value: Offering a platform that not only entertains but also educates, helping users build confidence and competence in stock market investments.
+User-Centric Design: Focusing on creating an intuitive and engaging experience for all users, from beginners to seasoned investors.
+
+Connect with Me
+I’m always open to feedback, questions, or collaborations. Feel free to reach out to me at .""")
 
 
 # Help page
