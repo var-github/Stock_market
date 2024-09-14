@@ -800,7 +800,7 @@ elif st.session_state['page'] == 4:
     if column1.button(label="🔙"):
         st.session_state['page'] = 1
         st.rerun()
-    st.write("""Hello, I’m Varun!
+    column2.write("""Hello, I’m Varun!
 I am a dedicated student pursuing a dual degree in Computer Science and Mathematics at Birla Institute of Technology and Science (BITS), Hyderabad. My academic journey and passion for financial strategies have inspired me to create a platform where enthusiasts and learners can dive into the world of investing without the financial risk.
 
 My Mission
