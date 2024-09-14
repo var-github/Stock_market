@@ -74,13 +74,10 @@ css = f"""
         background-color: #111;
         transition: 0.7s ease;
     }}
-    section[data-testid='stSidebar']:hover {{
-        top: 5%;
-    }}
     /* The navigation menu on hover */
     section[data-testid='stSidebar'] > div:hover{{
         width: 270px;
-        top: -5%;
+        top: -4%;
     }}
     section[data-testid='stSidebar'] > div:hover img{{
         position: relative;
