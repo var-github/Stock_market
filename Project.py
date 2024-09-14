@@ -911,6 +911,8 @@ elif st.session_state['page'] == 7:
     st.sidebar.caption("")
     st.sidebar.caption("")
     st.sidebar.caption("")
+    st.sidebar.caption("")
+    st.sidebar.caption("")
     st.sidebar.image(st.secrets["logo"])
     st.sidebar.caption("")
     with st.sidebar:
