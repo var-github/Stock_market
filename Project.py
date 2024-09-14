@@ -150,7 +150,7 @@ css = f"""
     }}
     iframe[title="streamlit_echarts.st_echarts"] {{
         position: relative;
-        left: 200px;
+        left: 10%;
         width: 800px;
         border: 1.5px solid;
         background: rgba(255, 255, 255, 0.62);
