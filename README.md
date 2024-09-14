@@ -8,6 +8,7 @@ This project is a web-based stock trading application developed using Python pro
 
 This app is hosted at [https://stock-market-python-project.streamlit.app/](https://stock-market-python-project.streamlit.app/)
 
-You can use username : press123, and password : 1234 to check the application\n
+You can use username : press123, and password : 1234 to check the application
+
 If the app is slow please wait or refresh
 
