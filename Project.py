@@ -803,16 +803,16 @@ elif st.session_state['page'] == 4:
     column2.write("""Hello, I’m Varun!\n
 I am a dedicated student pursuing a dual degree in Computer Science and Mathematics at Birla Institute of Technology and Science (BITS), Hyderabad. My academic journey and passion for financial strategies have inspired me to create a platform where enthusiasts and learners can dive into the world of investing without the financial risk.\n
 \n
-My Mission\n
+### My Mission\n
 My mission is to empower individuals to explore and master stock market strategies in a risk-free virtual setting. By combining my knowledge in Computer Science and Mathematics, I aim to offer a comprehensive, user-friendly platform that facilitates learning and strategic experimentation in stock market investments.\n
 \n
-What the website offers\n
+### What the website offers\n
 Invest in a Virtual Stock Market: Experiment with stock trading and investment strategies in a simulated environment that mirrors real-world market dynamics.\n
 Learn Strategies: Access resources and tools designed to help you understand market trends, analyze stocks, and refine your investment approach.\n
 Educational Value: Offering a platform that not only entertains but also educates, helping users build confidence and competence in stock market investments.\n
 User-Centric Design: Focusing on creating an intuitive and engaging experience for all users, from beginners to seasoned investors.\n
 \n
-Connect with Me\n
+### Connect with Me\n
 I’m always open to feedback, questions, or collaborations. Feel free to reach out to me at .""")
 
 
