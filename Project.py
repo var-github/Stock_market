@@ -895,6 +895,9 @@ elif st.session_state['page'] == 7:
     </style>
     """
     st.markdown(top, unsafe_allow_html=True)
+    st.sidebar.caption("")
+    st.sidebar.caption("")
+    st.sidebar.caption("")
     st.sidebar.image(st.secrets["logo"])
     st.sidebar.caption("")
     with st.sidebar:
