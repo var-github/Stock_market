@@ -317,7 +317,7 @@ def portfolio():
                 info = get_price(data[i][0])
             price = info['Price']
             sum += price * int(data[i][1])
-            cc[i][1] = cc[i][1] - (price * int(data[i][1]))
+            cc[i][1] = float(cc[i][1]) - (price * int(data[i][1]))
             data[i] = data[i] + (price,)
         data = [("Symbol", "Shares", "Current Price")] + data
     else:
