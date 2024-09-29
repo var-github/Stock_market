@@ -294,10 +294,11 @@ def get_price(company):
 # This function displays all the stocks the user owns
 def portfolio():
     column2.title("PORTFOLIO")
-    data = st.session_state['db'].execute(f"select symbol, sum(shares), sum(shares*price) from '{transaction}' where user_id = {st.session_state['user']} group by symbol having sum(shares) != 0;")
+    data = st.session_state['db'].execute(f"select symbol, sum(shares) from '{transaction}' where user_id = {st.session_state['user']} group by symbol having sum(shares) != 0;")
     data = data.fetchall()
-    st.text(data)
-    data.pop(-1)
+    cc = st.session_state['db'].execute(f"select symbol, sum(shares), sum(shares*price) from '{transaction}' where user_id = {st.session_state['user']};")
+    cc = data.fetchall()
+    st.text(cc)
     if not data:
         column2.warning("You currently have not invested in any stocks")
         st.stop()
