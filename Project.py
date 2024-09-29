@@ -297,6 +297,7 @@ def portfolio():
     data = st.session_state['db'].execute(f"select symbol, sum(shares), sum(shares*price) from '{transaction}' where user_id = {st.session_state['user']} group by symbol having sum(shares) != 0;")
     data = data.fetchall()
     st.text(data)
+    data.pop(-1)
     if not data:
         column2.warning("You currently have not invested in any stocks")
         st.stop()
