@@ -296,7 +296,7 @@ def portfolio():
     column2.title("PORTFOLIO")
     data = st.session_state['db'].execute(f"select symbol, sum(shares) from '{transaction}' where user_id = {st.session_state['user']} group by symbol having sum(shares) != 0;")
     data = data.fetchall()
-    cc = st.session_state['db'].execute(f'select symbol, shares, price, ABS(shares) * price from "{transaction}" where user_id = {st.session_state["user"]} group by symbol having sum(shares) != 0;')
+    cc = st.session_state['db'].execute(f'select symbol, sum(shares), sum(shares*price) from "{transaction}" where user_id = {st.session_state["user"]} group by symbol having sum(shares) != 0;')
     cc = cc.fetchall()
     st.text(cc)
     if not data:
