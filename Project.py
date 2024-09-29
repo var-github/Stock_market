@@ -298,8 +298,6 @@ def portfolio():
     data = data.fetchall()
     cc = st.session_state['db'].execute(f'select symbol, sum(shares*price) from "{transaction}" where user_id = {st.session_state["user"]} group by symbol having sum(shares) != 0;')
     cc = cc.fetchall()
-    st.text("Initial")
-    st.text(cc)
     if not data:
         column2.warning("You currently have not invested in any stocks")
         st.stop()
@@ -318,11 +316,10 @@ def portfolio():
             price = info['Price']
             sum += price * int(data[i][1])
             cc[i] = [cc[i][0], (price * int(data[i][1])) - float(cc[i][1])]
-            data[i] = data[i] + (price,)
-        data = [("Symbol", "Shares", "Current Price")] + data
+            data[i] = data[i] + (price,) + (cc[i][1],)
+        data = [("Symbol", "Shares", "Current Price", "Profit")] + data
     else:
         data = [("Symbol", "Shares")] + data
-    st.text("Final")
     st.text(cc)
     column2.table(data)
     if internet():
