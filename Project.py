@@ -320,7 +320,6 @@ def portfolio():
         data = [("Symbol", "Shares", "Current Price", "Profit")] + data
     else:
         data = [("Symbol", "Shares")] + data
-    st.text(cc)
     column2.table(data)
     if internet():
         column2.text("Total: $" + str(round(sum, ndigits=2)))
