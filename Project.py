@@ -300,6 +300,7 @@ def portfolio():
     cc = cc.fetchall()
     st.text("Initial")
     st.text(cc)
+    st.text(type(cc[i]))
     if not data:
         column2.warning("You currently have not invested in any stocks")
         st.stop()
